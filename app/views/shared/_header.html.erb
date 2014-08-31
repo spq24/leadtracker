@@ -1,0 +1,71 @@
+<header id="header">
+    <nav id="navigation">
+        <div class="container">
+            <% if logged_in? %>
+                    <% if params[:controller] == 'closingloop/leads'  %>
+                    <a id="logo" href="/closingloop/leads?reviewed=false"><%= image_tag 'logo.png' %></a>
+                    <% else %>
+                    <a id="logo" href="/"><%= image_tag 'logo.png' %></a>
+                    <% end %>
+                <ul class="main-nav nav">
+                  <% if params[:controller] == 'closingloop/leads'  %>
+                    <li><%= link_to "Unreviewed Leads", '?reviewed=false' %></li>
+                    <li><%= link_to "Reviewed Leads", '?reviewed=true' %></li>
+                    <li><%= link_to "All", closingloop_leads_path %></li>
+                    <li>
+                                                
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin<i class="icon-caret-down"></i></a> 
+                            <div class="dropdown-menu">
+                                <div class="arrow"></div>
+                                <ul>
+                                    <li><a href="clientarea.php?action=details">Report</a></li>
+                                    <li><a href="clientarea.php?action=contacts">Administrators</a></li>
+                                    <li><a href="clientarea.php?action=changepw">Reviewers</a></li>
+                                    <li><a href="clientarea.php?action=changepw">Opportunity Types</a></li>
+                                    <li><a href="clientarea.php?action=changepw">Non-Opportunity Types</a></li>
+                                    <li><a href="clientarea.php?action=changepw">Inquiry Reasons</a></li>
+                                    <li><% link_to "Sign Out", '/sign-out' %></li>
+                                </ul>
+                            </div>
+                    </li>                
+                  <% else %>
+                    <li class="dashboard">
+                      <% if current_user.company.present? %>
+                            <%= link_to "Dashboard", company_path(current_user.company) %>
+                        <% elsif current_user.agency.present? %>
+                            <%= link_to "Dashboard", agency_path(current_user.agency) %>
+                        <% else %>
+                            <%= link_to "Dashboard", brand_path(current_user.agency) %>
+                      <% end %>
+                    </li>
+                    <li><a href="/leads">Leads</a></li>
+                    <li><%= link_to "Web Metrics", web_metrics_path %></li>
+                    <% if current_user.company_id.present? %>
+                        <li><a href="clientarea.php?action=emails">E-mail</a></li>
+                    <% elsif current_user.agency_id.present? %>
+                        <li><%= link_to "Billing", billing_path %></li>
+                        <li><%= link_to "ROI Report", roi_report_path %></li>
+                    <% end %>
+                <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account Settings<i class="icon-caret-down"></i></a> 
+                        <div class="dropdown-menu">
+                            <div class="arrow"></div>
+                            <ul>
+                                <li><%= link_to "Edit Account Details", edit_user_path(current_user) unless !logged_in? %></li>
+                                <li><a href="clientarea.php?action=contacts">Manage Users</a></li>
+                                <li><%= link_to "Sign Out", '/sign-out' %></li>
+                            </ul>
+                        </div>
+                </li>                
+              <% end %>
+            </ul><!--/main-nav-->
+        <% end %>
+        </div><!--navigation container--> 
+    </nav><!--navigation-->
+    
+    <div id="clientbar">
+        <div class="container">                                        
+        </div><!--clientbar container-->
+    </div><!--/clientbar-->
+
+</header><!-- end of topbar -->

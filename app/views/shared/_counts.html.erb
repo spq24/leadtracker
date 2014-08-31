@@ -1,0 +1,20 @@
+<div class="widget widget-half span2">
+    <h5 class="underline">Total Actions <span class="question" title="The total amount of actions that LeadGen has generated for your business."></span></h5>
+    <p class="counter counter-leads"><%= @actions_all_time.count %></p>
+</div>
+<div class="widget widget-half span2">
+    <h5 class="underline">Total Leads <span class="question"  title="The total amount of leads that LeadGen has generated for your business."></span></h5>
+    <p class="counter counter-days"><%= @actual_leads.count %></p>
+</div>
+<div class="widget widget-half span3">
+    <h5 class="underline">Leads Past 60 days<span class="question"  title="The total amount of leads that LeadGen has generated for your business."></span></h5>
+    <p class="counter counter-days"><%= @actual_leads_sixty.count %></p>
+</div>
+<div class="widget widget-half span3">
+    <h5 class="underline">Leads Past 30 days<span class="question"  title="The total amount of leads that LeadGen has generated for your business."></span></h5>
+    <p class="counter counter-days"><%= @actual_leads_thirty.count %></p>
+</div>
+<div class="widget widget-half span2">
+    <h5 class="underline">Leads This Year<span class="question"  title="The total amount of leads that LeadGen has generated for your business."></span></h5>
+    <p class="counter counter-days"><%= @actual_leads_year.count %></p>
+</div>

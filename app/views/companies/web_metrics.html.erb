@@ -1,0 +1,96 @@
+<div id="main">     
+<div class="container">
+<link type="text/css" href="includes/hvacincludes/datepicker/jquery-ui-1.8.14.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="includes/hvacincludes/datepicker/jquery-ui-1.8.14.custom.min.js"></script>
+        <div class="page-heading">
+            <h1 class="pull-left page-title">Your Website Rankings</h1>
+            <div class="pull-right" style="min-width: 300px">
+                <form action="" method="post" id="date_range" class="inline">
+                    <input type="hidden" name="_ajax_call" value="1" />
+                    <input type="hidden" name="_ajax_qtype" value="piwik" />
+                    <label>Start Date:</label>
+                    <input type="text" name="sd" id="startDate" class="input-small" value="30 dago"/>
+                    <label>End Date:</label>
+                    <input type="text" name="ed" id="endDate" class="input-small" value="today"/>
+                    <input type="submit" value="Go" class="btn btn-success btn-small"/>
+                </form>
+            </div>
+        </div>
+		
+        <hr/>
+            <div class="alert alert-danger row-content">
+                    <p>You're not yet verified on Google Maps! Call us now: (267) 507-4705!</p>
+            </div>
+            <div class="alert alert-success row-content">
+                    <p>You are verified in Google Maps!</p>
+            </div>
+
+        <div id="piwik">
+            <p style="text-align: center"><b><img src="/assets/spinner.gif" alt="Loading..."/></b></p>
+        </div>
+        
+        <div class="widget widget-shadow widget-slider">
+            <div class="widget-content">
+				<div class="widget-top">
+					<h5>Average Ranking Over Time</h5>
+				</div>
+				<div id="lachart" class="graph" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div class="widget-bottom row-fluid row-inline">
+                <div class="widget-left-shadow"></div>
+                <div class="widget-right-shadow"></div>
+            </div>
+        </div>
+        
+        <div class="row-content">
+            <h5 class="underline">Some of the Keywords We Target For Your Site</h5>
+            <h3 class="font-light">You have no keywords</h3>
+       	</div>
+        
+        <div class="page-subheading">
+            <h2>Here's how your site's keywords are performing</h2>
+        </div>
+        <div class="row-content">
+            <table class="table table-statistics table-responsive">
+                <thead>
+                    <tr>
+                        <th>Search Engine</th>
+                        {foreach from=$blsearchengines item=se}
+                        <th colspan="2">{$se|ucwords|replace:'_':' '}</th>
+                        {/foreach}
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        {foreach from=$blsearchengines item=se}
+                        <td class="search-engine-boundary">Rank</td>
+                        <td>Last</td>
+                        {/foreach}
+                    </tr>
+                </thead>
+                <tbody>
+                {foreach from=$blrankings key=keyword item=seArray}
+	            	{php}
+	            		$num = $this->get_template_vars('blnumrankings');
+	            		$count = range(0,$num[$this->get_template_vars('keyword')]-1);
+	            		$this->assign('count',$count);
+	            	{/php}
+                	{foreach from=$count item=index}
+            	    	<tr>
+                			{if $index eq 0}<th rowspan="{$blnumrankings.$keyword}">{$keyword}</th>{/if}
+	                        {foreach from=$blsearchengines item=se}
+	                        	<td class="search-engine-boundary"><a href="{$seArray.$se.$index.url}" target="_blank"><span class="{$seArray.$se.$index.class}"><i class="{$seArray.$se.$index.icon}"></i>{$seArray.$se.$index.rank}</span></a></td>
+	                        	<td>{$seArray.$se.$index.last}</td>
+	                        {/foreach}
+        	        	</tr>
+            	   	{/foreach}
+                {/foreach}
+                </tbody>
+            </table>
+            <p>This report was last updated on: {$bltimestamp}</p>
+        </div>
+	    
+        {else}
+	    <div class="row-content"><pre>{$blsummary}</pre></div>
+		{/if}
+		
+		

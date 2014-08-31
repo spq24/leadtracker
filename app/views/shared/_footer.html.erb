@@ -1,0 +1,38 @@
+        <div class="text-center"><a href="#navigation" class="back-top btn btn-red btn-small">Back to top</a></div>
+    </div><!--/main container-->        
+</div><!--/main-->
+<footer id="footer">
+  <div class="container">
+    <% if logged_in? && !current_user.kinertia_employee? %>
+      <div class="row">
+          <div class="span4">
+              <h5>Important Links</h5>
+              <ul>
+                  <li><%= link_to 'Your LeadGen Website', "http://"+current_user.company.website_url, :target => "_blank" if current_user.company.present? %></li>
+                  <li><a href="#">Contact Support</a></li>
+                 
+              </ul>
+          </div>
+          <div class="span4">
+              <h5>LeadGen 2.0</h5>
+              
+              <ul>
+        <% if current_user.company.present? %>
+			  <li>Brought to you by your partners at <br /><strong><%= current_user.company.agency.company_name %></strong> & <strong>BRAND</strong> </li>
+        <% else %>
+        <li>Brought to you by your partners at <br /><strong>BRAND</strong> </li>
+        <% end %> 
+              </ul>
+          </div>
+
+        <div class="span4  pull-right">
+           <h5>Powered by</h5>
+             <%= image_tag("kinertiallc.png") %>
+            <p class="copytight">&copy; Kinertia LLC</p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</footer>
+</div>
+

@@ -1,0 +1,72 @@
+<div id="main">     
+<div class="container">
+<div class="page-heading mbt100">
+    <h1><%= @company.company_name %></h1>
+</div>
+    <%= render 'shared/blue_info_bar' %>
+<div class="row">
+    <%= render 'shared/counts' %>
+        <div class="widget widget-half span2">
+            <h5 class="underline">Leads        
+                <span class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="selected_real_leads_time" > August<i class="icon-caret-down"></i></a>
+                    <div class="dropdown-menu">
+                        <div class="arrow"></div>
+                        <ul id="real_leads_time">
+                                <li><a href="#{$key}">$NAME</a></li>
+                        </ul>
+                    </div>
+                </span> 
+            <span class="question"  title="The total amount of leads that LeadGen has generated for your business."></span></h5>
+            <p class="counter counter-days" id="counter_real_leads_time">30</p>
+        </div>
+</div>
+
+<% @bymonthleads.each do |c| %>
+   <%= c[1][0].created_at.strftime("%b-%Y") %>&nbsp;&nbsp;&nbsp;<%= c[1].count %>
+<% end %>
+<div class="row">
+    <div class="span10">
+        <div class="widget widget-shadow carousel slide contentSlider" id="carousel-example-generic" data-interval="false" data-ride="carousel">            
+            <div class="carousel-inner">
+              <div id="leadsactionchart" class="item active"><%= high_chart("leadsactionchart", @action_leads_chart) %></div>
+              <div id="leadsbreakdownchart" class="item"><%= high_chart("leadsbreakdownchart", @leads_breakdown_chart) %></div>
+            </div>
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <i class="fa fa-chevron-circle-left fa-2"></i>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <i class="fa fa-chevron-circle-right fa-2"></i>
+            </a>  
+            <div class="widget-bottom row-fluid row-inline">
+                <div class="widget-left-shadow"></div>
+                <div class="widget-right-shadow"></div>
+            </div>
+        </div>
+        <%= render 'contractor_status' %>
+    </div><!--/span10-->
+    
+    <div class="span4">        
+        <div class="widget-piechart">
+            <div id="leadsbreakdownpiechart" id="piechart" style="height: 185px; margin-left: 0;">
+                <%= high_chart("leadsbreakdownpiechart", @leads_breakdown_pie) %>
+            </div>
+            <div class="widget-bottom row-fluid row-inline">
+                <div class="widget-left-shadow"></div>
+                <div class="widget-right-shadow"></div>
+            </div>
+        </div>
+        <div class="widget-piechart">
+            <div id="sourcebreakdownpiechart" id="piechart" style="height: 186px; margin-left: 0;">
+                <%= high_chart("sourcebreakdownpiechart", @source_breakdown_pie) %>
+            </div>
+            <div class="widget-bottom row-fluid row-inline">
+                <div class="widget-left-shadow"></div>
+                <div class="widget-right-shadow"></div>
+            </div>
+        </div>        
+    </div><!--/span4-->  
+
+</div><!--/row-->
+
+    <%= render 'contractor_bottom_show' %>

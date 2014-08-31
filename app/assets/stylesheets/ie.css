@@ -1,0 +1,37 @@
+/* /* ============================================================== 
+ * 						STYLES FOR IE8 and lower 						 	 												  
+ * ============================================================== */
+
+	#main {
+		padding: 40px 0;	
+	}
+	#navigation {
+		height: 58px;
+		background: url('../assets/navigation-bg.png') repeat-x!important;
+	}
+	#navigation .container{
+		position: relative;
+	}
+	#logo {
+		position: absolute;
+		top: 0;
+	}
+	.signed-as {
+		left: 178px;	
+	}
+	#navigation .main-nav {
+		width: 790px;
+	}
+	.back-top {
+		display: none;
+	}
+	.btn.btn-large, .btn.btn-wide, .btn {
+		font-size: 14px;
+		padding: 10px;
+	}
+	.btn.btn-wide {
+		min-width: 280px;
+	}
+	.alert {
+		padding: 16px 35px 6px 16px;
+	}

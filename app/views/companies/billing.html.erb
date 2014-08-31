@@ -1,0 +1,148 @@
+<h2>Billing Report:</h2>
+<div>
+    <div class="row">
+        <div class="widget span12 widget-shadow">
+            <div class="widget-content">
+                <form action="clientarea.php?display=billing" method="POST" id="leadsreport_main">
+                    <input type="hidden" name="method" value="report"/>
+                    <div class="row-fluid row-widget">
+                          <div class="span4">
+                              <label>Contractor:</label>
+                              <select class="select"  name="viewtype_d" onchange="changeviewtype(2,this)">
+                                  <option value="all">All</option>
+                                  <option {if $viewtype_d && $viewtype_d == 'specific'}selected="selected"{/if} value="specific">Specific</option>
+                              </select>
+                          </div>
+                          <div id="d_list" class="span4 clientview2 responsive-hidelabel" {if !$viewtype_d || $viewtype_d == 'all'}style="display:none"{/if}>
+                            <label></label>
+                            <select class="select" name="clientid_d">
+                                <option value="0">--select--</option>
+                                {foreach from=$subusers item=cl}
+                                        <option value="{$cl.id}" {if $cl.id == $selectedclient}selected="selected"{/if} >{$cl.companyname}</option>
+                                {/foreach}
+                            </select>
+                          </div>
+                      </div>
+	                    <div class="row-fluid row-widget">
+                          <div>
+                          	<label class="clientviewSet" >Show Me All Contractors With</label>
+                          	<input  type="text" class="clientviewSet span2" name="minLeads" value="{$minLeads}" style="width:5.5%;" />
+                            <label class="clientviewSet" {if $viewtype_d && $viewtype_d != 'all'}style="display:none"{/if} >or more leads in</label>
+                            <label class="clientview2" {if !$viewtype_d || $viewtype_d == 'all'}style="display:none"{/if}>Show Me the report for</label>
+                            <select class="select" name="monthId">
+                               {foreach from=$months key=key item=cl}
+                                       <option value="{$key}" {if $key == $monthId}selected="selected"{/if} >{$cl}</option>
+                               {/foreach}
+                            </select>
+                           </div>
+                    </div>  
+                           <!-- <div class="control-group" {if $viewtype_d && $viewtype_d != 'all'}style="display:none"{/if}>
+                              
+                              
+                            </div> -->
+                       
+                    <div class="form-actions">
+                        <div id="report-callback"></div>
+                        <div id="select-action">
+                            <div class="widget-half"><input type="submit" class="btn btn-green btn-large btn-wide pull-right" value="Show"/></div>
+                            <div class="widget-half"><input class="btn btn-grey btn-large btn-wide pull-left" type="submit" onclick="emailPDF(); return false;" value="Email PDF"/></div>
+                        </div>
+                        <div id="email-popup" style="display: none">
+                            <p>We'll email this to you in a few minutes, where should we send it (separate Emails by commas)?</p>
+                            <textarea name="emails" class="input-block-level"></textarea>
+                            <input type="button" class="btn btn-green btn-large btn-wide pull-right"  value="Send Report" id="send-report"/>
+                            <input type="button" class="btn btn-grey btn-large btn-wide pull-left" value="Cancel" id="cancel-report"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+             
+</div>         
+{else}     
+    <strong>You don't have any subusers!</strong>
+{/if}
+    
+    
+
+
+    
+       
+{if $method=='report'}
+    
+        {if $clientdata.distributor}     
+                <div class="alert alert-info" style="text-align:center">
+                    <strong>Contractors With 2 Leads Or More</strong>
+                    <h4>{$moreThen2Leads}</h4>
+                </div>
+                <h3>Contractors                 <span class="pull-right">{$clientdata.distributor.companyname}</span>
+</h3>
+                <table width="100%" cellspacing="0" cellpadding="3" id="leadtable" class="table table-responsive">
+                    <thead>
+                        <tr><th>Company Name</th><th>Contact Name</th><th>Time on Program</th><!--<th>Package</th>--><th>Price</th><th>Credit</th><th>Total</th><th>Leads</th></tr>
+                    </thead>
+                    {foreach from=$clientdata.contractors item=contractor}
+                        <tr>
+                            <td>{$contractor.companyname}</td>
+                            <td>{$contractor.firstname} {$contractor.lastname}</td>
+                            <td>{$contractor.time} Months</td>
+                            <!--<td>{$contractor.package}</td>-->
+                            <td>${$contractor.price}</td>
+                            <td>${$contractor.hvac_credit}</td>
+                            <td>${$contractor.total}</td>
+                            <td>{$contractor.leads_count}
+                               <span class="{if $contractor.leads_count >= 2 }green-box{else}red-box{/if}"></span>
+                            </td>
+                         {* <!--  <td align="center">{if $contractor.rstatus == 'NOTCHARGED'}x{/if}</td> -->
+                            <!-- <td align="center">{if $contractor.rstatus == 'HALFCHARGED'}x{/if}</td> -->
+                           <!--  <td align="center">{if $contractor.rstatus == 'CHARGED'}x{/if}</td> -->*}
+                        </tr>                        
+                    {foreachelse}     
+                        <tr><td colspan="6" align="center">There is no contractors to display.</td></tr>
+                    {/foreach}
+                 {*<tr>
+                        <td colspan="2" style="text-align:right"><strong>Total:</strong></td>
+                        <td align="center"><strong>{$clientdata.distributor.count_notcharged}</strong></td>
+                        <td align="center"><strong>{$clientdata.distributor.count_half}</strong></td>
+                        <td align="center"><strong>{$clientdata.distributor.count_charged}</strong></td>
+                    </tr>   *}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><b>${$clientdata.distributor.price}</b></td>
+                            <td><b>${$clientdata.distributor.hvac_credit}</b></td>
+                            <td><b>${$clientdata.distributor.total}</b></td>
+                            <td><b>{$clientdata.distributor.leads_count}</b></td>
+                        </tr>
+                </table>
+                    
+                    
+                {foreach from=$clientdata.contractors item=contractor}
+                <div class="ontractors-list contractor-row row">
+                	<div class="span6 contractor-period">
+                    <h4>Billing Period: {$datefrom} - {$dateto}</h4>
+                    LeadGen <b>${$contractor.price|string_format:"%.2f"} USD</b>
+                  </div>
+                  <div class="span6">
+                  	<ul class="contractor-details widget-half">
+                      <li><b>Website:</b> <a href="http://{$contractor.customfield1}" target="_blank">{$contractor.customfield1}</a> </li>
+                      <li><b>Phone Tracking Number on Site:</b> {$contractor.customfield3}</li>
+                      <li><b>Forwarding to:</b> {$contractor.phonenumber}</li>
+                    </ul>
+                    
+                    <ul class="contractor-address widget-half">
+                      <li>{$contractor.address1}, {$contractor.address2}</li>
+                      <li>{$contractor.city}, {$contractor.state}, {$contractor.postcode}</li>
+                      <li>{$contractor.countryname}</li>
+                      <li>{$contractor.email}</li>
+                    </ul>
+                    
+                  </div>
+               </div>     
+               {/foreach}
+        {else}
+            <div class="no-data">Nothing to display.</div>
+        {/if}    
+{/if}

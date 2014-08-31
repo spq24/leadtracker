@@ -1,0 +1,74 @@
+<div id="main">     
+<div class="container">
+<div class="page-heading"><h1>Lead Report <br /> <%= @company.company_name %></h1></div>    
+    <div class="row">
+        <%= render 'shared/blue_info_bar' %>
+        <%= render 'shared/counts' %>
+    </div>    
+        <div class="row">
+        	<div class="span10">
+                <div class="widget widget-shadow">
+                    <div class="widget-content">                   
+                    	 <%= form_for @filterrific do |f| %>
+                         	<div class="row-fluid">
+                                <div class="widget-half span6">
+                                    <label>Start Date:</label><br />
+                                    <%= f.date_field(:with_created_at_gte) %>
+                                </div>
+                                <div class="widget-half  span6">
+                                    <label>End Date:</label><br />
+                                    <%= f.date_field(:with_created_at_lt) %>
+                                </div> 
+                            </div>
+                            <div class="form-actions">
+                                <%= link_to "Reset filters", reset_filterrific_leads_path, class: 'btn btn-small pull-right' %>
+                                <div id="report-callback"></div>
+                            </div>
+                        <% end %>                      
+                    </div>
+                    <div class="widget-bottom row-fluid row-inline">
+                    	<div class="widget-left-shadow"></div>
+                    	<div class="widget-right-shadow"></div>
+                    </div>
+                </div>
+            </div><!--/widget-->
+        </div><!--/row-->
+        <hr />
+        
+        <div class="page-subheading clearfix">            
+            <div class="pull-right">
+            	<label class="font-bold font-upper">Leads</label>
+                <select name="limits" class="select filters">
+                   <option value="20">20 Leads</option> 
+                   <option value="40">40 Leads</option> 
+                   <option value="100">100 Leads</option> 
+                   <option value="ALL">All</option> 
+                </select>
+            </div>
+        </div>
+        <div class="row filter">
+        	<div class="span2 filter-col">
+            	<div class="widget">
+                    <h5 class="underline">Inquiry Types<span class="question"  title="Reason for the phone call or form contact from website."></a></span></h5>
+                    <ul class="widget-half"  id="leads" >
+                        <%= form_for @filterrific do |f| %>
+                            <% @filterrific.select_options[:with_reasoninquiry_id].each do |c| %>
+                                <%= h c[1] %>
+                                <%= check_box_tag("filterrific[with_reasoninquiry_id][]",c, true) %>
+                            <% end %>
+                            <% @filterrific.select_options[:with_nonleadaction_id].each do |c| %>
+                                <%= h c[1] %>
+                                <%= check_box_tag("filterrific[with_nonleadaction_id][]",c) %>
+
+                            <% end %>
+                        <% end %>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="span10 filter-table" id="filterrific_results">
+                <%= render :partial => 'leads/list',  
+                           :locals => { :leads => @company_leads }
+                %>
+            </div>
+        </div>

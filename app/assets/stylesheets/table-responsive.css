@@ -1,0 +1,55 @@
+@media (max-width: 767px) {
+	.table-responsive table, 
+	.table-responsive thead, 
+	.table-responsive tbody, 
+	.table-responsive th, 
+	.table-responsive td, 
+	.table-responsive tr { 
+		display: block; 
+		min-height: 10px;
+	}
+	.table-responsive thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	.table-responsive thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	.table-responsive tbody tr,
+	.table-responsive.table-expand tbody tr.row-expand {
+		border-bottom: 2px solid rgba(0,0,0, 0.2);	
+	}
+	.table-responsive.table-expand tr {
+		border-bottom: none;
+	}
+	.table.table-responsive tbody td { 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+	.table.table-responsive tbody tr td:first-child {
+		border-bottom: 0;
+	}
+	.table-responsive td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: 800;
+	}
+	.table-responsive tbody tr td:first-child,
+	.table-responsive tbody tr th:first-child {
+		border-top: none!important;
+	}
+	.table-responsive td:before { content: attr(data-title); } 
+	.table.table-expand tbody tr:not(.row-expand) td {
+		border-top: 1px dotted rgba(0, 0, 0, 0.2);
+	}
+}
