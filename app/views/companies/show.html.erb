@@ -22,9 +22,6 @@
         </div>
 </div>
 
-<% @bymonthleads.each do |c| %>
-   <%= c[1][0].created_at.strftime("%b-%Y") %>&nbsp;&nbsp;&nbsp;<%= c[1].count %>
-<% end %>
 <div class="row">
     <div class="span10">
         <div class="widget widget-shadow carousel slide contentSlider" id="carousel-example-generic" data-interval="false" data-ride="carousel">            

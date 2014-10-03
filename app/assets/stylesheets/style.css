@@ -1400,9 +1400,7 @@
 	
 	/* ======= > DROPDOWN MENU < ======= */
 	
-	.dropdown-menu {
-		position: relative;		
-	}
+
 	.dropdown-menu .arrow,
 	.dropdown-menu .arrow:after {
 		position: absolute;
@@ -2823,7 +2821,7 @@
 		max-width: 92%;
 	}
 	#navigation {
-		min-height: 58px;
+		min-height: 80px;
 	}
 	.btn.btn-wide {
 		min-width: 280px;

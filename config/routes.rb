@@ -29,5 +29,6 @@ Leadgenthree::Application.routes.draw do
    get '/sign-in', 		 to: "sessions#new", as: 'sign_in'
    get '/sign-out',    to: "sessions#destroy"
    get '/ctm',          to: "leads#create"
+   get '/company/:id/users', to: "companies#users", as: 'company_users'
 
   end

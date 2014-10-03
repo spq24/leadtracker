@@ -50,22 +50,25 @@ class CompaniesController < ApplicationController
       @actions_this_week = @company.leads.where("created_at >= ?", Time.zone.now.beginning_of_week)
       @leads_breakdown = @company.leads.group(:reasoninquiry_id).distinct.count.to_a.drop(1)
       @actions_breakdown = @company.leads.group(:nonleadaction_id).distinct.count.to_a.drop(1)
-      @bymonthactions = @company.leads.group_by { |lead| lead.created_at.beginning_of_month.strftime("%B")}
+      @bymonthactionscount = @company.leads.where(reviewed: true).group('date(created_at)').count(:id).values
+      @bymonthleadscount = @company.leads.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).values
+      @leadsmonths = @company.leads.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).map {|k, v| k.to_date.strftime("%B %Y")}
       @actual_leads = @company.leads.actual_leads
       @actual_leads_year = @actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day)
       @actual_leads_sixty = @actual_leads.where(created_at: 60.days.ago..Time.now.beginning_of_day)
       @actual_leads_thirty = @actual_leads.where(created_at: 30.days.ago..Time.now.beginning_of_day)
 
 
-      @bymonthleads = @company.leads.group_by { |lead| lead.created_at.to_date}
+      bymonthleads = @company.leads.group_by { |lead| lead.created_at.to_date}
 
+      
 
       @action_leads_chart = LazyHighCharts::HighChart.new('graph') do |f|
         f.title({ :text => "LEADS & ACTIONS OVER TIME" })
-        f.xAxis(:categories => ["May", "June", "July", "August"])
+        f.xAxis(:categories => @leadsmonths)
         f.plot_options(:pointStart => 6.months.ago)
-        f.series(:name => "Actions", :yAxis => 0, :data => [20,30,100,50])
-        f.series(:name => "Leads", :yAxis => 0, :data => [10,20,30,40])
+        f.series(:name => "Actions", :yAxis => 0, :data => @bymonthactionscount)
+        f.series(:name => "Leads", :yAxis => 0, :data => @bymonthleadscount )
         f.dimensions = '600x190'
         f.yAxis [
           {:title => {:text => "Leads & Actions"} },
@@ -77,7 +80,7 @@ class CompaniesController < ApplicationController
 
       @leads_breakdown_chart = LazyHighCharts::HighChart.new('graph') do |f|
         f.title({ :text => "LEADS BREAKDOWN CHART" })
-        f.xAxis(:categories => ["May", "June", "July", "August"])
+        f.xAxis(:categories => @leadsmonths)
         f.plot_options(:pointStart => 6.months.ago)
         f.series(:name => "Service", :yAxis => 0, :data => [20,30,100,50])
         f.series(:name => "New System Quote", :yAxis => 0, :data => [10,20,30,40])
@@ -152,6 +155,12 @@ class CompaniesController < ApplicationController
 
   def index
     @companys = Company.all
+  end
+
+  def users
+    @company = Company.find(params[:id])
+    @users = @company.users
+    @user = User.new
   end
 
   def destroy

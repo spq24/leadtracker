@@ -19,6 +19,7 @@ gem 'filterrific'
 gem 'lazy_high_charts'
 gem 'font-awesome-rails'
 gem 'prawn'
+gem 'httparty'
 
 group :doc do
   gem 'sdoc', require: false
