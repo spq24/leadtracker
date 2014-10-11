@@ -40,7 +40,6 @@
                 <div class="widget-right-shadow"></div>
             </div>
         </div>
-        <%= render 'contractor_status' %>
     </div><!--/span10-->
     
     <div class="span4">        
@@ -65,5 +64,9 @@
     </div><!--/span4-->  
 
 </div><!--/row-->
-
-    <%= render 'contractor_bottom_show' %>
+<hr />
+<div class="row">
+        <%= @lead_source_types %>
+        <%= @lead_source_types.keys %>
+        <div id="leadssourcechart" class="item active"><%= high_chart("leadssourcechart", @leads_source_chart) %></div>
+</div>

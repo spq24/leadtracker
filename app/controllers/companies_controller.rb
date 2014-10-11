@@ -57,7 +57,7 @@ class CompaniesController < ApplicationController
       @actual_leads_year = @actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day)
       @actual_leads_sixty = @actual_leads.where(created_at: 60.days.ago..Time.now.beginning_of_day)
       @actual_leads_thirty = @actual_leads.where(created_at: 30.days.ago..Time.now.beginning_of_day)
-
+      @lead_source_types = @company.leads.actual_leads.group('source').count(:id)
 
       bymonthleads = @company.leads.group_by { |lead| lead.created_at.to_date}
 
@@ -76,6 +76,22 @@ class CompaniesController < ApplicationController
 
         f.legend(:enabled => false)
         f.chart({:defaultSeriesType => "line"})
+      end
+
+
+      @leads_source_chart  = LazyHighCharts::HighChart.new('graph') do |f|
+        f.title({ :text => "LEADS BY SOURCE" })
+        f.xAxis(:categories => @lead_source_types.to_a.index)
+        @lead_source_types.each do |l|
+          f.series(:name => l.index, :data => l)
+        end
+        f.dimensions = '600x190'
+        f.yAxis [
+          {:title => {:text => "Leads"} },
+        ]
+
+        f.legend(:align => 'center', :verticalAlign => 'bottom', :x => -20, :layout => 'horizontal')
+        f.chart({:defaultSeriesType => "bar"})
       end
 
       @leads_breakdown_chart = LazyHighCharts::HighChart.new('graph') do |f|
