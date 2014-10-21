@@ -1,0 +1,35 @@
+<table width="100%" align="center" class="table table-responsive">
+        <tr>
+            <th>Status</th>
+            <th>ID</th>
+            <th>Date & Time</th>
+            <th>Name/Caller</th>
+            <th>Type</th>
+            <th>Contractor</th>
+            <th>Distributor</th>
+        </tr>
+    <% @actions.each do |action| %>
+        <tr>
+            <td>
+            <% if action.reviewed? %>
+                <span class="label label-success">Reviewed</span>
+            <% else %>
+                <span class="label label-important">Unreviewed</span>
+            <% end %>
+            </td>
+            <td><%= link_to action.id, edit_closingloop_action_path(action) %></td>
+            <td><%= action.created_at.to_formatted_s(:long) %></td>
+            <td><%= action.opportunity_name %></td>
+            <td><%= action.message_type %></td>
+            <td><%= action.company.company_name %></td>
+            <td><%= action.company.agency.company_name %></td>
+        </tr>
+    <% end %>    
+        <tr>
+            <td colspan="7" style="text-align: center;">
+                <div class="pagination pagination-table">
+                    <%= paginate @actions %>
+                </div>
+            </td>
+        </tr>
+</table>

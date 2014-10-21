@@ -11,7 +11,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141011044023) do
+ActiveRecord::Schema.define(version: 20141021060521) do
+
+  create_table "actions", force: true do |t|
+    t.string   "adf_email"
+    t.string   "customer_code"
+    t.string   "tracking_number"
+    t.string   "target_number"
+    t.string   "customer_name"
+    t.string   "customer_address"
+    t.string   "customer_phone"
+    t.string   "call_recording_link"
+    t.string   "caller_phone_number"
+    t.string   "duration"
+    t.string   "call_status"
+    t.string   "opportunity_name"
+    t.string   "caller_status"
+    t.string   "lead_email"
+    t.string   "lead_interest"
+    t.string   "lead_phone_number"
+    t.string   "lead_comments"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "customer_id"
+    t.integer  "company_id"
+    t.string   "message_type"
+    t.boolean  "call_answered"
+    t.boolean  "is_customer"
+    t.integer  "actiontype_id"
+    t.integer  "non_customer_type"
+    t.integer  "leadaction_id"
+    t.string   "why"
+    t.integer  "reviewer_id"
+    t.boolean  "notified"
+    t.datetime "notified_date"
+    t.boolean  "reviewed"
+    t.boolean  "spam"
+    t.integer  "nonleadaction_id"
+    t.string   "status"
+    t.string   "contractor_invoice"
+    t.string   "equipment"
+    t.text     "notes"
+    t.string   "source"
+  end
 
   create_table "actiontypes", force: true do |t|
     t.string   "action_type"
@@ -109,46 +151,11 @@ ActiveRecord::Schema.define(version: 20141011044023) do
     t.integer  "main_contact_id"
   end
 
-  create_table "leads", force: true do |t|
-    t.string   "adf_email"
-    t.string   "customer_code"
-    t.string   "tracking_number"
-    t.string   "target_number"
-    t.string   "customer_name"
-    t.string   "customer_address"
-    t.string   "customer_phone"
-    t.string   "call_recording_link"
-    t.string   "caller_phone_number"
-    t.string   "duration"
-    t.string   "call_status"
-    t.string   "opportunity_name"
-    t.string   "caller_status"
-    t.string   "lead_email"
-    t.string   "lead_interest"
-    t.string   "lead_phone_number"
-    t.string   "lead_comments"
+  create_table "leadactions", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "customer_id"
-    t.integer  "company_id"
-    t.string   "message_type"
-    t.boolean  "call_answered"
-    t.boolean  "is_customer"
-    t.integer  "actiontype_id"
-    t.integer  "non_customer_type"
-    t.integer  "reasoninquiry_id"
-    t.string   "why"
-    t.integer  "reviewer_id"
-    t.boolean  "notified"
-    t.datetime "notified_date"
-    t.boolean  "reviewed"
-    t.boolean  "spam"
-    t.integer  "nonleadaction_id"
-    t.string   "status"
-    t.string   "contractor_invoice"
-    t.string   "equipment"
-    t.text     "notes"
-    t.string   "source"
+    t.string   "reason"
+    t.integer  "user_id"
   end
 
   create_table "levels", force: true do |t|
@@ -158,16 +165,10 @@ ActiveRecord::Schema.define(version: 20141011044023) do
   end
 
   create_table "nonleadactions", force: true do |t|
-    t.string   "non_lead_action_type"
+    t.string   "reason"
     t.string   "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "reasoninquiries", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "reason"
   end
 
   create_table "users", force: true do |t|

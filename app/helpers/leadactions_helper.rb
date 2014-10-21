@@ -1,0 +1,2 @@
+module LeadactionsHelper
+end

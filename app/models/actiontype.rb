@@ -1,5 +1,5 @@
 class Actiontype < ActiveRecord::Base
-	belongs_to :lead
+	belongs_to :action
 
 
 	def self.options_for_select

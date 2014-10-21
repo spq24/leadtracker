@@ -1,0 +1,20 @@
+<div id="main">     
+<div class="container">
+    <div class="page-heading">
+    	<h1>The Types Of Phone Calls & Form Fill Outs that ARE NOT Considered Leads</h1>
+    </div>
+
+            <%= form_for @nonleadaction do |f| %>
+            <div class="row-fluid row-content">
+                    <%= f.hidden_field :user_id, :value => current_user.id %>
+                    <div class="control-group span4">
+                        <label>Reason</label>
+                        <%= f.text_field :reason, placeholder: "Telemarketer" %>
+                    </div>    
+            </div>             
+            <div class="form-actions">
+                    <%= link_to "Cancel", nonleadactions_path, class: "pull-right", style: "margin-left: 10px; margin-top: 10px;" %>
+                    <input class="btn btn-green btn-wide btn-large pull-right" type="submit" name="save" value="Create New Non-Lead Action Type" />
+            </div>
+        
+        <% end %>

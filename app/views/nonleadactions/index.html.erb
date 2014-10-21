@@ -1,0 +1,21 @@
+<div id="main">     
+<div class="container">
+    <table cellpadding="0" cellspacing="0" class="table table-expand table-responsive" id="leads_table">
+        <thead>
+        <tr>
+            <th>Reason</th>
+            <th>Created On</th>
+            <th>Created By</th>
+         </tr>
+            <% @nonleadactions.each do |l| %>
+                <tr>
+                    <td><%= l.reason %></td>
+                    <td><%= l.created_at.strftime("%m/%d/%Y") %></td>
+                    <td><%= User.find_by(id: l.user_id).first_name %> <%= User.find_by(id: l.user_id).last_name %></td>
+                    <td><%= link_to "edit", edit_nonleadaction_path(l) %> | <em><%= link_to "delete", l, method: :delete, style: "color:red;" %></em></td>
+                </tr>
+            <% end %>
+        </thead> 
+    </table>
+
+    <%= link_to "Create New Non-Lead Type", new_nonleadaction_path, class: "btn btn-green btn-wide btn-large pull-right" %>

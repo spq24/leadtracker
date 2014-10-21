@@ -1,4 +1,4 @@
-class Nonleadaction < ActiveRecord::Base
+class Leadaction < ActiveRecord::Base
 	belongs_to :action
 
 

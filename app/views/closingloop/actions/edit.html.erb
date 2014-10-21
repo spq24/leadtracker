@@ -1,0 +1,182 @@
+<% if @action.message_type == 'call' %>
+    <%= form_for [:closingloop, @action] do |f| %>
+            <%= f.hidden_field :reviewer_id, :value => @user.id %>
+            <%= f.hidden_field :reviewed, :value => true %>
+            <table width="70%" align="center" class="table table-responsive">
+                <tr>
+                    <th>Tracking Number</th>
+                    <td><%= @action.user.tracking_phone_number %></td>
+                </tr>
+                <tr>
+                    <th>Target Number</th>
+                    <td><%= @action.user.phonenumber %></td>
+                </tr>
+                <tr>
+                    <th>Opportunity Name</th>
+                    <td><%= @action.opportunity_name %></td>
+                </tr>
+                <tr>
+                    <th>Opportunity Address</th>
+                    <td><%= @action.customer_address %></td>
+                </tr>
+                <tr>
+                    <th>Opportunity Phone</th>
+                    <td><%= @action.caller_phone_number %></td>
+                </tr>
+                <tr>
+                    <th>Call Recording</th>
+                    <td><%= audio_tag(@action.call_recording_link, controls: true) %></td>
+                </tr>
+                <tr>
+                    <th>Duration</th>
+                    <td><%= @action.duration %></td>
+                </tr>
+                <tr>
+                    <th>Call Status</th>
+                    <td><%= @action.call_status %></td>
+                </tr>
+                <tr>
+                    <th>Date & Time</th>
+                    <td><%= @action.created_at.to_formatted_s(:long) %></td>
+                </tr>
+                <% if @action.reviewed? %>
+                    <tr id="row_reviewed_by">
+                        <th>Reviewed By</th>
+                        <td><%= @action.user.main_contact_first_name %> <%= @action.user.main_contact_last_name %></td>
+                    </tr>
+                <% end %>
+                <tr><td colspan="2">&nbsp;</td></tr>
+                        <tr id="q_call_answered">
+                            <th>Call Answered?</th>
+                            <td>
+                                <div class="radio-toolbar">
+                                    <%= f.radio_button :call_answered, true, class: 'call_answered_true' %>
+                                    <%= f.label :call_answered, "Yes" %>
+                                    <%= f.radio_button :call_answered, false, class: 'call_answered_false' %>
+                                    <%= f.label :call_answered, "No" %>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="why_not_answered" style="display:none;">
+                            <th>Why wasn't it answered?</th>
+                            <td>
+                                <%= f.select :why, options_for_select([["No Answer", "N"], ["Abandoned", "A"], ["After Business Hours", "H"]], @action.why), { include_blank: true } %>
+                            </td>
+                        </tr>
+                        <tr id="q_opportunity" style="display:none;">
+                            <th>Was it a opportunity?</th>
+                            <td>
+                                <div class="radio-toolbar">
+                                    <%= f.radio_button :is_customer, true, class: 'opportunity_true' %>
+                                    <%= f.label :is_customer, "Yes" %>
+                                    <%= f.radio_button :is_customer, false, class: 'opportunity_false' %>
+                                    <%= f.label :is_customer, "No" %>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr id="opportunity_type" style="display:none;">
+                            <th>Opportunity Type</th>
+                            <td>
+                                <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', @action.actiontype_id), { include_blank: true } %>
+                            </td>
+                        </tr>
+                        <tr id="non_opportunity_type" style="display:none;">
+                            <th>Non Opportunity Type</th>
+                            <td>
+                                <%= f.select :nonleadaction_id, options_from_collection_for_select(@nonleadactions, 'id', 'non_lead_action_type', @action.nonleadaction_id), { include_blank: true } %>
+                            </td>
+                        </tr>
+                        <tr id="reason_for_call" style="display:none;">
+                            <th>Reason for Call</th>
+                            <td><%= f.select :leadaction_id, options_from_collection_for_select(@leadactions, 'id', 'reason', @action.leadaction_id), { include_blank: true }  %></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td><input type="submit" value="Save" id="save" class="btn btn-success" /></td>
+                        </tr>
+                      </table>
+    <% end %>
+<% end %>
+
+
+<% if @action.message_type == 'form' %>      
+    <%= form_for [:closingloop, @action] do |f| %>
+            <%= f.hidden_field :reviewer_id, :value => @user.id %>
+            <%= f.hidden_field :reviewed, :value => true %>
+            <table width="70%" align="center" class="table table-responsive">
+                <tr>
+                    <th>Opportunity Name</th>
+                    <td><%= @action.opportunity_name %></td>
+                </tr>
+                <tr>
+                    <th>Email Address</th>
+                    <td><%= @action.lead_email %></td>
+                </tr>
+                <tr>
+                    <th>Interest</th>
+                    <td><%= @action.lead_interest %></td>
+                </tr>
+                <tr>
+                    <th>Phone Number</th>
+                    <td><%= @action.lead_phone_number %></td>
+                </tr>
+                <tr>
+                    <th>Comments</th>
+                    <td><%= @action.lead_comments %></td>
+                </tr>
+                <tr>
+                    <th>Date & Time</th>
+                    <td><%= @action.created_at.to_formatted_s(:long) %></td>
+                </tr>
+                <% if @action.reviewed? %>
+                    <tr id="row_reviewed_by">
+                        <th>Reviewed By</th>
+                        <td><%= @action.user.main_contact_first_name %> <%= @action.user.main_contact_last_name %></td>
+                    </tr>
+                <% end %>
+                <tr><td colspan="2">&nbsp;</td></tr>
+                <tr id="q_opportunity_mail">
+                    <th>Was it a opportunity?</th>
+                    <td>
+                        <div class="radio-toolbar">
+                            <%= f.radio_button :is_customer, true, class: 'opportunity_true' %>
+                            <%= f.label :is_customer, "Yes" %>
+                            <%= f.radio_button :is_customer, false, class: 'opportunity_false' %>
+                            <%= f.label :is_customer, "No" %>
+                        </div>
+                    </td>
+                </tr>
+                <tr id="opportunity_type" style="display:none;">
+                    <th>Opportunity Type</th>
+                    <td>
+                        <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', @action.actiontype_id), { include_blank: true } %>
+                    </td>
+                </tr>
+                <tr id="non_opportunity_type" style="display:none;">
+                    <th>Non Opportunity Type</th>
+                    <td>
+                        <%= f.select :nonleadaction_id, options_from_collection_for_select(@nonleadactions, 'id', 'non_lead_action_type', @action.nonleadaction_id), { include_blank: true } %>
+                    </td>
+                </tr>
+                <tr id="inquiry_type_mail" style="display:none;">
+                    <th>Inquiry Type</th>
+                    <td><%= f.select :leadaction_id, options_from_collection_for_select(@inquiryreasons, 'id', 'reason', @action.leadaction_id), { include_blank: true }  %></td>
+                </tr>
+                <tr id="q_spam_mail" style="display:none;">
+                    <th>Was it SPAM?</th>
+                    <td>
+                        <div class="radio-toolbar">
+                            <%= f.radio_button :spam, true %>
+                            <%= f.label :spam, "Yes" %>
+                            <%= f.radio_button :spam, false %>
+                            <%= f.label :spam, "No" %>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" value="Save" id="save" class="btn btn-success" /></td>
+                </tr>
+              </table>
+    <% end %>
+<% end %>

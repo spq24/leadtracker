@@ -1,12 +1,7 @@
 class CompaniesController < ApplicationController
 
-  def web_metrics
-  end
 
   def billing
-  end
-
-  def roi_report
   end
 
   def new
@@ -44,22 +39,22 @@ class CompaniesController < ApplicationController
   def show
       @user = current_user
       @company = @user.company
-      @actions_all_time = @company.leads.where(reviewed: true)
-      @actions_this_year = @company.leads.where("created_at >= ?", Time.zone.now.beginning_of_year)
-      @actions_this_month = @company.leads.where("created_at >= ?", Time.zone.now.beginning_of_month)
-      @actions_this_week = @company.leads.where("created_at >= ?", Time.zone.now.beginning_of_week)
-      @leads_breakdown = @company.leads.group(:reasoninquiry_id).distinct.count.to_a.drop(1)
-      @actions_breakdown = @company.leads.group(:nonleadaction_id).distinct.count.to_a.drop(1)
-      @bymonthactionscount = @company.leads.where(reviewed: true).group('date(created_at)').count(:id).values
-      @bymonthleadscount = @company.leads.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).values
-      @leadsmonths = @company.leads.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).map {|k, v| k.to_date.strftime("%B %Y")}
-      @actual_leads = @company.leads.actual_leads
+      @actions_all_time = @company.actions.where(reviewed: true)
+      @actions_this_year = @company.actions.where("created_at >= ?", Time.zone.now.beginning_of_year)
+      @actions_this_month = @company.actions.where("created_at >= ?", Time.zone.now.beginning_of_month)
+      @actions_this_week = @company.actions.where("created_at >= ?", Time.zone.now.beginning_of_week)
+      @leads_breakdown = @company.actions.group(:leadaction_id).distinct.count.to_a.drop(1)
+      @actions_breakdown = @company.actions.group(:nonleadaction_id).distinct.count.to_a.drop(1)
+      @bymonthactionscount = @company.actions.where(reviewed: true).group('date(created_at)').count(:id).values
+      @bymonthleadscount = @company.actions.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).values
+      @leadsmonths = @company.actions.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).map {|k, v| k.to_date.strftime("%B %Y")}
+      @actual_leads = @company.actions.actual_leads
       @actual_leads_year = @actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day)
       @actual_leads_sixty = @actual_leads.where(created_at: 60.days.ago..Time.now.beginning_of_day)
       @actual_leads_thirty = @actual_leads.where(created_at: 30.days.ago..Time.now.beginning_of_day)
-      @lead_source_types = @company.leads.actual_leads.group('source').count(:id)
+      @lead_source_types = @company.actions.actual_leads.group('source').count(:id)
 
-      bymonthleads = @company.leads.group_by { |lead| lead.created_at.to_date}
+      bymonthleads = @company.actions.group_by { |action| action.created_at.to_date}
 
       
 

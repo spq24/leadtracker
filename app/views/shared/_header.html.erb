@@ -3,9 +3,13 @@
         <div class="container">
             <% if logged_in? %>
                     <% if params[:controller] == 'closingloop/leads'  %>
-                    <a id="logo" href="/closingloop/leads?reviewed=false"><%= image_tag 'logo.png' %></a>
+                        <%= link_to image_tag('logo.png'), "/closingloop/leads?reviewed=false", id: "logo" %>
+                    <% elsif current_user.company.present? %>
+                        <%= link_to image_tag('logo.png'), current_user.company, id: "logo" %>
+                    <% elsif current_user.agency.present? %>
+                        <%= link_to image_tag('logo.png'), current_user.agency, id: "logo" %>
                     <% else %>
-                    <a id="logo" href="/"><%= image_tag 'logo.png' %></a>
+                        <%= link_to image_tag('logo.png'), root_path, id: "logo" %>
                     <% end %>
                 <ul class="main-nav nav">
                   <% if params[:controller] == 'closingloop/leads'  %>
@@ -38,13 +42,13 @@
                             <%= link_to "Dashboard", brand_path(current_user.agency) %>
                       <% end %>
                     </li>
-                    <li><a href="/leads">Leads</a></li>
-                    <li><%= link_to "Web Metrics", web_metrics_path %></li>
-                    <% if current_user.company_id.present? %>
-                        <li><a href="clientarea.php?action=emails">E-mail</a></li>
-                    <% elsif current_user.agency_id.present? %>
+                    <% if current_user.company.present? %>
+                        <li><%= link_to "Actions", actions_path %></li>
+                    <% elsif current_user.agency.present? %>
+                        <li><%= link_to "Companies/Customers", agencies_path %>
+                    <% end %>
+                    <% if current_user.agency_id.present? %>
                         <li><%= link_to "Billing", billing_path %></li>
-                        <li><%= link_to "ROI Report", roi_report_path %></li>
                     <% end %>
                 <li>
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account Settings<i class="icon-caret-down"></i></a> 
@@ -52,7 +56,9 @@
                             <div class="arrow"></div>
                             <ul>
                                 <li><%= link_to "Edit Account Details", edit_user_path(current_user) unless !logged_in? %></li>
-                                <li><%= link_to "Manage Users", company_users_path(current_user.company) unless !logged_in? %></li>
+                                <li><%= link_to "Manage Users", company_users_path unless !logged_in? %></li>
+                                <li><%= link_to "Manage Lead Action Types", leadactions_path unless !logged_in? || current_user.agency.present? %></li>
+                                <li><%= link_to "Manage Non-Lead Action Types", nonleadactions_path unless !logged_in? || current_user.agency.present? %></li>
                                 <li><%= link_to "Sign Out", '/sign-out' %></li>
                             </ul>
                         </div>

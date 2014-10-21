@@ -1,0 +1,67 @@
+<hr/>
+<div class="row">
+    <div class="page-subheading">
+        <h2 class="pull-left">Contractors</h2>
+    </div>
+    <div class="span2">
+        <div class="widget widget-half">
+            <h5 class="underline">Participants<span class="question"  title="Number of active contractors on LeadGen"></span></h5>
+            <p class="counter">30</p>
+        </div>
+    </div>
+    <div class="span2">
+        <div class="widget widget-half">
+            <h5 class="underline">AVG. Length<span class="question"  title="Average number of months contractors have been on the Program"></span></h5>
+            <p class="counter">9 Months</p> 
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12" id="contractors">
+     <table cellpadding="0" cellspacing="0" class="table paginated">
+            <thead>
+             <tr>
+                <th style="width: 20%">Customer Name</th>
+                <th style="width: 25%">Website</th>
+                <th style="width: 19%">Actions All Time</th>
+                <th style="width: 16%">Leads All Time</th> 
+                <th style="width: 20%">Google Maps Status</th> 
+             </tr>
+            </thead>
+            <tbody>
+                <% if @user.customers.any? %>
+                    <tr>
+                        <% @user.customers.each do |c| %>
+                            <td><%= c.company_name %></td>
+                            <td>
+                                <% if c.website_url.length > 20 %>
+                                <%= link_to c.website_url, "http://"+c.website_url, :target => "_blank" %>
+                                <% else %>
+                                <%= link_to c.website_url, "http://"+c.website_url, :target => "_blank" %>
+                                <% end %>
+                            </td>
+                            <td>
+                                <%= c.leads.count %>
+                            </td>
+                            <td>
+                                <%= c.leads.actual_leads.count %>
+                            </td>
+                            <% if c.google_maps_status == "Verified Complete" || "Verified not through leadgen (links to leadgen site)" %> 
+                                <td class="v">Verified Complete</td>
+                            <% else %>
+                                <td class="nv">
+                                    <p>Not Verified</p>                                
+                                </td>
+                           <% end %>
+                          </tr>
+                    <% end %>
+                <% else %>
+                    <tr>
+                        <td  colspan="3">There are currently no contractors</td>
+                    </tr>
+                 <% end %>
+            </tbody>
+       </table>
+    </div>
+</div><!--/row-->   
