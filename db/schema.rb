@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141021060521) do
+ActiveRecord::Schema.define(version: 20141022042240) do
 
   create_table "actions", force: true do |t|
     t.string   "adf_email"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20141021060521) do
     t.string   "equipment"
     t.text     "notes"
     t.string   "source"
+    t.integer  "agency_id"
   end
 
   create_table "actiontypes", force: true do |t|

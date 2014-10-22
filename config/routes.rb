@@ -8,7 +8,9 @@ Leadgenthree::Application.routes.draw do
    root 'static_pages#front'
 
    resources :companies
-   resources :agencies
+   resources :agencies do
+      get :reset_filterrific, on: :collection
+   end
    resources :brands
    resources :users
    resources :sessions, only: [:create, :destroy]
@@ -30,5 +32,7 @@ Leadgenthree::Application.routes.draw do
    get '/sign-out',    to: "sessions#destroy"
    get '/ctm',          to: "actions#create"
    get '/company/:id/users', to: "companies#users", as: 'company_users'
+   get '/agency/:id/users', to: "agencies#users", as: 'agency_users'
+   get '/agency/:id/companies', to: "agencies#index", as: 'agency_companies'
 
   end

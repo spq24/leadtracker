@@ -1,0 +1,82 @@
+<div id="main">     
+<div class="container">
+    <div class="page-heading">
+        <h1>All Users Associated With: <br /> <%= @agency.company_name %></h1>
+        <a href="#add_user" class="btn btn-green btn-wide btn-large pull-right">Add a User</a>
+    </div>
+
+    <% @users.each do |u| %>
+
+    <h5 class="underline"><%= u.first_name %> <%= u.last_name %>'s Information</h5>
+
+            <%= form_for u do |f| %>
+            <div class="row-fluid row-content">
+                <div class="span6">
+                    <div class="control-group span6">
+                        <label>First Name</label>
+                        <%= f.text_field :first_name, placeholder: u.first_name %>
+                    </div>    
+                    <div class="control-group span6">
+                        <label>Last Name</label>
+                        <%= f.text_field :last_name, placeholder: u.last_name %>
+                    </div>
+                    <div class="control-group span12">
+                        <label>Email<span class="question" title="If you need to change this email please email support@leadgenhvac.com"></span></label>
+                        <%= f.text_field :email, placeholder: u.email %>
+                    </div> 
+                    <div class="control-group span12">
+                        <label>Phone Number</label>
+                        <div class="row-inline row-fluid">
+                            <%= f.text_field :phonenumber, placeholder: u.phonenumber %>
+                        </div>
+                    </div>
+                     <div class="control-group  span12">
+                        <label>Password</label>
+                        <div class="row-inline row-fluid">
+                            <%= f.password_field :password, placeholder: "Only edit if you want to change your password", style: "width: 573px;" %>
+                         </div>
+                    </div>   
+
+                </div>
+            </div>             
+            <div class="form-actions">
+                    <input class="btn btn-green btn-wide btn-large pull-right" type="submit" name="save" value="Save Changes" />
+            </div>
+        
+        <% end %>
+    <% end %>
+        <div id="add_user"></div>
+        <%= form_for @user do |f| %>
+            <div class="row-fluid row-content">
+                <div class="span6">
+                    <div class="control-group span6">
+                        <label>First Name</label>
+                        <%= f.text_field :first_name, placeholder: "John" %>
+                    </div>    
+                    <div class="control-group span6">
+                        <label>Last Name</label>
+                        <%= f.text_field :last_name, placeholder: "Doe" %>
+                    </div>
+                    <div class="control-group span12">
+                        <label>Email<span class="question" title="If you need to change this email please email support@leadgenhvac.com"></span></label>
+                        <%= f.text_field :email, placeholder: "john@doe.com" %>
+                    </div> 
+                    <div class="control-group span12">
+                        <label>Phone Number</label>
+                        <div class="row-inline row-fluid">
+                            <%= f.text_field :phonenumber, placeholder: "(555) 555-5555" %>
+                        </div>
+                    </div>
+                     <div class="control-group  span12">
+                        <label>Password</label>
+                        <div class="row-inline row-fluid">
+                            <%= f.password_field :password, placeholder: "secure password", style: "width: 573px;" %>
+                         </div>
+                    </div>   
+
+                </div>
+            </div>             
+            <div class="form-actions">
+                    <input class="btn btn-green btn-wide btn-large pull-right" type="submit" name="save" value="Add User" />
+            </div>
+        <% end %>

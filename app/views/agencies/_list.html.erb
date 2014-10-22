@@ -1,0 +1,176 @@
+<table cellpadding="0" cellspacing="0" class="table table-expand table-responsive" id="leads_table">
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Customer Name</th>
+        <th>Lead Source</th>
+        <th style="width:15%">lead Type</th>
+        <th style="width:15%">Status</th>
+        <th style="width:5%">&nbsp;</th>
+     </tr>
+    </thead> 
+</table>
+<%= render_filterrific_spinner %>
+<div class="panel-group" id="accordion">
+<% @agency_actions.each do |action| %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <table style="width:100%;" class="table-expand">
+            <tr>
+                <td style="width:15%;"><a data-toggle="collapse" data-parent="#accordion" href="#collapse_<%= action.id %>"><%= action.created_at.to_date.to_s(:long) %></a></td>
+                <td style="width:35%;"><a data-toggle="collapse" data-parent="#accordion" href="#collapse_<%= action.id %>"><%= action.opportunity_name %></a></td>
+                <td style="width:15%;"><%= action.message_type.upcase %></td>
+                <td style="width:15%;">
+                    <% if action.leadaction_id.present? %>
+                        <span class="request request-quality">Quality</span>
+                    <% elsif action.spam? %>
+                        <span class="request request-quality">Spam</span>
+                    <% elsif action.actiontype_id == 2 %>
+                        <span class="request request-existing">Existing Customer</span>
+                    <% elsif action.nonleadaction_id == 7 %>
+                        <span class="request request-hangup">Hangup</span>
+                    <% else %>
+                        --
+                    <% end %>
+                </td>
+                <td style="width:15%;">
+                    <% if action.status == 'p' %>
+                        <span class="status status-pending">Pending</span>
+                    <% elsif action.status == 'u' %>
+                        <span class="status status-unreported">Unreported</span>
+                    <% elsif action.status == 's' %>
+                        <span class="status status-jom-complete">Job Complete</span>
+                    <% elsif action.status == 'x' %>
+                        <span class="status status-no-business">No Business</span>
+                    <% else %>
+                        <span class="status status-new">** New **</span>
+                    <% end %>
+                </td>
+                <td style="width:5%;"><a class="btn btn-action accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse_<%= action.id %>"></a></td>
+            </tr>
+        </table>
+      </h4>
+    </div>
+    <div id="collapse_<%= action.id %>" class="panel-collapse collapse">
+      <div class="panel-body">
+        <table>
+                <tr id="edit_<%= action.id %>">
+                    <td colspan="6" class="widget widget-content widget-white collapse out">
+                        <% if action.message_type == 'call' %>
+                              <div class="row-fluid row-widget">
+                                <div class="control-group span4">
+                                    <h5>Date & Time</h5>
+                                    <p><%= action.created_at.to_formatted_s(:long) %></p>
+                                </div>
+                                <div class="control-group span4">
+                                    <h5>Caller Phone Number</h5>
+                                    <p><%= action.caller_phone_number %></p>
+                                </div>
+                                <div class="control-group span4">
+                                    <h5>Duration</h5>
+                                    <p><%= action.duration %></p>
+                                </div>
+                            </div><!--row-widget-->
+                            
+                            <div class="row-fluid row-widget">
+                                <div class="control-group span4">
+                                    <h5>Call Status</h5>
+                                    <p><%= action.call_status %></p>
+                                </div>
+                                <div class="control-group span4">
+                                    <h5>Caller Name</h5>
+                                    <p><%= action.opportunity_name %></p>
+                                </div>
+                                <div class="control-group span4">
+                                    <h5>Caller Address</h5>
+                                    <p><%= action.customer_address %></p>
+                                </div>
+                            </div><!--row-widget-->
+                            <div class="control-group">
+                                <h5>Call Recording</h5>
+                                <audio controls>
+                                  <source src="<%= action.call_recording_link %>" type="audio/ogg">
+                                  <p><%= link_to "Call Recording", action.call_recording_link, target:"_blank" %></p>
+                                </audio>
+                                
+                            </div> 
+                        <% elsif action.message_type == 'form' %>
+                            <div class="row-fluid row-widget">
+                                <div class="control-group span4">
+                                    <h5>Customer Name</h5>
+                                    <p><%= action.opportunity_name %></p>
+                                </div>
+                                <div class="control-group span4">
+                                    <h5>Customer E-mail</h5>
+                                    <a href="{$msg.email_address}"><%= action.lead_email %></a>
+                                </div>
+                                <div class="control-group span4">
+                                    <h5>Customer Phone Numbers</h5>
+                                    <p><%= action.caller_phone_number %></p>
+                                </div>
+                            </div><!--row-widget-->
+                            
+                            <div class="row-fluid row-widget">
+                                <div class="control-group span4">
+                                    <h5>Inquiry Reason</h5>
+                                    <p><%= action.lead_interest %></p>
+                                </div>
+                            </div><!--row-widget-->
+                            
+                            <div class="row-widget">
+                                <h5>Message</h5>
+                                <p><%= action.lead_comments %></p>
+                            </div>
+                        <% end %>    
+                              <%= form_for action, class: "msg_form" do |f| %>
+                                <div class="row-fluid row-widget">
+                                    <div class="control-group span4">
+                                        <h5>Inquiry Type</h5>
+                                        <%= f.select :leadaction_id, options_from_collection_for_select(@leadactions, 'id', 'reason', action.leadaction_id), { include_blank: true }  %>                   
+                                    </div>
+                                    <% if  [1, 2, 3].include?(action.leadaction_id ) %>
+                                    <div id="customer_type_dd"  class="control-group span4">
+                                    <% else %>
+                                    <div id="customer_type_dd" class="control-group span4">
+                                    <% end %>
+                                        <h5>Customer Type</h5>
+                                        <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', action.actiontype_id), { include_blank: true } %>
+                                    </div>
+                                    <div class="control-group span4">
+                                        <h5>Status</h5>
+                                        <%= f.select :status, options_for_select([["U - Unreported", "u"], ["P - Pending", "p"], ["$ - Job Complete", "s"], ["X - No Business", "x"]], action.status), { include_blank: true }, class: "outcome_status select" %>
+                                    </div>
+                                </div><!--row-widget-->
+                                <div class="complete_job widget-row control-group row-fluid">
+                                    <h5>Invoice Amt.</h5>
+                                    <%= f.text_field :contractor_invoice, value: action.contractor_invoice %>
+                                </div>
+                                    
+                                <div class="complete_job widget-row control-group row-fluid">
+                                    <h5>Equipment</h5> 
+                                    <%= f.text_area :equipment, rows: 2, cols: 100, value: action.equipment, class: "span12" %>
+                                    <small>(200 chars max.)</small>
+                                </div>
+                                 
+                                <div class="widget-row row-fluid">
+                                    <h5>Notes</h5>
+                                    <%= f.text_area :notes, rows: 3, value: action.equipment, class: "span12" %>
+                                    <small>(1000 chars max.)</small>
+                                </div>                                        
+                               <div class="form-actions">
+                                    <%= f.submit "Save changes", class: "btn btn-green pull-right" %>
+                                    <a href="#" class="btn btn-dgrey pull-left">Cancel</a>
+                               </div> 
+                           <% end %>                                                            
+                    </td>
+                </tr>
+            </table>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+<div id="paginator">
+    <%= paginate @agency_actions, :remote => true %>
+</div> 
