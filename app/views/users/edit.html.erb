@@ -6,7 +6,14 @@
 
     <h5 class="underline"><%= @user.first_name %> <%= @user.last_name %>'s Information</h5>
 
-    <h5 class="underline">Your Company: <%= @user.company.company_name %></h5>
+    <h5 class="underline">Your Company: 
+        <% if @user.company.present? %> 
+
+            <%= @user.company.company_name %>
+        <% else %>
+            <%= @user.agency.company_name %>
+        <% end %>
+    </h5>
 
             <%= form_for @user do |f| %>
             <div class="row-fluid row-content">

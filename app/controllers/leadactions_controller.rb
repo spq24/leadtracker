@@ -45,6 +45,6 @@ class LeadactionsController < ApplicationController
 	private
 
 	 def leadaction_params
-    	params.require(:leadaction).permit(:reason, :user_id)
+    	params.require(:leadaction).permit(:reason, :value, :user_id)
   	 end
 end

@@ -10,7 +10,11 @@
                     <div class="control-group span4">
                         <label>Reason</label>
                         <%= f.text_field :reason, placeholder: @leadaction.reason %>
-                    </div>    
+                    </div>   
+                    <div class="control-group span4">
+                        <label>Value</label>
+                        <%= f.text_field :value, placeholder: @leadaction.value %>
+                    </div>   
                     <div class="control-group span4">
                         <p><b>Created At</b></p>
                         <p><%= @leadaction.created_at.strftime("%m/%d/%Y") %></p>

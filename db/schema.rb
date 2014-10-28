@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022042240) do
+ActiveRecord::Schema.define(version: 20141023195801) do
 
   create_table "actions", force: true do |t|
     t.string   "adf_email"
@@ -157,6 +157,8 @@ ActiveRecord::Schema.define(version: 20141022042240) do
     t.datetime "updated_at"
     t.string   "reason"
     t.integer  "user_id"
+    t.integer  "value"
+    t.integer  "agency_id"
   end
 
   create_table "levels", force: true do |t|
@@ -170,6 +172,7 @@ ActiveRecord::Schema.define(version: 20141022042240) do
     t.string   "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "agency_id"
   end
 
   create_table "users", force: true do |t|

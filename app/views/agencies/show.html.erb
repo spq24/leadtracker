@@ -133,7 +133,7 @@
 										<h4>Leads<br />This month</h4>
 										<span>											
 											<% @agency.companies.each do |c| %>
-												<%= c.actions.where(created_at: Time.now.beginning_of_month..Time.now.beginning_of_day, leadaction_id: [1,2,3]).count %>
+												<%= c.actions.where(created_at: Time.now.beginning_of_month..Time.now.beginning_of_day).where.not(leadaction_id: '').count %>
 											<% end %>
 										</span>
 										<b class="glyphicon glyphicon-arrow-up"></b>30% yoy
@@ -144,9 +144,9 @@
 								<div class="well" data-toggle="tooltip" title="Number of leads in the current year.">
 									<div class="count">
 										<h4>Leads<br />This year</h4>
-										<span>										
+										<span>	
 											<% @agency.companies.each do |c| %>
-												<%= c.actions.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day, leadaction_id: [1,2,3]).count %>
+												<%= c.actions.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day).where.not(leadaction_id: '').count %>
 											<% end %>
 										</span>
 									</div>
@@ -172,7 +172,7 @@
 							<div class="widget-shadow"></div>
 							<div class="widget-shadow-fix"></div>
 						</div>
-						<div class="row">
+						<div class="row" style="margin-bottom:200px;">
 							<div class="col-sm-6 col-lg-3">
 								<div class="well" data-toggle="tooltip" title="Total market value of leads in the selected date range.">
 									<div class="count">
@@ -186,9 +186,7 @@
 									<div class="count">
 										<h4>Market Value<br />this month</h4>
 										<span>		
-											<% @agency.companies.each do |c| %>
-												<%= number_to_currency(c.actions.where(created_at: Time.now.beginning_of_month..Time.now.beginning_of_day, leadaction_id: [1,2,3]).count * 300, precision: 0) %>
-											<% end %>
+											<%= @leadvaluem.empty? ? '$0' : number_to_currency(@leadvaluem.sum, precision: 0) %>
 										</span>
 									</div>
 								</div>
@@ -198,9 +196,7 @@
 									<div class="count">
 										<h4>Market Value<br />this year</h4>
 										<span>
-											<% @agency.companies.each do |c| %>
-												<%= number_to_currency(c.actions.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day, leadaction_id: [1,2,3]).count * 300, precision: 0) %>
-											<% end %>
+											<%= @leadvaluey.empty? ? '$0' : number_to_currency(@leadvaluey.sum, precision: 0) %>										
 										</span>
 									</div>
 								</div>
@@ -210,142 +206,16 @@
 									<div class="count">
 										<h4>Market Value<br />all time</h4>
 										<span>
-											<% @agency.companies.each do |c| %>
-												<%= number_to_currency(c.actions.where(leadaction_id: [1,2,3]).count * 300, precision: 0) %>
-											<% end %>
+											<%= @leadvalueat.empty? ? '$0' : number_to_currency(@leadvalueat.sum, precision: 0) %>
 										</span>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="page-header">
-							<h1>Rankings</h1>
-						</div>
-						<div class="row">
-							<div class="col-sm-6 col-md-4 col-lg-2">&nbsp;</div>
-							<div class="col-sm-6 col-md-4 col-lg-2">
-								<div class="well" data-toggle="tooltip" title="Page 1 Rankings.">
-									<div class="count">
-										<h4>Page 1<br />Rankings</h4>
-										<span>{$page_1_rankings}</span>
-										{if $page_1_rankings_yoy > 0}(<b class="glyphicon glyphicon-arrow-up"></b>{$page_1_rankings_yoy}% yoy)
-										{elseif $page_1_rankings_yoy < 0}(<b class="glyphicon glyphicon-arrow-down"></b>{$page_1_rankings_yoy}% yoy)
-										{elseif $page_1_rankings > 0}(0% yoy)
-										{/if}
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 col-md-4 col-lg-2">
-								<div class="well" data-toggle="tooltip" title="#1 Rankings.">
-									<div class="count">
-										<h4>#1<br />Rankings</h4>
-										<span>{$num_1_rankings}</span>
-										{if $num_1_rankings_yoy > 0}(<b class="glyphicon glyphicon-arrow-up"></b>{$num_1_rankings_yoy}% yoy)
-										{elseif $num_1_rankings_yoy < 0}(<b class="glyphicon glyphicon-arrow-down"></b>{$num_1_rankings_yoy}% yoy)
-										{elseif $num_1_rankings > 0}(0% yoy)
-										{/if}
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 col-md-4 col-lg-2">
-								<div class="well" data-toggle="tooltip" title="Average rank cooling keywords.">
-									<div class="count">
-										<h4>Avg. Rank<br />Coolings keywords</h4>
-										<span>{$avg_ranking_cooling}</span>
-										{if $avg_ranking_cooling_yoy > 0}(<b class="glyphicon glyphicon-arrow-up"></b>{$avg_ranking_cooling_yoy}% yoy)
-										{elseif $avg_ranking_cooling_yoy < 0}(<b class="glyphicon glyphicon-arrow-down"></b>{$avg_ranking_cooling_yoy}% yoy)
-										{elseif $avg_ranking_cooling > 0}(0% yoy)
-										{/if}
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 col-md-4 col-lg-2">
-								<div class="well" data-toggle="tooltip" title="Average rank heating keywords.">
-									<div class="count">
-										<h4>Avg. Rank<br />Heating Keywords</h4>
-										<span>{$avg_ranking_heating}</span>
-										{if $avg_ranking_heating_yoy > 0}(<b class="glyphicon glyphicon-arrow-up"></b>{$avg_ranking_heating_yoy}% yoy)
-										{elseif $avg_ranking_heating_yoy < 0}(<b class="glyphicon glyphicon-arrow-down"></b>{$avg_ranking_heating_yoy}% yoy)
-										{elseif $avg_ranking_heating > 0}(0% yoy)
-										{/if}
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6 col-md-4 col-lg-2">&nbsp;</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-12 col-lg-6">
-								<div class="widget">
-									<div class="widget-content">
-										<div id="page1_ranking"></div>
-									</div>
-									<div class="widget-shadow"></div>
-									<div class="widget-shadow-fix"></div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-lg-6">
-								<div class="widget">
-									<div class="widget-content">
-										<div id="num1_ranking"></div>
-									</div>
-									<div class="widget-shadow"></div>
-									<div class="widget-shadow-fix"></div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
 
-								<ul class="media-list">
-									<li class="media">
-										<!--<a class="pull-left" href="#">
-											<img class="media-object" src="..." alt="...">
-										</a>-->
-										<div class="media-body">
-											<h4 class="media-heading">Contractor</h4>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										</div>
-									</li>
-									<li class="media">
-										<div class="media-body">
-											<h4 class="media-heading">Contractor</h4>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										</div>
-									</li>
-									<li class="media">
-										<div class="media-body">
-											<h4 class="media-heading">Contractor</h4>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										</div>
-									</li>
-								</ul>
-							</div>
-							<div class="col-md-6">
-								<div class="page-header">
-									<h1>Latest Leads</h1>
-								</div>
-								<ul class="media-list">
-									<li class="media">
-										<!--<a class="pull-left" href="#">
-											<img class="media-object" src="..." alt="...">
-										</a>-->
-										<div class="media-body">
-											<h4 class="media-heading">Contractor - Distributor</h4>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										</div>
-									</li>
-									<li class="media">
-										<div class="media-body">
-											<h4 class="media-heading">Contractor - Distributor</h4>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										</div>
-									</li>
-									<li class="media">
-										<div class="media-body">
-											<h4 class="media-heading">Contractor - Distributor</h4>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-										</div>
-									</li>
-								</ul>
-							</div>
+						<div class="row">
+						</div>
+						<div class="row">
+						</div>
+						<div class="row">
 						</div>

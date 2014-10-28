@@ -3,7 +3,20 @@ class AgenciesController < ApplicationController
 		@user = current_user
 		@agency = @user.agency
 	    @companies = @agency.companies.all
-	end
+	    @agencyleads = @agency.actions.where.not(leadaction_id: '').all
+	    @agencyleadsy = @agency.actions.where.not(leadaction_id: '').where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day).all
+	    @agencyleadsm = @agency.actions.where.not(leadaction_id: '').where(created_at: Time.now.beginning_of_month..Time.now.beginning_of_day).all
+	    #market value of leads all time
+	    @leadvalues = @agencyleads.map { |l| Leadaction.find(l.leadaction_id) }
+		@leadvalueat = @leadvalues.map { |l| l.value }
+		#market value of leads year
+		@leadvaluesy = @agencyleadsy.map { |l| Leadaction.find(l.leadaction_id) }
+		@leadvaluey = @leadvaluesy.map { |l| l.value }
+		#market value of leads month
+		@leadvaluesm = @agencyleadsm.map { |l| Leadaction.find(l.leadaction_id) }
+		@leadvaluem = @leadvaluesm.map { |l| l.value }
+
+	end	
 
 	def index
 		@user = current_user
