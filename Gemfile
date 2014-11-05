@@ -20,6 +20,7 @@ gem 'lazy_high_charts'
 gem 'font-awesome-rails'
 gem 'prawn'
 gem 'httparty'
+gem 'gmaps4rails'
 
 group :doc do
   gem 'sdoc', require: false

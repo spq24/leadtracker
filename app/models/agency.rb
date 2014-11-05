@@ -1,9 +1,8 @@
 class Agency < ActiveRecord::Base
-		filterrific(
+	filterrific(
 		default_settings: { with_created_at_gte: 6.months.ago, with_created_at_lt: Time.now },
 		filter_names: [
-		  :with_nonleadaction_id,
-		  :with_reasoninquiry_id,
+		  :with_companies,
 		  :with_created_at_gte,
 		  :with_created_at_lt
 		]
@@ -25,18 +24,16 @@ class Agency < ActiveRecord::Base
 	  where('leads.created_at < ?', ref_date.to_date.to_s(:db))
 	}
 
-	scope :with_nonleadaction_id, lambda { |nonleadaction_ids|
-    	where(nonleadaction_id: [*nonleadaction_ids])
+	scope :with_companies, lambda { |company_id|
+    	where([
+	    	  %(
+	    		EXISTS (
+	    			SELECT 1
+	    			FROM companies
+	    			WHERE agency.id = companies.agency_id)
+	    		),
+    			company_id
+    		  ])
   	}
-
-	scope :with_reasoninquiry_id, lambda { |reasoninquiry_ids|
-		where(reasoninquiry_id: [*reasoninquiry_ids])
-    }
-
-    scope :this_month, -> { 
-    	where(:created_at => Time.now.beginning_of_month..Time.now.end_of_month) 
-    }
-
-    scope :group_by_month, -> { group("date('month', created_at)") }
 
 end

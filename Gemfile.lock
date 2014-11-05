@@ -48,6 +48,7 @@ GEM
       rails (>= 3.0.0)
     font-awesome-rails (4.1.0.0)
       railties (>= 3.2, < 5.0)
+    gmaps4rails (2.1.2)
     hash-deep-merge (0.1.1)
     hike (1.2.3)
     httparty (0.13.1)
@@ -144,6 +145,7 @@ DEPENDENCIES
   figaro
   filterrific
   font-awesome-rails
+  gmaps4rails
   httparty
   jbuilder (~> 1.2)
   jquery-rails

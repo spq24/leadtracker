@@ -32,11 +32,6 @@ class Action < ActiveRecord::Base
 		where(leadaction_id: [*leadaction_ids])
     }
 
-    scope :this_month, -> { 
-    	where(:created_at => Time.now.beginning_of_month..Time.now.end_of_month) 
-    }
-
-    scope :group_by_month, -> { group("date('month', created_at)") }
 
 	def self.filter_by_reviewed_status(status)
 	  case status

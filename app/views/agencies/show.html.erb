@@ -19,57 +19,19 @@
 							</div>
 						</div>
 						<div class="well" id="filter">
-							<form role="filter" id="userfilter" action="" method="POST">
+							<%= form_for @filterrific do |f| %>
 								<div class="row">
 									<div class="col-sm-6 col-md-4 col-lg-2">
-										<div class="dropdown">
-											<button class="btn btn-default dropdown-toggle" type="button" id="dealerList" data-toggle="dropdown" value="Dealers">
-												Dealers
-												<span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu" role="menu" aria-labelledby="dealerList" id="dealers">
-												<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="0">All</a></li>
-												{foreach from=$dealers item=ccname key=ccid}<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="{$ccid}">{$ccname}</a></li>
-												{/foreach}
-											</ul>
-										</div>
+										<%= f.select(:with_companies, @filterrific.select_options[:with_companies], { include_blank: ' - All Customers -'}, class: "btn btn-default dropdown-toggle") %>
 									</div>
-									<div class="col-sm-6 col-md-4 col-lg-2">
-										<div class="dropdown">
-											<button class="btn btn-default dropdown-toggle" type="button" id="ageList" data-toggle="dropdown">
-												Age
-												<span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu" role="menu" aria-labelledby="ageList" id="ages">
-												<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="0">Any</a></li>
-												<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="1">1 month or more</a></li>
-												<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="3">3 months or more</a></li>
-												<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="6">6 months or more</a></li>
-												<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="12">12 months or more</a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-sm-6 col-md-4 col-lg-3">
-										<div class="dropdown">
-											<button class="btn btn-default dropdown-toggle" type="button" id="gmapStatusList" data-toggle="dropdown">
-												Google Maps Status
-												<span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu" role="menu" aria-labelledby="gmapStatusList" id="gmapStatuses">
-												<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="0">Any</a></li>
-												<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="y">Verified</a></li>
-												<li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-value="n">Not Verified</a></li>
-											</ul>
-										</div>
-									</div>	
-									<div class="col-md-2">
+									<div class="col-md-2 pull-right">
 										<div class="controls">
 											<div class="input-group">
 												<input id="start-date" type="text" class="date-picker form-control" placeholder="Start Date" name="sd" value="<%= 6.months.ago.strftime("%m/%d/%Y") %>" />
 											</div>
 										</div>
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-2 pull-right">
 										<div class="controls">
 											<div class="input-group">
 												<input id="end-date" type="text" class="date-picker form-control" placeholder="End Date" name="ed" value="<%= 6.months.ago.strftime("%m/%d/%Y") %>" />
@@ -77,14 +39,14 @@
 										</div>
 									</div>								
 								</div>
-							</form>
+							<% end %>
 						</div>
 
 						<div class="row">
 							<div class="col-sm-12 col-lg-6">
 								<div class="widget">
 									<div class="widget-content">
-										<div id="cpl_graph"></div>
+											<%= high_chart("agencyleadsactionchart", @agency_action_leads_chart) %>
 									</div>
 									<div class="widget-shadow"></div>
 									<div class="widget-shadow-fix"></div>
@@ -93,7 +55,7 @@
 							<div class="col-sm-12 col-lg-6">
 								<div class="widget">
 									<div class="widget-content">
-										<div id="map_canvas"></div>
+										  <div id="map-canvas"></div>
 									</div>
 									<div class="widget-shadow"></div>
 									<div class="widget-shadow-fix"></div>
@@ -219,3 +181,18 @@
 						</div>
 						<div class="row">
 						</div>
+					<script type="text/javascript">
+						var myLatlng = new google.maps.LatLng(39.828211,-98.579571);
+						var mapOptions = {
+						  zoom: 4,
+						  center: myLatlng
+						}
+						var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+						// To add the marker to the map, use the 'map' property
+						var marker = new google.maps.Marker({
+						    position: myLatlng,
+						    map: map,
+						    title:"Hello World!"
+						});
+				    </script>

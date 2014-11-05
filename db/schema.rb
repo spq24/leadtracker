@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141023195801) do
+ActiveRecord::Schema.define(version: 20141105062647) do
 
   create_table "actions", force: true do |t|
     t.string   "adf_email"
@@ -150,6 +150,8 @@ ActiveRecord::Schema.define(version: 20141023195801) do
     t.integer  "brand_id"
     t.integer  "agency_id"
     t.integer  "main_contact_id"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   create_table "leadactions", force: true do |t|

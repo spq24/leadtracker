@@ -3,10 +3,13 @@
 <head>
   <title>LeadTrackr</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyC-4Vg0e0CkGsS6yvJVCY_k3B2WnuNaQjU", "data-turbolinks-track" => false %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+
   <%= csrf_meta_tags %>
 </head>
 <body>
+	
 	<div id="wrapper">
 		<%= render 'shared/header' %>
 		<%= render 'shared/messages' %>

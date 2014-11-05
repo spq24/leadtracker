@@ -16,4 +16,6 @@ class Company < ActiveRecord::Base
 			(Date.today.year * 12 + Date.today.month) - (created_at.year * 12 + created_at.month)
 		end
 	end
+
+
 end

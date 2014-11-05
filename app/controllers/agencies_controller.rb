@@ -3,9 +3,9 @@ class AgenciesController < ApplicationController
 		@user = current_user
 		@agency = @user.agency
 	    @companies = @agency.companies.all
-	    @agencyleads = @agency.actions.where.not(leadaction_id: '').all
-	    @agencyleadsy = @agency.actions.where.not(leadaction_id: '').where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day).all
-	    @agencyleadsm = @agency.actions.where.not(leadaction_id: '').where(created_at: Time.now.beginning_of_month..Time.now.beginning_of_day).all
+	    @agencyleads = @agency.actions.actual_leads.all
+	    @agencyleadsy = @agency.actions.actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day).all
+	    @agencyleadsm = @agency.actions.actual_leads.where(created_at: Time.now.beginning_of_month..Time.now.beginning_of_day).all
 	    #market value of leads all time
 	    @leadvalues = @agencyleads.map { |l| Leadaction.find(l.leadaction_id) }
 		@leadvalueat = @leadvalues.map { |l| l.value }
@@ -15,7 +15,31 @@ class AgenciesController < ApplicationController
 		#market value of leads month
 		@leadvaluesm = @agencyleadsm.map { |l| Leadaction.find(l.leadaction_id) }
 		@leadvaluem = @leadvaluesm.map { |l| l.value }
+		@bymonthactionscount = @agency.actions.where(reviewed: true).group('date(actions.created_at)').count(:id).values
+		@bymonthleadscount = @agency.actions.actual_leads.group('date(actions.created_at)').count(:id).values
+		@leadsmonths = @agency.actions.actual_leads.group('date(actions.created_at)').count(:id).map {|k, v| k.to_date.strftime("%B %Y")}
 
+		@filterrific = Filterrific.new(Agency, params[:filterrific] || session[:filterrific_companies])
+		@companies_select = @companies.to_a.map { |e| [e.company_name, e.id] }
+		@filterrific.select_options = { with_companies: @companies_select }
+		#@companies_actions_show = @agency.actions.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
+		session[:filterrific_companies] = @filterrific.to_hash
+
+
+		@agency_action_leads_chart = LazyHighCharts::HighChart.new('graph') do |f|
+	        f.title({ :text => "LEADS & ACTIONS OVER TIME FOR YOUR CUSTOMERS" })
+	        f.xAxis(:categories => @leadsmonths)
+	        f.plot_options(:pointStart => 6.months.ago)
+	        f.series(:name => "Actions", :yAxis => 0, :data => @bymonthactionscount)
+	        f.series(:name => "Leads", :yAxis => 0, :data => @bymonthleadscount )
+	        f.dimensions = '600x190'
+	        f.yAxis [
+	          {:title => {:text => "Leads & Actions"} },
+	        ]
+
+	        f.legend(:enabled => false)
+	        f.chart({:defaultSeriesType => "area", :zoomType => 'x'})
+	    end
 	end	
 
 	def index

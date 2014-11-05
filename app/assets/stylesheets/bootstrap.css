@@ -70,9 +70,9 @@ img {
   -ms-interpolation-mode: bicubic;
 }
 
-#map_canvas img,
-.google-maps img {
-  max-width: none;
+#map-canvas {
+  width: 800px; 
+  height: 400px;
 }
 
 button,
