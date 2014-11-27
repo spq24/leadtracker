@@ -883,7 +883,7 @@
 		border: 1px solid #d5d5d5;
 	}
    .widget-content {
-		padding: 20px 20px 0 20px;   
+		padding: 20px 20px 20px 20px;   
    }
    .widget-slogan .widget-content {
 	   padding: 40px 40px 0 40px;
@@ -3557,4 +3557,14 @@
 
 .panel-default {
 	margin-bottom: 25px;
+}
+
+#sidenav {
+	position: fixed;
+	left: 0;
+	margin-top: 0.5%
+}
+
+.pushright {
+	margin-left: 15%;
 }

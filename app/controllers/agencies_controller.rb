@@ -6,6 +6,7 @@ class AgenciesController < ApplicationController
 	    @agencyleads = @agency.actions.actual_leads.all
 	    @agencyleadsy = @agency.actions.actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day).all
 	    @agencyleadsm = @agency.actions.actual_leads.where(created_at: Time.now.beginning_of_month..Time.now.beginning_of_day).all
+	    #@agencyleadsdr = @agency.actions.actual_leads.where(created_at: Agency.with_created_at_gte..Agency.with_created_at_lt).all
 	    #market value of leads all time
 	    @leadvalues = @agencyleads.map { |l| Leadaction.find(l.leadaction_id) }
 		@leadvalueat = @leadvalues.map { |l| l.value }
@@ -17,8 +18,9 @@ class AgenciesController < ApplicationController
 		@leadvaluem = @leadvaluesm.map { |l| l.value }
 		@bymonthactionscount = @agency.actions.where(reviewed: true).group('date(actions.created_at)').count(:id).values
 		@bymonthleadscount = @agency.actions.actual_leads.group('date(actions.created_at)').count(:id).values
+		@bydayleadscount = @agency.actions.actual_leads.group('date(actions.created_at)').count(:id).values
 		@leadsmonths = @agency.actions.actual_leads.group('date(actions.created_at)').count(:id).map {|k, v| k.to_date.strftime("%B %Y")}
-
+		@leadsdays = @agency.actions.actual_leads.group('date(actions.created_at)').count(:id).map {|k, v| k.to_date.strftime("%m/%d/%Y")}
 		@filterrific = Filterrific.new(Agency, params[:filterrific] || session[:filterrific_companies])
 		@companies_select = @companies.to_a.map { |e| [e.company_name, e.id] }
 		@filterrific.select_options = { with_companies: @companies_select }
@@ -35,6 +37,21 @@ class AgenciesController < ApplicationController
 	        f.dimensions = '600x190'
 	        f.yAxis [
 	          {:title => {:text => "Leads & Actions"} },
+	        ]
+
+	        f.legend(:enabled => false)
+	        f.chart({:defaultSeriesType => "area", :zoomType => 'x'})
+	    end
+
+	    @agency_leads_time_chart = LazyHighCharts::HighChart.new('graph') do |f|
+	        f.title({ :text => "LEADS OVER TIME FOR YOUR CUSTOMERS" })
+	        f.subtitle({ :text => "Click and drag in the plot area to zoom in"})
+	        f.xAxis(:categories => @leadsdays)
+	        f.plot_options(:pointStart => 6.months.ago)
+	        f.series(:name => "Leads", :yAxis => 0, :data => @bydayleadscount )
+	        f.dimensions = '1200x190'
+	        f.yAxis [
+	          {:title => {:text => "Leads"} },
 	        ]
 
 	        f.legend(:enabled => false)
