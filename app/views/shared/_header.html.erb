@@ -43,7 +43,7 @@
                       <% end %>
                     </li>
                     <% if current_user.company.present? %>
-                        <li><%= link_to "Actions", actions_path %></li>
+                        <li><%= link_to "Actions", "/actions/reset_filterrific" %></li>
                     <% elsif current_user.agency.present? %>
                         <li><%= link_to "Customer Leads", agency_companies_path(current_user.agency) %>
                     <% end %>

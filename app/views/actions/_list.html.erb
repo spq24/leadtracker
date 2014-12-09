@@ -5,7 +5,7 @@
         <div class="panel-heading">
           <h4 class="panel-title">
             <ul>
-            <li><a data-toggle="collapse" data-target="#collapse<%= action.id %>" href="#collapse<%= action.id %>"><%= action.created_at.to_date.to_s(:long) %></a></li>
+            <li><span data-toggle="collapse" data-target="#collapse<%= action.id %>" href="#collapse<%= action.id %>"><%= action.created_at.to_date.to_s(:long) %></span></li>
             <li><%= action.opportunity_name %></li>
             <li style="margin-left: 2rem;"><%= action.message_type.upcase %></li>
             <li>
@@ -34,7 +34,7 @@
                     <span class="status status-new">** New **</span>
                 <% end %>
               </li>
-              <li><a class="btn btn-action accordion-toggle" data-toggle="collapse" data-target="#collapse<%= action.id %>" href="#collapse<%= action.id %>"></a></li>
+              <li><span class="btn btn-action accordion-toggle" data-toggle="collapse" data-target="#collapse<%= action.id %>" href="#collapse<%= action.id %>"></span></li>
             </ul>
           </h4>
         </div>
@@ -105,18 +105,18 @@
                 <div class="row-fluid row-widget">
                   <div class="control-group span4">
                       <h5>Inquiry Type</h5>
-                      <%= f.select :leadaction_id, options_from_collection_for_select(@leadactions, 'id', 'reason', action.leadaction_id), { include_blank: true }  %>  
+                      <%= f.select :leadaction_id, options_from_collection_for_select(@leadactions, 'id', 'reason', action.leadaction_id), { include_blank: true }, class: "btn"  %>  
                   </div>
                   <div class="control-group span4">
                     <% if action.leadaction_id? %>
                     <h5>Customer Type</h5>
-                    <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', action.actiontype_id), { include_blank: true } %>
+                    <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', action.actiontype_id), { include_blank: true }, class: "btn" %>
                     <% end %>
                   </div>
-                      <div class="control-group span4">
-                        <h5>Status</h5>
-                        <%= f.select :status, options_for_select([["U - Unreported", "u"], ["P - Pending", "p"], ["$ - Job Complete", "s"], ["X - No Business", "x"]], action.status), { include_blank: true }, class: "outcome_status select" %>
-                      </div>
+                  <div class="control-group span4">
+                    <h5>Status</h5>
+                    <%= f.select :status, options_for_select([["U - Unreported", "u"], ["P - Pending", "p"], ["$ - Job Complete", "s"], ["X - No Business", "x"]], action.status), { include_blank: true }, class: "outcome_status select btn" %>
+                  </div>
                 </div>
                 <div class="complete_job widget-row control-group row-fluid">
                     <h5>Invoice Amt.</h5>
@@ -136,7 +136,7 @@
                 </div>                                        
                <div class="form-actions">
                     <%= f.submit "Save changes", class: "btn btn-green pull-right" %>
-                    <a href="#" class="btn btn-dgrey pull-left">Cancel</a>
+                    <span  data-toggle="collapse" data-target="#collapse<%= action.id %>" href="#collapse<%= action.id %>" class="accordion-toggle btn btn-dgrey pull-left cancel">Cancel</span>
                </div>           
             <% end %>
           </div>
