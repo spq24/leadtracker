@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141105062647) do
+ActiveRecord::Schema.define(version: 20141212004944) do
 
   create_table "actions", force: true do |t|
     t.string   "adf_email"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20141105062647) do
     t.boolean  "is_customer"
     t.integer  "actiontype_id"
     t.integer  "non_customer_type"
-    t.integer  "leadaction_id"
+    t.integer  "category_id"
     t.string   "why"
     t.integer  "reviewer_id"
     t.boolean  "notified"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20141105062647) do
     t.text     "notes"
     t.string   "source"
     t.integer  "agency_id"
+    t.boolean  "lead"
   end
 
   create_table "actiontypes", force: true do |t|
@@ -93,6 +94,16 @@ ActiveRecord::Schema.define(version: 20141105062647) do
     t.string   "website_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "categories", force: true do |t|
+    t.string   "reason"
+    t.integer  "user_id"
+    t.integer  "value"
+    t.integer  "agency_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "lead"
   end
 
   create_table "companies", force: true do |t|

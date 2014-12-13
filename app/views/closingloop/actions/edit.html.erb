@@ -5,11 +5,11 @@
             <table width="70%" align="center" class="table table-responsive">
                 <tr>
                     <th>Tracking Number</th>
-                    <td><%= @action.user.tracking_phone_number %></td>
+                    <td><%= @action.company.tracking_phone_number %></td>
                 </tr>
                 <tr>
                     <th>Target Number</th>
-                    <td><%= @action.user.phonenumber %></td>
+                    <td><%= @action.company.phonenumber %></td>
                 </tr>
                 <tr>
                     <th>Opportunity Name</th>
@@ -42,7 +42,7 @@
                 <% if @action.reviewed? %>
                     <tr id="row_reviewed_by">
                         <th>Reviewed By</th>
-                        <td><%= @action.user.main_contact_first_name %> <%= @action.user.main_contact_last_name %></td>
+                        <td><%= @reviewer.first_name %> <%= @reviewer.last_name %></td>
                     </tr>
                 <% end %>
                 <tr><td colspan="2">&nbsp;</td></tr>
@@ -80,15 +80,9 @@
                                 <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', @action.actiontype_id), { include_blank: true } %>
                             </td>
                         </tr>
-                        <tr id="non_opportunity_type" style="display:none;">
-                            <th>Non Opportunity Type</th>
-                            <td>
-                                <%= f.select :nonleadaction_id, options_from_collection_for_select(@nonleadactions, 'id', 'non_lead_action_type', @action.nonleadaction_id), { include_blank: true } %>
-                            </td>
-                        </tr>
                         <tr id="reason_for_call" style="display:none;">
                             <th>Reason for Call</th>
-                            <td><%= f.select :leadaction_id, options_from_collection_for_select(@leadactions, 'id', 'reason', @action.leadaction_id), { include_blank: true }  %></td>
+                            <td><%= f.select :category_id, options_from_collection_for_select(@categories, 'id', 'reason', @action.category_id), { include_blank: true }  %></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -131,7 +125,7 @@
                 <% if @action.reviewed? %>
                     <tr id="row_reviewed_by">
                         <th>Reviewed By</th>
-                        <td><%= @action.user.main_contact_first_name %> <%= @action.user.main_contact_last_name %></td>
+                        <td><%= @reviewer.first_name %> <%= @reviewer.last_name %></td>
                     </tr>
                 <% end %>
                 <tr><td colspan="2">&nbsp;</td></tr>
@@ -152,15 +146,9 @@
                         <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', @action.actiontype_id), { include_blank: true } %>
                     </td>
                 </tr>
-                <tr id="non_opportunity_type" style="display:none;">
-                    <th>Non Opportunity Type</th>
-                    <td>
-                        <%= f.select :nonleadaction_id, options_from_collection_for_select(@nonleadactions, 'id', 'non_lead_action_type', @action.nonleadaction_id), { include_blank: true } %>
-                    </td>
-                </tr>
                 <tr id="inquiry_type_mail" style="display:none;">
                     <th>Inquiry Type</th>
-                    <td><%= f.select :leadaction_id, options_from_collection_for_select(@inquiryreasons, 'id', 'reason', @action.leadaction_id), { include_blank: true }  %></td>
+                    <td><%= f.select :category_id, options_from_collection_for_select(@categories, 'id', 'reason', @action.category_id), { include_blank: true }  %></td>
                 </tr>
                 <tr id="q_spam_mail" style="display:none;">
                     <th>Was it SPAM?</th>

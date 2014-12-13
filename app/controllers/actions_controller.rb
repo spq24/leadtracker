@@ -71,7 +71,7 @@ class ActionsController < ApplicationController
   private
 
   def action_params
-    params.require(:action).permit(:call_answered, :is_customer, :customer_type, :leadaction_id, :nonleadaction_id, :actiontype_id, :status, :why, :reviewed, :created_at, :tracking_number, :caller_phone_number, :customer_name, :customer_phone, :call_recording_link, :duration, :company_id, :contractor_invoice, :equipment, :notes, :source, :agency_id,     :adf_email, :customer_code, :target_number, :call_status, :opportunity_name, :caller_status, :lead_email, :lead_interest, :lead_phone_number, :lead_comments, :non_customer_type, :reviewer_id, :notified, :notified_date, :spam)
+    params.permit(:call_answered, :is_customer, :customer_type, :leadaction_id, :nonleadaction_id, :actiontype_id, :status, :why, :reviewed, :created_at, :tracking_number, :caller_phone_number, :customer_name, :customer_phone, :call_recording_link, :duration, :company_id, :contractor_invoice, :equipment, :notes, :source, :agency_id,     :adf_email, :customer_code, :target_number, :call_status, :opportunity_name, :caller_status, :lead_email, :lead_interest, :lead_phone_number, :lead_comments, :non_customer_type, :reviewer_id, :notified, :notified_date, :spam)
   end 
 end
 

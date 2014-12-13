@@ -2,8 +2,8 @@
     <nav id="navigation">
         <div class="container">
             <% if logged_in? %>
-                    <% if params[:controller] == 'closingloop/leads'  %>
-                        <%= link_to image_tag('logo.png'), "/closingloop/leads?reviewed=false", id: "logo" %>
+                    <% if params[:controller] == 'closingloop/actions'  %>
+                        <%= link_to image_tag('logo.png'), "/closingloop/actions?reviewed=false", id: "logo" %>
                     <% elsif current_user.company.present? %>
                         <%= link_to image_tag('logo.png'), current_user.company, id: "logo" %>
                     <% elsif current_user.agency.present? %>
@@ -12,10 +12,10 @@
                         <%= link_to image_tag('logo.png'), root_path, id: "logo" %>
                     <% end %>
                 <ul class="main-nav nav">
-                  <% if params[:controller] == 'closingloop/leads'  %>
+                  <% if params[:controller] == 'closingloop/actions'  %>
                     <li><%= link_to "Unreviewed Leads", '?reviewed=false' %></li>
                     <li><%= link_to "Reviewed Leads", '?reviewed=true' %></li>
-                    <li><%= link_to "All", closingloop_leads_path %></li>
+                    <li><%= link_to "All", closingloop_actions_path %></li>
                     <li>
                                                 
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin<i class="icon-caret-down"></i></a> 
@@ -61,8 +61,7 @@
                                 <% elsif current_user.agency.present? %>
                                     <li><%= link_to "Manage Users", agency_users_path(current_user.agency) unless !logged_in? %></li>
                                 <% end %>
-                                <li><%= link_to "Manage Lead Action Types", leadactions_path unless !logged_in? || current_user.agency.present? %></li>
-                                <li><%= link_to "Manage Non-Lead Action Types", nonleadactions_path unless !logged_in? || current_user.agency.present? %></li>
+                                <li><%= link_to "Manage Action Categories", categories_path unless !logged_in? || current_user.agency.present? %></li>
                                 <li><%= link_to "Sign Out", '/sign-out' %></li>
                             </ul>
                         </div>

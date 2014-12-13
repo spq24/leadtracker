@@ -1,0 +1,25 @@
+<div id="main">     
+<div class="container">
+    	<h1>The Types Of Phone Calls & Form Fill Outs You Consider Leads</h1>
+        <center><h4>List All The Reasons Someone Would Contact Your Business</h4></center><br />
+            <%= form_for @category do |f| %>
+            <div class="row-fluid row-content new-category">
+                <ul>
+                    <%= f.hidden_field :user_id, :value => current_user.id %>
+
+                    <li><label>Reason For Contacting Your Business</label><br />
+                    <%= f.text_field :reason, placeholder: "Service Call" %></li>
+
+                    <li><label>Would You Consider This A Lead?</label><br /> 
+                    <%= f.select(:lead, options_for_select([["Yes", true], ["No", false]]), {include_blank: "--select one--"}, class: "btn btn-wide") %></li>
+
+                    <li><label>What Is The Dollar Value Of This Lead?</label><br />
+                    <%= f.text_field :value, placeholder: "300" %></li>
+                </ul>
+            </div>             
+            <div class="form-actions">
+                    <%= link_to "Cancel", categories_path, class: "pull-right", style: "margin-left: 10px; margin-top: 10px;" %>
+                    <input class="btn btn-green btn-wide btn-large pull-right" type="submit" name="save" value="Create A New Category" />
+            </div>
+        
+        <% end %>

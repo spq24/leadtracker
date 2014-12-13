@@ -15,8 +15,7 @@ Leadgenthree::Application.routes.draw do
    resources :users
    resources :sessions, only: [:create, :destroy]
    resources :actiontypes
-   resources :leadactions, only: [:create, :new, :update, :edit, :destroy, :index]
-   resources :nonleadactions, only: [:create, :new, :update, :edit, :destroy, :index]
+   resources :categories, only: [:create, :new, :update, :edit, :destroy, :index]
    resources :actions do
     get :reset_filterrific, on: :collection
    end

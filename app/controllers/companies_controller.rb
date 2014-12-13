@@ -77,8 +77,8 @@ class CompaniesController < ApplicationController
       @leads_source_chart  = LazyHighCharts::HighChart.new('graph') do |f|
         f.title({ :text => "LEADS BY SOURCE" })
         f.xAxis(:categories => @lead_source_types.to_a.index)
-        @lead_source_types.each do |l|
-          f.series(:name => l.index, :data => l)
+        @lead_source_types.each do |type, count|
+          f.series(:name => type, :data => count)
         end
         f.dimensions = '600x190'
         f.yAxis [

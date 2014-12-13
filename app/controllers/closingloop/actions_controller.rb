@@ -1,11 +1,11 @@
 class Closingloop::ActionsController < ClosingloopsController
 
 	def edit
-		@lead = Lead.find(params[:id])
+		@action = Action.find(params[:id])
 		@actiontypes = Actiontype.all
-		@nonleadactions = Nonleadaction.all
-		@leadactions = Leadactions.all
+		@categories = Category.all
 		@user = current_user
+		@reviewer = User.find(@action.reviewer_id)
 	end
 
 	def index
@@ -15,9 +15,12 @@ class Closingloop::ActionsController < ClosingloopsController
 
 	def update
 	  @action = Action.find(params[:id])
-	    if @action.update_attributes(lead_params)
+	    if @action.update_attributes(action_params)
+	      if Category.find(@action.category_id).lead == true
+	      	@action.update_attribute(:lead, true)
+	      end
 	      flash[:success] = "Loop closed!"
-	      redirect_to '/closingloop/leads?reviewed=false'
+	      redirect_to '/closingloop/actions?reviewed=false'
 	    else
 	      flash[:danger] = "Something Went Wrong! The loop was not closed!"
 	      render :edit
@@ -26,8 +29,8 @@ class Closingloop::ActionsController < ClosingloopsController
 
   private
 
-  def lead_params
-    params.require(:action).permit(:call_answered, :is_customer, :leadaction_id, :actiontype_id, :why, :reviewer_id, :reviewed, :spam, :nonleadaction_id)
+  def action_params
+    params.permit(:call_answered, :is_customer, :category_id, :actiontype_id, :why, :reviewer_id, :reviewed, :spam, :lead)
   end
 
 end    

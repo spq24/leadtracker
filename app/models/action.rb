@@ -11,8 +11,7 @@ class Action < ActiveRecord::Base
 
 	belongs_to :company
 	has_one :actiontype
-	has_one :leadaction
-	has_one :nonleadaction
+	has_one :category
 
 
 	scope :with_created_at_gte, lambda { |ref_date|
@@ -28,8 +27,8 @@ class Action < ActiveRecord::Base
     	where(nonleadaction_id: [*nonleadaction_ids])
   	}
 
-	scope :with_leadaction_id, lambda { |leadaction_ids|
-		where(leadaction_id: [*leadaction_ids])
+	scope :where_lead, lambda { |leads|
+		where(lead: true)
     }
 
 
