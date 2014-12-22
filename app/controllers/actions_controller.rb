@@ -17,7 +17,7 @@ class ActionsController < ApplicationController
 
     def update
 	  action = Action.find(params[:id])
-	    if action.update_attributes(action_params)
+	    if action.update!(action_params)
 	      flash[:success] = "Loop closed!"
 	      if params[:controller] == 'actions'
 	      		redirect_to action: :index
@@ -34,14 +34,12 @@ class ActionsController < ApplicationController
 	def index
 		@user = current_user
 		@company = @user.company
-		@actions = Action.order(:id).page(params[:page])
+		@actions = Action.order(:id)
 		@filterrific = Filterrific.new(Action, params[:filterrific] || session[:filterrific_actions])
-		@filterrific.select_options = { with_leadaction_id: Leadaction.options_for_select, with_nonleadaction_id: Nonleadaction.options_for_select }
 		@company_actions = @company.actions.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
 		session[:filterrific_actions] = @filterrific.to_hash
 		@actiontypes = Actiontype.all
-		@nonleadactions = Nonleadaction.all
-		@leadactions = Leadaction.all
+		@categories = Category.all
 		@actions_all_time = @company.actions.where(reviewed: true)
 		@actual_leads = @company.actions.actual_leads
 	    @actual_leads_year = @actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day)
@@ -71,7 +69,7 @@ class ActionsController < ApplicationController
   private
 
   def action_params
-    params.permit(:call_answered, :is_customer, :customer_type, :leadaction_id, :nonleadaction_id, :actiontype_id, :status, :why, :reviewed, :created_at, :tracking_number, :caller_phone_number, :customer_name, :customer_phone, :call_recording_link, :duration, :company_id, :contractor_invoice, :equipment, :notes, :source, :agency_id,     :adf_email, :customer_code, :target_number, :call_status, :opportunity_name, :caller_status, :lead_email, :lead_interest, :lead_phone_number, :lead_comments, :non_customer_type, :reviewer_id, :notified, :notified_date, :spam)
+    params.permit(:id, :call_answered, :is_customer, :customer_type, :category_id, :actiontype_id, :status, :why, :contractor_invoice, :equipment, :notes, :source, :agency_id,     :adf_email, :customer_code, :target_number, :call_status, :opportunity_name, :caller_status, :lead_email, :lead_interest, :lead_phone_number, :lead_comments, :non_customer_type, :reviewer_id)
   end 
 end
 

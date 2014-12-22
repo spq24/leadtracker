@@ -12,8 +12,6 @@ class Agency < ActiveRecord::Base
 	has_many :users
 	has_many :companies
 	has_many :actions, through: :companies
-	has_many :leadactions, through: :actions
-	has_many :nonleadactions, through: :nonleadactions
 
 	#scope :with_created_at_gte, lambda { |ref_date|
 	 # where('agency.actions.created_at >= ?', ref_date)

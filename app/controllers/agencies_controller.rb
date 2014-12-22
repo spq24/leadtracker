@@ -6,9 +6,8 @@ class AgenciesController < ApplicationController
 	    @agencyleads = @agency.actions.actual_leads.all
 	    @agencyleadsy = @agency.actions.actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day).all
 	    @agencyleadsm = @agency.actions.actual_leads.where(created_at: Time.now.beginning_of_month..Time.now.beginning_of_day).all
-	    #@agencyleadsdr = @agency.actions.actual_leads.where(created_at: Agency.with_created_at_gte..Agency.with_created_at_lt).all
-	    #market value of leads all time
-	    @leadvalues = @agencyleads.map { |l| Leadaction.find(l.leadaction_id) }
+
+	    @leadvalues = @agencyleads.map { |l| Category.find(l.category_id) }
 		@leadvalueat = @leadvalues.map { |l| l.value }
 		#market value of leads year
 		@leadvaluesy = @agencyleadsy.map { |l| Leadaction.find(l.leadaction_id) }

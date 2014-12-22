@@ -41,7 +41,7 @@ class Action < ActiveRecord::Base
 	end
 
 	def self.actual_leads
-		where.not(leadaction_id: '')
+		where(lead: true)
 	end
 
 	def pie_actions(array)

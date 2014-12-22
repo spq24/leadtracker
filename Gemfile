@@ -22,6 +22,13 @@ gem 'prawn'
 gem 'httparty'
 gem 'gmaps4rails'
 
+group :development do
+	gem 'pry'
+	gem 'pry-debugger'
+	gem 'better_errors'
+	gem 'binding_of_caller'
+end
+
 group :doc do
   gem 'sdoc', require: false
 end

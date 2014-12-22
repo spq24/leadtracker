@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Leadgenthree::Application.config.secret_key_base = '73c25fb28f25a3b92830892226062e17fa8156890f4177d2683e7a7edd505820f6818a1cdf69133ac45d8f3936ea2e31bf4d899a1adbf3434a363cbd83d8aa42'
+Leadtracker::Application.config.secret_key_base = '73c25fb28f25a3b92830892226062e17fa8156890f4177d2683e7a7edd505820f6818a1cdf69133ac45d8f3936ea2e31bf4d899a1adbf3434a363cbd83d8aa42'

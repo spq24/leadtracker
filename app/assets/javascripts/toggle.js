@@ -24,6 +24,7 @@ $(document).ready(function() {
         $('#opportunity_type').show();
         $('#reason_for_call').show();
         $('#inquiry_type_mail').show();
+        $('#lead').show();
         $('#non_opportunity_type').hide();
         $('#q_spam_mail').hide();
     }

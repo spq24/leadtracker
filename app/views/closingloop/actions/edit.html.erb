@@ -1,5 +1,5 @@
 <% if @action.message_type == 'call' %>
-    <%= form_for [:closingloop, @action] do |f| %>
+    <%= form_for([:closingloop, @action]) do |f| %>
             <%= f.hidden_field :reviewer_id, :value => @user.id %>
             <%= f.hidden_field :reviewed, :value => true %>
             <table width="70%" align="center" class="table table-responsive">
@@ -84,9 +84,11 @@
                             <th>Reason for Call</th>
                             <td><%= f.select :category_id, options_from_collection_for_select(@categories, 'id', 'reason', @action.category_id), { include_blank: true }  %></td>
                         </tr>
+
+
                         <tr>
                             <td>&nbsp;</td>
-                            <td><input type="submit" value="Save" id="save" class="btn btn-success" /></td>
+                            <td><%= f.submit "save", class: "btn btn-success" %></td>
                         </tr>
                       </table>
     <% end %>
@@ -147,7 +149,7 @@
                     </td>
                 </tr>
                 <tr id="inquiry_type_mail" style="display:none;">
-                    <th>Inquiry Type</th>
+                    <th>Reason for reaching out?</th>
                     <td><%= f.select :category_id, options_from_collection_for_select(@categories, 'id', 'reason', @action.category_id), { include_blank: true }  %></td>
                 </tr>
                 <tr id="q_spam_mail" style="display:none;">
@@ -163,7 +165,7 @@
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><input type="submit" value="Save" id="save" class="btn btn-success" /></td>
+                    <td><%= f.submit "Save", class: "btn btn-success" %></td>
                 </tr>
               </table>
     <% end %>

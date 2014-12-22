@@ -1,11 +1,13 @@
 class Closingloop::ActionsController < ClosingloopsController
+require "pry"
 
 	def edit
 		@action = Action.find(params[:id])
 		@actiontypes = Actiontype.all
 		@categories = Category.all
+		@lead_categories = @categories.where(lead: true)
 		@user = current_user
-		@reviewer = User.find(@action.reviewer_id)
+		@reviewer = User.find(@action.reviewer_id) if @action.reviewed?
 	end
 
 	def index
@@ -15,10 +17,8 @@ class Closingloop::ActionsController < ClosingloopsController
 
 	def update
 	  @action = Action.find(params[:id])
-	    if @action.update_attributes(action_params)
-	      if Category.find(@action.category_id).lead == true
-	      	@action.update_attribute(:lead, true)
-	      end
+	    if @action.update(action_params)
+	      binding.pry
 	      flash[:success] = "Loop closed!"
 	      redirect_to '/closingloop/actions?reviewed=false'
 	    else
