@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Leadgenthree::Application.load_tasks
+Leadtracker::Application.load_tasks

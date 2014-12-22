@@ -6,7 +6,7 @@
             <th>Name/Caller</th>
             <th>Type</th>
             <th>Contractor</th>
-            <th>Distributor</th>
+            <th>Agency/Parent Brand</th>
         </tr>
     <% @actions.each do |action| %>
         <tr>
@@ -22,7 +22,7 @@
             <td><%= action.opportunity_name %></td>
             <td><%= action.message_type %></td>
             <td><%= action.company.company_name %></td>
-            <td><%= action.company.agency.company_name %></td>
+            <td><%= action.agency.company_name %></td>
         </tr>
     <% end %>    
         <tr>

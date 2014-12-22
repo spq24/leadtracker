@@ -10,6 +10,7 @@ class Action < ActiveRecord::Base
 	)
 
 	belongs_to :company
+	belongs_to :agency
 	has_one :actiontype
 	has_one :category
 

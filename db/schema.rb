@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141212004944) do
+ActiveRecord::Schema.define(version: 20141222064643) do
 
   create_table "actions", force: true do |t|
     t.string   "adf_email"
@@ -31,8 +31,6 @@ ActiveRecord::Schema.define(version: 20141212004944) do
     t.string   "lead_interest"
     t.string   "lead_phone_number"
     t.string   "lead_comments"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "customer_id"
     t.integer  "company_id"
     t.string   "message_type"
@@ -55,6 +53,8 @@ ActiveRecord::Schema.define(version: 20141212004944) do
     t.string   "source"
     t.integer  "agency_id"
     t.boolean  "lead"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "actiontypes", force: true do |t|
@@ -101,9 +101,9 @@ ActiveRecord::Schema.define(version: 20141212004944) do
     t.integer  "user_id"
     t.integer  "value"
     t.integer  "agency_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.boolean  "lead"
+    t.datetime "created_at"
+    t.datetime "updated_ate"
   end
 
   create_table "companies", force: true do |t|
@@ -155,37 +155,14 @@ ActiveRecord::Schema.define(version: 20141212004944) do
     t.string   "status"
     t.string   "role"
     t.string   "level_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.boolean  "active",                    default: true
     t.integer  "brand_id"
     t.integer  "agency_id"
     t.integer  "main_contact_id"
     t.float    "latitude"
     t.float    "longitude"
-  end
-
-  create_table "leadactions", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "reason"
-    t.integer  "user_id"
-    t.integer  "value"
-    t.integer  "agency_id"
-  end
-
-  create_table "levels", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "nonleadactions", force: true do |t|
-    t.string   "reason"
-    t.string   "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "agency_id"
   end
 
   create_table "users", force: true do |t|

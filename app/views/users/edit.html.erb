@@ -8,10 +8,9 @@
 
     <h5 class="underline">Your Company: 
         <% if @user.company.present? %> 
-
             <%= @user.company.company_name %>
         <% else %>
-            <%= @user.agency.company_name %>
+            
         <% end %>
     </h5>
 

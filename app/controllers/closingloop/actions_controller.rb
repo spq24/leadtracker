@@ -12,13 +12,12 @@ require "pry"
 
 	def index
 		@actions = Action.filter_by_reviewed_status(params[:reviewed]).order(:id).page(params[:page])
-		@reviewed_leads = Action.where(:reviewed == true)
+		@reviewed_leads = Action.where(reviewed: true)
 	end
 
 	def update
 	  @action = Action.find(params[:id])
 	    if @action.update(action_params)
-	      binding.pry
 	      flash[:success] = "Loop closed!"
 	      redirect_to '/closingloop/actions?reviewed=false'
 	    else
