@@ -8,27 +8,27 @@
             <th>Contractor</th>
             <th>Agency/Parent Brand</th>
         </tr>
-    <% @actions.each do |action| %>
+    <% @opportunities.each do |opportunity| %>
         <tr>
             <td>
-            <% if action.reviewed? %>
+            <% if opportunity.reviewed? %>
                 <span class="label label-success">Reviewed</span>
             <% else %>
                 <span class="label label-important">Unreviewed</span>
             <% end %>
             </td>
-            <td><%= link_to action.id, edit_closingloop_action_path(action) %></td>
-            <td><%= action.created_at.to_formatted_s(:long) %></td>
-            <td><%= action.opportunity_name %></td>
-            <td><%= action.message_type %></td>
-            <td><%= action.company.company_name %></td>
-            <td><%= action.agency.company_name %></td>
+            <td><%= link_to opportunity.id, edit_closingloop_opportunity_path(opportunity) %></td>
+            <td><%= opportunity.created_at.to_formatted_s(:long) %></td>
+            <td><%= opportunity.opportunity_name %></td>
+            <td><%= opportunity.message_type %></td>
+            <td><%= opportunity.company.company_name %></td>
+            <td><%= opportunity.agency.company_name %></td>
         </tr>
     <% end %>    
         <tr>
             <td colspan="7" style="text-align: center;">
                 <div class="pagination pagination-table">
-                    <%= paginate @actions %>
+                    <%= paginate @opportunities %>
                 </div>
             </td>
         </tr>

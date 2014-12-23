@@ -7,10 +7,10 @@ class CategoriesController < ApplicationController
 		@user = current_user
 		@category = Category.create(category_params)
 		if @category.save
-	      flash[:success] = "You have successfully created a new Action Category"
+	      flash[:success] = "You have successfully created a new Opportunity Category"
 	      redirect_to categories_path
 	    else
-	      flash[:danger] = "Something Went Wrong! Your Action Category wasn't edited properly"
+	      flash[:danger] = "Something Went Wrong! Your Opportunity Category wasn't edited properly"
 	      render :new
 	    end 
 	end
@@ -22,17 +22,17 @@ class CategoriesController < ApplicationController
 	def update
 	    @category = Category.find(params[:id])
 	    if @category.update_attributes(category_params)
-	      flash[:success] = "You have successfully edited Your Action Category"
+	      flash[:success] = "You have successfully edited Your Opportunity Category"
 	      redirect_to categories_path
 	    else
-	      flash[:danger] = "Something Went Wrong! Your Action Category wasn't edited properly"
+	      flash[:danger] = "Something Went Wrong! Your Opportunity Category wasn't edited properly"
 	      render :edit
 	    end 
 	end
 
 	def destroy
 		Category.find(params[:id]).destroy
-	    flash[:success] = "Action Category Deleted."
+	    flash[:success] = "Opportunity Category Deleted."
 	    redirect_to categories_path
 	end
 

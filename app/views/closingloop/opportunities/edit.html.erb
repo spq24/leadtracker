@@ -1,45 +1,45 @@
-<% if @action.message_type == 'call' %>
-    <%= form_for([:closingloop, @action]) do |f| %>
+<% if @opportunity.message_type == 'call' %>
+    <%= form_for([:closingloop, @opportunity]) do |f| %>
             <%= f.hidden_field :reviewer_id, :value => @user.id %>
             <%= f.hidden_field :reviewed, :value => true %>
             <table width="70%" align="center" class="table table-responsive">
                 <tr>
                     <th>Tracking Number</th>
-                    <td><%= @action.company.tracking_phone_number %></td>
+                    <td><%= @opportunity.company.tracking_phone_number %></td>
                 </tr>
                 <tr>
                     <th>Target Number</th>
-                    <td><%= @action.company.phonenumber %></td>
+                    <td><%= @opportunity.company.phonenumber %></td>
                 </tr>
                 <tr>
                     <th>Opportunity Name</th>
-                    <td><%= @action.opportunity_name %></td>
+                    <td><%= @opportunity.opportunity_name %></td>
                 </tr>
                 <tr>
                     <th>Opportunity Address</th>
-                    <td><%= @action.customer_address %></td>
+                    <td><%= @opportunity.customer_address %></td>
                 </tr>
                 <tr>
                     <th>Opportunity Phone</th>
-                    <td><%= @action.caller_phone_number %></td>
+                    <td><%= @opportunity.caller_phone_number %></td>
                 </tr>
                 <tr>
                     <th>Call Recording</th>
-                    <td><%= audio_tag(@action.call_recording_link, controls: true) %></td>
+                    <td><%= audio_tag(@opportunity.call_recording_link, controls: true) %></td>
                 </tr>
                 <tr>
                     <th>Duration</th>
-                    <td><%= @action.duration %></td>
+                    <td><%= @opportunity.duration %></td>
                 </tr>
                 <tr>
                     <th>Call Status</th>
-                    <td><%= @action.call_status %></td>
+                    <td><%= @opportunity.call_status %></td>
                 </tr>
                 <tr>
                     <th>Date & Time</th>
-                    <td><%= @action.created_at.to_formatted_s(:long) %></td>
+                    <td><%= @opportunity.created_at.to_formatted_s(:long) %></td>
                 </tr>
-                <% if @action.reviewed? %>
+                <% if @opportunity.reviewed? %>
                     <tr id="row_reviewed_by">
                         <th>Reviewed By</th>
                         <td><%= @reviewer.first_name %> <%= @reviewer.last_name %></td>
@@ -60,7 +60,7 @@
                         <tr id="why_not_answered" style="display:none;">
                             <th>Why wasn't it answered?</th>
                             <td>
-                                <%= f.select :why, options_for_select([["No Answer", "N"], ["Abandoned", "A"], ["After Business Hours", "H"]], @action.why), { include_blank: true } %>
+                                <%= f.select :why, options_for_select([["No Answer", "N"], ["Abandoned", "A"], ["After Business Hours", "H"]], @opportunity.why), { include_blank: true } %>
                             </td>
                         </tr>
                         <tr id="q_opportunity" style="display:none;">
@@ -77,12 +77,12 @@
                         <tr id="opportunity_type" style="display:none;">
                             <th>Opportunity Type</th>
                             <td>
-                                <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', @action.actiontype_id), { include_blank: true } %>
+                                <%= f.select :actiontype_id, options_from_collection_for_select(@opportunitytypes, 'id', 'action_type', @opportunity.actiontype_id), { include_blank: true } %>
                             </td>
                         </tr>
                         <tr id="reason_for_call" style="display:none;">
                             <th>Reason for Call</th>
-                            <td><%= f.select :category_id, options_from_collection_for_select(@categories, 'id', 'reason', @action.category_id), { include_blank: true }  %></td>
+                            <td><%= f.select :category_id, options_from_collection_for_select(@categories, 'id', 'reason', @opportunity.category_id), { include_blank: true }  %></td>
                         </tr>
 
 
@@ -95,36 +95,36 @@
 <% end %>
 
 
-<% if @action.message_type == 'form' %>      
-    <%= form_for [:closingloop, @action] do |f| %>
+<% if @opportunity.message_type == 'form' %>      
+    <%= form_for [:closingloop, @opportunity] do |f| %>
             <%= f.hidden_field :reviewer_id, :value => @user.id %>
             <%= f.hidden_field :reviewed, :value => true %>
             <table width="70%" align="center" class="table table-responsive">
                 <tr>
                     <th>Opportunity Name</th>
-                    <td><%= @action.opportunity_name %></td>
+                    <td><%= @opportunity.opportunity_name %></td>
                 </tr>
                 <tr>
                     <th>Email Address</th>
-                    <td><%= @action.lead_email %></td>
+                    <td><%= @opportunity.lead_email %></td>
                 </tr>
                 <tr>
                     <th>Interest</th>
-                    <td><%= @action.lead_interest %></td>
+                    <td><%= @opportunity.lead_interest %></td>
                 </tr>
                 <tr>
                     <th>Phone Number</th>
-                    <td><%= @action.lead_phone_number %></td>
+                    <td><%= @opportunity.lead_phone_number %></td>
                 </tr>
                 <tr>
                     <th>Comments</th>
-                    <td><%= @action.lead_comments %></td>
+                    <td><%= @opportunity.lead_comments %></td>
                 </tr>
                 <tr>
                     <th>Date & Time</th>
-                    <td><%= @action.created_at.to_formatted_s(:long) %></td>
+                    <td><%= @opportunity.created_at.to_formatted_s(:long) %></td>
                 </tr>
-                <% if @action.reviewed? %>
+                <% if @opportunity.reviewed? %>
                     <tr id="row_reviewed_by">
                         <th>Reviewed By</th>
                         <td><%= @reviewer.first_name %> <%= @reviewer.last_name %></td>
@@ -145,12 +145,12 @@
                 <tr id="opportunity_type" style="display:none;">
                     <th>Opportunity Type</th>
                     <td>
-                        <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', @action.actiontype_id), { include_blank: true } %>
+                        <%= f.select :actiontype_id, options_from_collection_for_select(@opportunitytypes, 'id', 'action_type', @opportunity.actiontype_id), { include_blank: true } %>
                     </td>
                 </tr>
                 <tr id="inquiry_type_mail" style="display:none;">
                     <th>Reason for reaching out?</th>
-                    <td><%= f.select :category_id, options_from_collection_for_select(@categories, 'id', 'reason', @action.category_id), { include_blank: true }  %></td>
+                    <td><%= f.select :category_id, options_from_collection_for_select(@categories, 'id', 'reason', @opportunity.category_id), { include_blank: true }  %></td>
                 </tr>
                 <tr id="q_spam_mail" style="display:none;">
                     <th>Was it SPAM?</th>

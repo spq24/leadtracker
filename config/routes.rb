@@ -16,20 +16,20 @@ Leadtracker::Application.routes.draw do
    resources :sessions, only: [:create, :destroy]
    resources :actiontypes
    resources :categories, only: [:create, :new, :update, :edit, :destroy, :index]
-   resources :actions do
+   resources :opportunities do
     get :reset_filterrific, on: :collection
    end
 
    namespace :closingloop do
-      resources :actions, only: [:edit, :update, :index]
+      resources :opportunities, only: [:edit, :update, :index]
    end
 
-   get '/actions',              to: "leads#index"
+   get '/opportunities',        to: "opportunities#index"
    get '/billing',              to: "companies#billing", as: 'billing'
    get '/roi',                  to: "companies#roi_report", as: 'roi_report'
    get '/sign-in', 		          to: "sessions#new", as: 'sign_in'
    get '/sign-out',             to: "sessions#destroy"
-   get '/ctm',                  to: "actions#create"
+   get '/ctm',                  to: "opportunities#create"
    get '/company/:id/users',    to: "companies#users", as: 'company_users'
    get '/agency/:id/users',     to: "agencies#users", as: 'agency_users'
    get '/agency/:id/companies', to: "agencies#index", as: 'agency_companies'

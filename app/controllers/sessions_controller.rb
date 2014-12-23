@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
 			if user.active?
 				session[:user_id] = user.id
 				if user.cl_user?
-					redirect_to '/closingloop/actions?reviewed=false'
+					redirect_to '/closingloop/opportunities?reviewed=false'
 				elsif user.company_id.present?
 					redirect_to company_path(user.company_id)
 				elsif user.agency_id.present?

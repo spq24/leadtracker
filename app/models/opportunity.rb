@@ -1,9 +1,7 @@
-class Action < ActiveRecord::Base
+class Opportunity < ActiveRecord::Base
 	filterrific(
-		default_settings: { with_created_at_gte: 30.days.ago, with_created_at_lt: Time.now, with_leadaction_id: '<>' },
+		default_settings: { with_created_at_gte: 30.days.ago, with_created_at_lt: Time.now },
 		filter_names: [
-		  :with_nonleadaction_id,
-		  :with_leadaction_id,
 		  :with_created_at_gte,
 		  :with_created_at_lt
 		]
@@ -16,17 +14,13 @@ class Action < ActiveRecord::Base
 
 
 	scope :with_created_at_gte, lambda { |ref_date|
-	  where('actions.created_at >= ?', ref_date.to_date.to_s(:db))
+	  where('opportunities.created_at >= ?', ref_date.to_date.to_s(:db))
 	}
 
 	# always exclude the upper boundary for semi open intervals
 	scope :with_created_at_lt, lambda { |ref_date|
-	  where('actions.created_at < ?', ref_date.to_date.to_s(:db))
+	  where('opportunities.created_at < ?', ref_date.to_date.to_s(:db))
 	}
-
-	scope :with_nonleadaction_id, lambda { |nonleadaction_ids|
-    	where(nonleadaction_id: [*nonleadaction_ids])
-  	}
 
 	scope :where_lead, lambda { |leads|
 		where(lead: true)

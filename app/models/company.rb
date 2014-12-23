@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-	has_many :actions
+	has_many :opportunities
 	has_many :users
 	belongs_to :agency
 

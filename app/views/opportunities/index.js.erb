@@ -1,0 +1,2 @@
+<% js = escape_javascript(render(:partial => 'opportunities/list', :locals => { :leads => @company_opportunities })) %>
+$("#filterrific_results").html("<%= js %>");

@@ -21,7 +21,7 @@
                                 </div> 
                             </div>
                             <div class="form-actions">
-                                <%= link_to "Reset filters", reset_filterrific_actions_path, class: 'btn btn-small pull-right' %>
+                                <%= link_to "Reset filters", reset_filterrific_opportunities_path, class: 'btn btn-small pull-right' %>
                                 <div id="report-callback"></div>
                             </div>
                         <% end %>                      
@@ -51,24 +51,14 @@
             	<div class="widget">
                     <h5 class="underline">Inquiry Types<span class="question"  title="Reason for the phone call or form contact from website."></a></span></h5>
                     <ul class="widget-half"  id="leads" >
-                        <%= form_for @filterrific do |f| %>
-                            <% @filterrific.select_options[:with_leadaction_id].each do |c| %>
-                                <%= h c[1] %>
-                                <%= check_box_tag("filterrific[with_leadaction_id][]",c, true) %>
-                            <% end %>
-                            <% @filterrific.select_options[:with_nonleadaction_id].each do |c| %>
-                                <%= h c[1] %>
-                                <%= check_box_tag("filterrific[with_nonleadaction_id][]",c) %>
-
-                            <% end %>
-                        <% end %>
+                        <li>categories</li>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
             </div>
             <div class="span12 filter-table" id="filterrific_results">
-                <%= render :partial => 'actions/list',  
-                           :locals => { :actions => @company_actions }
+                <%= render :partial => 'opportunities/list',  
+                           :locals => { :opportunities => @company_opportunities }
                 %>
             </div>
         </div>

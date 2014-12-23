@@ -36,7 +36,7 @@
 							<div class="col-sm-12 col-lg-6">
 								<div class="widget">
 									<div class="widget-content">
-											<%= high_chart("agencyleadsactionchart", @agency_action_leads_chart) %>
+											<%= high_chart("agencyleadsopportunitychart", @agency_opportunity_leads_chart) %>
 									</div>
 									<div class="widget-shadow"></div>
 									<div class="widget-shadow-fix"></div>
@@ -68,11 +68,7 @@
 								<div class="well" data-toggle="tooltip" title="Number of leads in the current month.">
 									<div class="count">
 										<h4>Leads<br />This month</h4>
-										<span>											
-											<% @agency.companies.each do |c| %>
-												<%= c.actions.where(created_at: Time.now.beginning_of_month..Time.now.beginning_of_day).where.not(leadaction_id: '').count %>
-											<% end %>
-										</span>
+										<span>30</span>
 										<b class="glyphicon glyphicon-arrow-up"></b>30% yoy
 									</div>
 								</div>
@@ -81,11 +77,7 @@
 								<div class="well" data-toggle="tooltip" title="Number of leads in the current year.">
 									<div class="count">
 										<h4>Leads<br />This year</h4>
-										<span>	
-											<% @agency.companies.each do |c| %>
-												<%= c.actions.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day).where.not(leadaction_id: '').count %>
-											<% end %>
-										</span>
+										<span>50</span>
 									</div>
 								</div>
 							</div>
@@ -93,11 +85,7 @@
 								<div class="well" data-toggle="tooltip" title="Number of leads since joining the program.">
 									<div class="count">
 										<h4>Leads<br />All time</h4>
-										<span>								
-											<% @agency.companies.each do |c| %>
-												<%= c.actions.where.not(leadaction_id: '').count %>
-											<% end %>
-										</span>
+										<span>100</span>
 									</div>
 								</div>
 							</div>

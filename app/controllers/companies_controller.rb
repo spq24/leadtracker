@@ -39,34 +39,34 @@ class CompaniesController < ApplicationController
   def show
       @user = current_user
       @company = @user.company
-      @actions_all_time = @company.actions.where(reviewed: true)
-      @actions_this_year = @company.actions.where("created_at >= ?", Time.zone.now.beginning_of_year)
-      @actions_this_month = @company.actions.where("created_at >= ?", Time.zone.now.beginning_of_month)
-      @actions_this_week = @company.actions.where("created_at >= ?", Time.zone.now.beginning_of_week)
-      @leads_breakdown = @company.actions.group(:leadaction_id).distinct.count.to_a.drop(1)
-      @actions_breakdown = @company.actions.group(:nonleadaction_id).distinct.count.to_a.drop(1)
-      @bymonthactionscount = @company.actions.where(reviewed: true).group('date(created_at)').count(:id).values
-      @bymonthleadscount = @company.actions.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).values
-      @leadsmonths = @company.actions.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).map {|k, v| k.to_date.strftime("%B %Y")}
-      @actual_leads = @company.actions.actual_leads
+      @opportunities_all_time = @company.opportunities.where(reviewed: true)
+      @opportunities_this_year = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_year)
+      @opportunities_this_month = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_month)
+      @opportunities_this_week = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_week)
+      #@leads_breakdown = @company.opportunities.group(:leadaction_id).distinct.count.to_a.drop(1)
+      #@opportunities_breakdown = @company.opportunities.group(:nonleadaction_id).distinct.count.to_a.drop(1)
+      @bymonthopportunitiescount = @company.opportunities.where(reviewed: true).group('date(created_at)').count(:id).values
+      @bymonthleadscount = @company.opportunities.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).values
+      @leadsmonths = @company.opportunities.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).map {|k, v| k.to_date.strftime("%B %Y")}
+      @actual_leads = @company.opportunities.actual_leads
       @actual_leads_year = @actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day)
       @actual_leads_sixty = @actual_leads.where(created_at: 60.days.ago..Time.now.beginning_of_day)
       @actual_leads_thirty = @actual_leads.where(created_at: 30.days.ago..Time.now.beginning_of_day)
-      @lead_source_types = @company.actions.actual_leads.group('source').count(:id)
+      @lead_source_types = @company.opportunities.actual_leads.group('source').count(:id)
 
-      bymonthleads = @company.actions.group_by { |action| action.created_at.to_date}
+      bymonthleads = @company.opportunities.group_by { |o| o.created_at.to_date}
 
       
 
-      @action_leads_chart = LazyHighCharts::HighChart.new('graph') do |f|
-        f.title({ :text => "LEADS & ACTIONS OVER TIME" })
+      @opportunity_leads_chart = LazyHighCharts::HighChart.new('graph') do |f|
+        f.title({ :text => "LEADS & OPPORTUNITIES OVER TIME" })
         f.xAxis(:categories => @leadsmonths)
         f.plot_options(:pointStart => 6.months.ago)
-        f.series(:name => "Actions", :yAxis => 0, :data => @bymonthactionscount)
+        f.series(:name => "Opportunities", :yAxis => 0, :data => @bymonthopportunitiescount)
         f.series(:name => "Leads", :yAxis => 0, :data => @bymonthleadscount )
         f.dimensions = '600x190'
         f.yAxis [
-          {:title => {:text => "Leads & Actions"} },
+          {:title => {:text => "Leads & Opportunities"} },
         ]
 
         f.legend(:enabled => false)
@@ -109,12 +109,12 @@ class CompaniesController < ApplicationController
             f.chart({:defaultSeriesType=>"pie"})
             series = {
                      :type=> 'pie',
-                     :name=> 'Action',
+                     :name=> 'Opportunity',
                      :innerSize=> '70%',
                      :data=> [['New System Quote',    8.41],['Non HVAC Service',    0],['Service', 33.62], ['Scheduling Question', 4.64], ['Other', 53.04]]
             }
             f.series(series)
-            f.options[:title][:text] = "Actions<br/>Breakdown"
+            f.options[:title][:text] = "Opportunities<br/>Breakdown"
             f.options[:title][:align] = "center"
             f.options[:title][:verticalAlign] = "middle"
             f.options[:tooltip][:pointFormat] = "<b>{point.percentage:.1f}%</b>"

@@ -1,28 +1,28 @@
-class ActionsController < ApplicationController
+class OpportunitiesController < ApplicationController
 	before_filter :require_user
 
     def new
-    	@action = Action.new
+    	@opportunity = Opportunity.new
     end
 
     def create
 	 	call = JSON.parse(request.body.read)
 	 	@company = Company.find_by tracking_number: call["tracking_number"] 
-	 	@action = Action.create(tracking_number: call["tracking_number"], caller_phone_number: call["business_number"], customer_name: call["name"], customer_phone: call["caller_number"], call_recording_link: call["audio"], duration: call["duration"], company_id: @company.id )
+	 	@opportunity = Opportunity.create(tracking_number: call["tracking_number"], caller_phone_number: call["business_number"], customer_name: call["name"], customer_phone: call["caller_number"], call_recording_link: call["audio"], duration: call["duration"], company_id: @company.id )
 	end
 
 	def edit
-   	 @action = Action.find(params[:id])
+   	 @opportunity = Opportunity.find(params[:id])
     end
 
     def update
-	  action = Action.find(params[:id])
-	    if action.update!(action_params)
+	  @opportunity = Opportunity.find(params[:id])
+	    if @opportunity.update!(opportunity_params)
 	      flash[:success] = "Loop closed!"
-	      if params[:controller] == 'actions'
-	      		redirect_to action: :index
+	      if params[:controller] == 'opportunities'
+	      		redirect_to opportunity: :index
 	  	  else
-	      		redirect_to closingloop_actions_path
+	      		redirect_to closingloop_opportunities_path
 	      end
 	    else
 	      flash[:danger] = "Something Went Wrong! The loop was not closed!"
@@ -34,14 +34,14 @@ class ActionsController < ApplicationController
 	def index
 		@user = current_user
 		@company = @user.company
-		@actions = Action.order(:id)
-		@filterrific = Filterrific.new(Action, params[:filterrific] || session[:filterrific_actions])
-		@company_actions = @company.actions.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
-		session[:filterrific_actions] = @filterrific.to_hash
-		@actiontypes = Actiontype.all
+		@opportunities = Opportunity.order(:id)
+		@filterrific = Filterrific.new(Opportunity, params[:filterrific] || session[:filterrific_opportunities])
+		@company_opportunities = @company.opportunities.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
+		session[:filterrific_opportunities] = @filterrific.to_hash
+		@opportunitytypes = Actiontype.all
 		@categories = Category.all
-		@actions_all_time = @company.actions.where(reviewed: true)
-		@actual_leads = @company.actions.actual_leads
+		@opportunities_all_time = @company.opportunities.where(reviewed: true)
+		@actual_leads = @company.opportunities.actual_leads
 	    @actual_leads_year = @actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day)
 	    @actual_leads_sixty = @actual_leads.where(created_at: 60.days.ago..Time.now.beginning_of_day)
 	    @actual_leads_thirty = @actual_leads.where(created_at: 30.days.ago..Time.now.beginning_of_day)
@@ -50,25 +50,25 @@ class ActionsController < ApplicationController
       		format.html
       		format.js
 	        format.pdf do
-	          pdf = ReportPdf.new(@company_actions)
+	          pdf = ReportPdf.new(@company_opportunities)
 	          send_data pdf.render, filename: 'report.pdf', type: 'application/pdf'
 	        end
     	end
 
     	  rescue ActiveRecord::RecordNotFound
 		    # There is an issue with the persisted param_set. Reset it.
-		    redirect_to(action: :reset_filterrific) and return
+		    redirect_to(opportunity: :reset_filterrific) and return
 	end
 	
 
 	def reset_filterrific
-	    session[:filterrific_actions] = nil
-	    redirect_to :action => :index
+	    session[:filterrific_opportunities] = nil
+	    redirect_to  opportunities_path
   	end
 
   private
 
-  def action_params
+  def opportunity_params
     params.permit(:id, :call_answered, :is_customer, :customer_type, :category_id, :actiontype_id, :status, :why, :contractor_invoice, :equipment, :notes, :source, :agency_id,     :adf_email, :customer_code, :target_number, :call_status, :opportunity_name, :caller_status, :lead_email, :lead_interest, :lead_phone_number, :lead_comments, :non_customer_type, :reviewer_id)
   end 
 end
