@@ -1,5 +1,4 @@
 class Closingloop::OpportunitiesController < ClosingloopsController
-require "pry"
 
 	def edit
 		@opportunity = Opportunity.find(params[:id])
@@ -7,7 +6,7 @@ require "pry"
 		@categories = Category.all
 		@lead_categories = @categories.where(lead: true)
 		@user = current_user
-		@reviewer = User.find(@Opportunity.reviewer_id) if @Opportunity.reviewed?
+		@reviewer = User.find(@opportunity.reviewer_id) if @opportunity.reviewed?
 	end
 
 	def index

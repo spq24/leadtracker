@@ -77,7 +77,7 @@
                         <tr id="opportunity_type" style="display:none;">
                             <th>Opportunity Type</th>
                             <td>
-                                <%= f.select :actiontype_id, options_from_collection_for_select(@opportunitytypes, 'id', 'action_type', @opportunity.actiontype_id), { include_blank: true } %>
+                                <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', @opportunity.actiontype_id), { include_blank: true } %>
                             </td>
                         </tr>
                         <tr id="reason_for_call" style="display:none;">

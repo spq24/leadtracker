@@ -1,6 +1,6 @@
 <div id="main">     
 <div class="container">
-<div class="page-heading"><h1>Lead Report <br /> <%= @company.company_name %></h1></div>    
+<div class="page-heading"><h1>Lead Report <%= @company.company_name %></h1></div>    
     <div class="row">
         <%= render 'shared/blue_info_bar' %>
         <%= render 'shared/counts' %>
@@ -34,7 +34,6 @@
             </div><!--/widget-->
         </div><!--/row-->
         <hr />
-        
         <div class="page-subheading clearfix">            
             <div class="pull-right">
             	<label class="font-bold font-upper">Leads</label>

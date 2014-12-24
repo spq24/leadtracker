@@ -3,7 +3,9 @@ class Opportunity < ActiveRecord::Base
 		default_settings: { with_created_at_gte: 30.days.ago, with_created_at_lt: Time.now },
 		filter_names: [
 		  :with_created_at_gte,
-		  :with_created_at_lt
+		  :with_created_at_lt,
+		  :where_lead,
+		  :with_category
 		]
 	)
 
@@ -23,7 +25,11 @@ class Opportunity < ActiveRecord::Base
 	}
 
 	scope :where_lead, lambda { |leads|
-		where(lead: true)
+		Category.find(self.category_id).lead
+    }
+
+    scope :with_category, lambda { |categories|
+    	Category.all
     }
 
 
@@ -37,6 +43,10 @@ class Opportunity < ActiveRecord::Base
 
 	def self.actual_leads
 		where(lead: true)
+	end
+
+	def lead?
+		Category.find(self.category_id).lead
 	end
 
 	def pie_actions(array)
