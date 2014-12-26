@@ -3,6 +3,9 @@
 <div class="page-heading mbt100">
     <h1><%= @company.company_name %></h1><button type="button" class="btn btn-large btn-success pull-right">Add A Marketing Source to Track</button>
 </div>
+<% Opportunity.actual_leads.each do |o| %>
+<%= o %>
+<% end %>
     <%= render 'shared/blue_info_bar' %>
 <div class="row">
     <%= render 'shared/counts' %>
@@ -66,7 +69,4 @@
 </div><!--/row-->
 <hr />
 <div class="row">
-        <%= @lead_source_types %>
-        <%= @lead_source_types.keys %>
-        <div id="leadssourcechart" class="item active"><%= high_chart("leadssourcechart", @leads_source_chart) %></div>
 </div>

@@ -42,7 +42,7 @@ class Opportunity < ActiveRecord::Base
 	end
 
 	def self.actual_leads
-		where(lead: true)
+		self.joins(categories: :lead)
 	end
 
 	def lead?

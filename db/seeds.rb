@@ -15,6 +15,10 @@ Company.create(company_name: "Fante's hvac", address_one: "35 Charleston Rd.", c
 
 Agency.create(company_name: "P&N Distribution", address_one: "306 Connecticut Drive", address_two: "Suite 200", city: "Burlington Township", state: "NJ", postcode: "(609) 835-1512")
 
+Category.create(reason: "Service Call", user_id: "1", value: "300", agency_id: "1", lead: true)
+Category.create(reason: "New System Quote", user_id: "1", value: "300", agency_id: "1", lead: true)
+Category.create(reason: "Non HVAC Service", user_id: "1", value: "300", agency_id: "1", lead: true)
+Category.create(reason: "Other", user_id: "1", agency_id: "1", lead: false)
 
 #Agency.create(company_name:"P&N Distribution", address_one: "306 Connecticut Drive", address_two: "Suite 200", city: "Burlington Township", state: "NJ", postcode: "08046", country: "USA", phonenumber: "(609) 835-1512", created_at: Time.now, updated_at: Time.now)
 
