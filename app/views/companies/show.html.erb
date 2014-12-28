@@ -3,9 +3,6 @@
 <div class="page-heading mbt100">
     <h1><%= @company.company_name %></h1><button type="button" class="btn btn-large btn-success pull-right">Add A Marketing Source to Track</button>
 </div>
-<% Opportunity.actual_leads.each do |o| %>
-<%= o %>
-<% end %>
     <%= render 'shared/blue_info_bar' %>
 <div class="row">
     <%= render 'shared/counts' %>

@@ -17,5 +17,9 @@ class Company < ActiveRecord::Base
 		end
 	end
 
+	def company_opportunities
+		Opportunity.where(reviewed: true, company_id: self.id)
+	end
+
 
 end

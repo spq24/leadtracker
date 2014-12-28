@@ -39,15 +39,15 @@ class CompaniesController < ApplicationController
   def show
       @user = current_user
       @company = @user.company
-      @opportunities_all_time = @company.opportunities.where(reviewed: true)
-      @opportunities_this_year = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_year)
-      @opportunities_this_month = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_month)
-      @opportunities_this_week = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_week)
+      @opportunities_all_time = @company.opportunities.where(reviewed: true).count
+      @opportunities_this_year = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_year).count
+      @opportunities_this_month = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_month).count
+      @opportunities_this_week = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_week).count
       #@leads_breakdown = @company.opportunities.group(:leadaction_id).distinct.count.to_a.drop(1)
       #@opportunities_breakdown = @company.opportunities.group(:nonleadaction_id).distinct.count.to_a.drop(1)
-      @bymonthopportunitiescount = @company.opportunities.where(reviewed: true).group('date(created_at)').count(:id).values
-      @bymonthleadscount = @company.opportunities.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).values
-      @leadsmonths = @company.opportunities.where(reviewed: true).actual_leads.group('date(created_at)').count(:id).map {|k, v| k.to_date.strftime("%B %Y")}
+      @bymonthopportunitiescount = @company.opportunities.where(reviewed: true).group('date(opportunities.created_at)').count(:id).values
+      @bymonthleadscount = @company.opportunities.actual_leads.group('date(opportunities.created_at)').count(:id).values
+      @leadsmonths = @company.opportunities.where(reviewed: true).actual_leads.group('date(opportunities.created_at)').count(:id).map {|k, v| k.to_date.strftime("%B %Y")}
       @actual_leads = @company.opportunities.actual_leads
       @actual_leads_year = @actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day)
       @actual_leads_sixty = @actual_leads.where(created_at: 60.days.ago..Time.now.beginning_of_day)

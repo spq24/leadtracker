@@ -12,7 +12,7 @@ class Opportunity < ActiveRecord::Base
 	belongs_to :company
 	belongs_to :agency
 	has_one :actiontype
-	has_one :category
+	belongs_to :category
 
 
 	scope :with_created_at_gte, lambda { |ref_date|
@@ -41,13 +41,15 @@ class Opportunity < ActiveRecord::Base
 	  end
 	end
 
-	def self.actual_leads
-		self.joins(categories: :lead)
+	def reviewed_opportunities
+		self.where(reviewed: true)
 	end
 
-	def lead?
-		Category.find(self.category_id).lead
+
+	def self.actual_leads
+		includes(:category).where( categories: { lead: true })
 	end
+
 
 	def pie_actions(array)
       # slice array to get index 0 of each sub array

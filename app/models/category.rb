@@ -1,3 +1,3 @@
 class Category < ActiveRecord::Base
-	belongs_to :opportunity
+	has_many :opportunities
 end
