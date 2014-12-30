@@ -25,7 +25,7 @@ class Opportunity < ActiveRecord::Base
 	}
 
 	scope :where_lead, lambda { |leads|
-		Category.find(self.category_id).lead
+		includes(:category).where( categories: { lead: true })
     }
 
     scope :with_category, lambda { |categories|

@@ -39,10 +39,7 @@ class CompaniesController < ApplicationController
   def show
       @user = current_user
       @company = @user.company
-      @opportunities_all_time = @company.opportunities.where(reviewed: true).count
-      @opportunities_this_year = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_year).count
-      @opportunities_this_month = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_month).count
-      @opportunities_this_week = @company.opportunities.where("created_at >= ?", Time.zone.now.beginning_of_week).count
+      @opportunities_all_time = @company.opportunities.where(reviewed: true)
       #@leads_breakdown = @company.opportunities.group(:leadaction_id).distinct.count.to_a.drop(1)
       #@opportunities_breakdown = @company.opportunities.group(:nonleadaction_id).distinct.count.to_a.drop(1)
       @bymonthopportunitiescount = @company.opportunities.where(reviewed: true).group('date(opportunities.created_at)').count(:id).values
