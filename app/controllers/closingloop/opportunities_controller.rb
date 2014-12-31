@@ -5,6 +5,7 @@ class Closingloop::OpportunitiesController < ClosingloopsController
 		@actiontypes = Actiontype.all
 		@categories = Category.all
 		@lead_categories = @categories.where(lead: true)
+		@non_lead_categories = @categories.where(lead: false)
 		@user = current_user
 		@reviewer = User.find(@opportunity.reviewer_id) if @opportunity.reviewed?
 	end

@@ -20,6 +20,10 @@ Category.create(reason: "New System Quote", user_id: "1", value: "300", agency_i
 Category.create(reason: "Non HVAC Service", user_id: "1", value: "300", agency_id: "1", lead: true)
 Category.create(reason: "Other", user_id: "1", agency_id: "1", lead: false)
 
+Actiontype.create(action_type: "New Opportunity", user_id: "1")
+Actiontype.create(action_type: "Existing Customer", user_id: "1")
+Actiontype.create(action_type: "Referred Customer", user_id: "1")
+
 #Agency.create(company_name:"P&N Distribution", address_one: "306 Connecticut Drive", address_two: "Suite 200", city: "Burlington Township", state: "NJ", postcode: "08046", country: "USA", phonenumber: "(609) 835-1512", created_at: Time.now, updated_at: Time.now)
 
 #Brand.create(company_name:"Rheem Manufacturing", address_one: "1100 Abernathy Rd NE", address_two: "Suite 299", city: "Atlanta", state: "GA", postcode: "30328", country: "USA", phonenumber: "(770) 351-3000", created_at: Time.now, updated_at: Time.now)
