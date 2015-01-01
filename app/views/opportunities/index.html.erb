@@ -50,7 +50,12 @@
             	<div class="widget">
                     <h5 class="underline">Inquiry Types<span class="question"  title="Reason for the phone call or form contact from website."></a></span></h5>
                     <ul class="widget-half"  id="leads" >
-                        <li>categories</li>
+                        <%= form_for @filterrific do |f| %>
+                          <% @filterrific.select_options[:with_categories].each do |c| %>
+                            <%= h c[1] %>
+                          <%= check_box_tag("filterrific[with_categories][]",c, true) %>
+                          <% end %>
+                        <% end %>
                     </ul>
                 </div>
                 <div class="clearfix"></div>

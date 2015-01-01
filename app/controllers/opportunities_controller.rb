@@ -35,11 +35,12 @@ class OpportunitiesController < ApplicationController
 		@user = current_user
 		@company = @user.company
 		@opportunities = Opportunity.order(:id)
-		@filterrific = Filterrific.new(Opportunity, params[:filterrific] || session[:filterrific_opportunities])
-		@company_opportunities = @company.opportunities.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
-		session[:filterrific_opportunities] = @filterrific.to_hash
 		@actiontypes = Actiontype.all
 		@categories = Category.all
+		@filterrific = Filterrific.new(Opportunity, params[:filterrific] || session[:filterrific_opportunities])
+		@company_opportunities = @company.opportunities.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
+		@filterrific.select_options = { with_categories: @categories.to_a.map { |c| [c.id, c.reason] } }
+		session[:filterrific_opportunities] = @filterrific.to_hash
 		@opportunities_all_time = @company.opportunities.where(reviewed: true)
 		@actual_leads = @company.opportunities.actual_leads
 	    @actual_leads_year = @actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day)
@@ -68,7 +69,7 @@ class OpportunitiesController < ApplicationController
   private
 
   def opportunity_params
-    params.require(:opportunity).permit(:id, :call_answered, :is_customer, :customer_type, :category_id, :actiontype_id, :status, :why, :contractor_invoice, :equipment, :notes, :source, :agency_id,     :adf_email, :customer_code, :target_number, :call_status, :opportunity_name, :caller_status, :lead_email, :lead_interest, :lead_phone_number, :lead_comments, :non_customer_type, :reviewer_id)
+    params.require(:opportunity).permit(:id, :call_answered, :is_customer, :customer_type, :category_id, :actiontype_id, :status, :why, :contractor_invoice, :equipment, :notes, :source, :agency_id, :adf_email, :customer_code, :target_number, :call_status, :opportunity_name, :caller_status, :lead_email, :lead_interest, :lead_phone_number, :lead_comments, :non_customer_type, :reviewer_id)
   end 
 end
 

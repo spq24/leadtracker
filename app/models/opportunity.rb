@@ -5,7 +5,7 @@ class Opportunity < ActiveRecord::Base
 		  :with_created_at_gte,
 		  :with_created_at_lt,
 		  :where_lead,
-		  :with_category
+		  :with_categories
 		]
 	)
 
@@ -28,7 +28,7 @@ class Opportunity < ActiveRecord::Base
 		includes(:category).where( categories: { lead: true })
     }
 
-    scope :with_category, lambda { |categories|
+    scope :with_categories, lambda { |categories|
     	Category.all
     }
 

@@ -10,7 +10,7 @@
             <li style="margin-left: 2rem;"><%= opportunity.message_type.upcase %></li>
             <li>
                 <% if opportunity.category.lead? %>
-                    <span class="request request-quality">Quality</span>
+                    <span class="request request-quality">Lead</span>
                 <% elsif opportunity.spam? %>
                     <span class="request request-quality">Spam</span>
                 <% else %>
