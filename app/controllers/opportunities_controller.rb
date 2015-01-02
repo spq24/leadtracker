@@ -39,7 +39,7 @@ class OpportunitiesController < ApplicationController
 		@categories = Category.all
 		@filterrific = Filterrific.new(Opportunity, params[:filterrific] || session[:filterrific_opportunities])
 		@company_opportunities = @company.opportunities.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
-		@filterrific.select_options = { with_categories: @categories.to_a.map { |c| [c.id, c.reason] } }
+		@filterrific.select_options = { with_category_id: @categories.to_a.map { |c| [c.id, c.reason] } }
 		session[:filterrific_opportunities] = @filterrific.to_hash
 		@opportunities_all_time = @company.opportunities.where(reviewed: true)
 		@actual_leads = @company.opportunities.actual_leads
