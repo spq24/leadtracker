@@ -7,20 +7,16 @@
 <div class="row">
     <%= render 'shared/counts' %>
         <div class="widget widget-half span2">
-            <h5 class="underline">Leads        
+            <h5 class="underline">Leads      
                 <span class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="selected_real_leads_time" > August<i class="icon-caret-down"></i></a>
-                    <div class="dropdown-menu">
-                        <div class="arrow"></div>
-                        <ul id="real_leads_time">
-                                <li><a href="#{$key}">$NAME</a></li>
-                        </ul>
-                    </div>
+                    <%= select_month(Date.today) %>
                 </span> 
             <span class="question"  title="The total amount of leads that LeadGen has generated for your business."></span></h5>
             <p class="counter counter-days" id="counter_real_leads_time">30</p>
         </div>
 </div>
+
+<%= @company.source_breakdown %>
 
 <div class="row">
     <div class="span10">

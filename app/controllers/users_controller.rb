@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "You have successfully edited Your Account"
-      redirect_to edit_user_path
+      redirect_to users_path
     else
       flash[:danger] = "Something Went Wrong! Your account wasn't edited properly"
       render :edit
@@ -39,7 +39,11 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @user = current_user
+    @company = @user.company
+    @agency = @user.agency
+    @company_users = @company.users.all if @user.company.present?
+    @agency_users = @agency.users.all if @user.agency.present?
   end
 
   def destroy
@@ -57,7 +61,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :full_name, :admin, :main_contact_first_name, :main_contact_last_name, :company_name, :phonenumber, :password, :address_one, :address_two, :city, :state, :postcode)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :admin, :company_id, :phonenumber, :password, :address_one, :address_two, :city, :state, :postcode)
   end
 
   def correct_user

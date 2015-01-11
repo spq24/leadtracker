@@ -1,63 +1,43 @@
+<div id="main">     
+<div class="container">
 		<div class="page-heading">
-        	<h1>Edit Your Account Details</h1>
+        	<h1><%= @company.company_name %>'s Contact Info</h1>
         </div>
-        
-        <h5 class="underline">Business and personal information</h5>
-        
-                <%= form_for @user do |f| %>
+               <%= form_for @company do |f| %>
                 <div class="row-fluid row-content">
                     <div class="span6">
-                        <div class="control-group span6">
-                            <label>First Name</label>
-                            <%= f.text_field :main_contact_first_name, placeholder: @user.main_contact_first_name %>
-                        </div>    
-                        <div class="control-group span6">
-                            <label>Last Name</label>
-                            <%= f.text_field :main_contact_last_name, placeholder: @user.main_contact_last_name %>
-                        </div>
                         <div class="control-group span12">
                             <label>Company Name</label>
-                            <%= f.text_field :company_name, placeholder: @user.company_name %>
-                        </div>
-                        <div class="control-group span12">
-                            <label>Email<span class="question" title="If you need to change this email please email support@leadgenhvac.com"></span></label>
-                            <%= f.text_field :main_contact_email, placeholder: @user.main_contact_email, disabled: true %>
+                            <%= f.text_field :company_name, placeholder: @company.company_name %>
                         </div> 
                         <div class="control-group span12">
                             <label>Phone Number</label>
                             <div class="row-inline row-fluid">
-                                <%= f.text_field :phonenumber, placeholder: @user.phonenumber %>
+                                <%= f.text_field :phonenumber, placeholder: @company.phonenumber %>
                             </div>
                         </div>
-                         <div class="control-group  span12">
-                            <label>Password</label>
-                            <div class="row-inline row-fluid">
-                                <%= f.password_field :password, placeholder: "Only edit if you want to change your password", style: "width: 573px;" %>
-                             </div>
-                        </div>   
-
                     </div>
                     <div class="span6">
                         <div class="control-group span12">
                             <label>Street Address</label>
-                            <%= f.text_field :address_one, placeholder: @user.address_one %>
+                            <%= f.text_field :address_one, placeholder: @company.address_one %>
                         </div>
                         <div class="control-group span12">
                             <label>Address two</label>
-                            <%= f.text_field :address_two, placeholder: @user.address_two %>
+                            <%= f.text_field :address_two, placeholder: @company.address_two %>
                         </div>
                         <div class="control-group span12">
                             <label>City</label>
-                            <%= f.text_field :city, placeholder: @user.city %>
+                            <%= f.text_field :city, placeholder: @company.city %>
                         </div>
                         <div class="row-fluid">
                             <div class="control-group span6">
                                 <label>State</label>
-                                <%= select_tag :state, options_for_select([["Alabama", "AL"], ["Alaska", "AK"], ["Arizona", "AZ"], ["Arkansas", "AR"], ["California", "CA"], ["Colorado", "CO"], ["Connecticut", "CT"], ["Delaware", "DE"], ["District Of Columbia", "DC"], ["Florida", "FL"], ["Georgia", "GA"], ["Hawaii", "HI"], ["Idaho", "ID"], ["Illinois", "IL"], ["Indiana", "IN"], ["Iowa", "IA"], ["Kansas", "KS"], ["Kentucky", "KY"], ["Louisiana", "LA"], ["Maine", "ME"], ["Maryland", "MD"], ["Massachusetts", "MA"], ["Michigan", "MI"], ["Minnesota", "MN"], ["Mississippi", "MS"], ["Missouri", "MO"], ["Montana", "MT"], ["Nebraska", "NE"], ["Nevada", "NV"], ["New Hampshire", "NH"], ["New Jersey", "NJ"], ["New Mexico", "NM"], ["New York", "NY"], ["North Carolina", "NC"], ["North Dakota", "ND"], ["Ohio", "OH"], ["Oklahoma", "OK"], ["Oregon", "OR"], ["Pennsylvania", "PA"], ["Rhode Island", "RI"], ["South Carolina", "SC"], ["South Dakota", "SD"], ["Tennessee", "TN"], ["Texas", "TX"], ["Utah", "UT"], ["Vermont", "VT"], ["Virginia", "VA"], ["Washington", "WA"], ["West Virginia", "WV"], ["Wisconsin", "WI"], ["Wyoming", "WY"]]) %>
+                                <%= select_tag :state, options_for_select([["Alabama", "AL"], ["Alaska", "AK"], ["Arizona", "AZ"], ["Arkansas", "AR"], ["California", "CA"], ["Colorado", "CO"], ["Connecticut", "CT"], ["Delaware", "DE"], ["District Of Columbia", "DC"], ["Florida", "FL"], ["Georgia", "GA"], ["Hawaii", "HI"], ["Idaho", "ID"], ["Illinois", "IL"], ["Indiana", "IN"], ["Iowa", "IA"], ["Kansas", "KS"], ["Kentucky", "KY"], ["Louisiana", "LA"], ["Maine", "ME"], ["Maryland", "MD"], ["Massachusetts", "MA"], ["Michigan", "MI"], ["Minnesota", "MN"], ["Mississippi", "MS"], ["Missouri", "MO"], ["Montana", "MT"], ["Nebraska", "NE"], ["Nevada", "NV"], ["New Hampshire", "NH"], ["New Jersey", "NJ"], ["New Mexico", "NM"], ["New York", "NY"], ["North Carolina", "NC"], ["North Dakota", "ND"], ["Ohio", "OH"], ["Oklahoma", "OK"], ["Oregon", "OR"], ["Pennsylvania", "PA"], ["Rhode Island", "RI"], ["South Carolina", "SC"], ["South Dakota", "SD"], ["Tennessee", "TN"], ["Texas", "TX"], ["Utah", "UT"], ["Vermont", "VT"], ["Virginia", "VA"], ["Washington", "WA"], ["West Virginia", "WV"], ["Wisconsin", "WI"], ["Wyoming", "WY"]]), class: "btn" %>
                             </div>    
                             <div class="control-group span6">
                                 <label>Area Code</label>
-                                <%= f.text_field :postcode, placeholder: @user.postcode %>
+                                <%= f.text_field :postcode, placeholder: @company.postcode %>
                             </div>    
                         </div>                     
                     </div>
