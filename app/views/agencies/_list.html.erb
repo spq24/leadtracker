@@ -22,14 +22,10 @@
                 <td style="width:35%;"><a data-toggle="collapse" data-parent="#accordion" href="#collapse_<%= opportunity.id %>"><%= opportunity.opportunity_name %></a></td>
                 <td style="width:15%;"><%= opportunity.message_type.upcase %></td>
                 <td style="width:15%;">
-                    <% if opportunity.leadaction_id.present? %>
-                        <span class="request request-quality">Quality</span>
+                    <% if opportunity.category.lead? %>
+                        <span class="request request-quality">Lead</span>
                     <% elsif opportunity.spam? %>
                         <span class="request request-quality">Spam</span>
-                    <% elsif opportunity.actiontype_id == 2 %>
-                        <span class="request request-existing">Existing Customer</span>
-                    <% elsif opportunity.nonleadaction_id == 7 %>
-                        <span class="request request-hangup">Hangup</span>
                     <% else %>
                         --
                     <% end %>
@@ -127,9 +123,9 @@
                                 <div class="row-fluid row-widget">
                                     <div class="control-group span4">
                                         <h5>Inquiry Type</h5>
-                                        <%= f.select :leadaction_id, options_from_collection_for_select(@leadactions, 'id', 'reason', opportunity.leadaction_id), { include_blank: true }  %>                   
+                                        <%= f.select :category_id, options_from_collection_for_select(@categories, 'id', 'reason', opportunity.category_id), { include_blank: true }, class: "btn"  %>                   
                                     </div>
-                                    <% if  [1, 2, 3].include?(opportunity.leadaction_id ) %>
+                                    <% if opportunity.category.lead? %>
                                     <div id="customer_type_dd"  class="control-group span4">
                                     <% else %>
                                     <div id="customer_type_dd" class="control-group span4">

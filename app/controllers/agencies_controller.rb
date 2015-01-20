@@ -62,16 +62,13 @@ class AgenciesController < ApplicationController
 		@user = current_user
 		@agency = @user.agency
 		@companies = @agency.companies.all
-
-
-
-		@opportunities = Opportunity.order(:id).page(params[:page])
-		@filterrific = Filterrific.new(Opportunity, params[:filterrific] || session[:filterrific_opportunities])
-		#@filterrific.select_options = { with_leadaction_id: Leadaction.options_for_select, with_nonleadaction_id: Nonleadaction.options_for_select }
-		@agency_opportunities = @agency.opportunities.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
-		session[:filterrific_opportunities] = @filterrific.to_hash
 		@actiontypes = Actiontype.all
 		@categories = Category.all
+		@opportunities = Opportunity.order(:id).page(params[:page])
+		@filterrific = Filterrific.new(Opportunity, params[:filterrific] || session[:filterrific_opportunities])
+		@filterrific.select_options = { with_category_id: @categories.to_a.map { |c| [c.id, c.reason] }, with_companies: @companies.to_a.map { |e| [e.company_name, e.id] }  }
+		@agency_opportunities = @agency.opportunities.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
+		session[:filterrific_opportunities] = @filterrific.to_hash
 		@opportunities_all_time = @agency.opportunities.where(reviewed: true)
 		@actual_leads = @agency.opportunities.actual_leads
 	    @actual_leads_year = @actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day)

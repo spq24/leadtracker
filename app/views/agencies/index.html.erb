@@ -8,22 +8,27 @@
         	<div class="span10">
                 <div class="widget widget-shadow">
                     <div class="widget-content">                   
-                    	 <%= form_for @filterrific do |f| %>
-                         	<div class="row-fluid">
+                         <%= form_for @filterrific do |f| %>
+                            <div class="row-fluid">
                                 <div class="widget-half span6">
                                     <label>Start Date:</label><br />
-                                    date field
+                                    <%= f.date_field(:with_created_at_gte) %>
                                 </div>
                                 <div class="widget-half  span6">
                                     <label>End Date:</label><br />
-                                    date field
-                                </div> 
+                                    <%= f.date_field(:with_created_at_lt) %>
+                                </div>
+                                <div class="widget-half  span6"> 
+                                    <label>Companies:</label><br />
+                                    <%= f.select(:with_companies, @filterrific.select_options[:with_companies], { include_blank: ' - All Customers -'}, class: "btn btn-default dropdown-toggle") %>
+                                </div>
                             </div>
                             <div class="form-actions">
-                                <%= link_to "Reset filters", reset_filterrific_agencies_path, class: 'btn btn-small pull-right' %>
+                                <%= link_to "Reset filters", reset_filterrific_opportunities_path, class: 'btn btn-small pull-right' %>
                                 <div id="report-callback"></div>
                             </div>
-                        <% end %>                      
+
+                        <% end %>                       
                     </div>
                     <div class="widget-bottom row-fluid row-inline">
                     	<div class="widget-left-shadow"></div>
@@ -50,7 +55,12 @@
             	<div class="widget">
                     <h5 class="underline">Inquiry Types<span class="question"  title="Reason for the phone call or form contact from website."></a></span></h5>
                     <ul class="widget-half"  id="leads" >
-                        <li>categories</li>
+                        <%= form_for @filterrific do |f| %>
+                          <% @filterrific.select_options[:with_category_id].each do |c| %>
+                            <%= h c[1] %>
+                          <%= check_box_tag("filterrific[with_category_id][]",c, true) %>
+                          <% end %>
+                        <% end %>
                     </ul>
                 </div>
                 <div class="clearfix"></div>

@@ -1,6 +1,6 @@
 <div class="bar-blue row-content">
     <div class="row-fluid">
         <div class="span5"><span class="font-lblue">Your Website: </span><%= link_to @company.website_url, "http://"+@company.website_url, :target => "_blank" %></div>
-        <div class="span7"><span class="font-lblue">Call tracking number:</span> <%= @company.tracking_phone_number %><span class="font-lblue">&nbsp; forwards to   </span> <%= @company.phonenumber %>  <span class="question" data-toggle="tooltip" data-placement="top" title="Your website contains a tracking phone number that forwards to your office number. Call it with your cell phone to test it!"></span></div>  
+        <div class="span7"><span class="font-lblue">Call tracking number:</span> <%= @company.tracking_phone_number %> <span class="question" data-toggle="tooltip" data-placement="top" title="Your website contains a tracking phone number that forwards to your office number. Call it with your cell phone to test it!"></span></div>  
     </div>
 </div>
