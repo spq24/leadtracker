@@ -64,7 +64,7 @@ class AgenciesController < ApplicationController
 		@companies = @agency.companies.all
 		@actiontypes = Actiontype.all
 		@categories = Category.all
-		@opportunities = Opportunity.order(:id).page(params[:page])
+		@opportunities = Opportunity.order(:id)
 		@filterrific = Filterrific.new(Opportunity, params[:filterrific] || session[:filterrific_opportunities])
 		@filterrific.select_options = { with_category_id: @categories.to_a.map { |c| [c.id, c.reason] }, with_companies: @companies.to_a.map { |e| [e.company_name, e.id] }  }
 		@agency_opportunities = @agency.opportunities.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
@@ -74,6 +74,17 @@ class AgenciesController < ApplicationController
 	    @actual_leads_year = @actual_leads.where(created_at: Time.now.beginning_of_year..Time.now.beginning_of_day)
 	    @actual_leads_sixty = @actual_leads.where(created_at: 60.days.ago..Time.now.beginning_of_day)
 	    @actual_leads_thirty = @actual_leads.where(created_at: 30.days.ago..Time.now.beginning_of_day)
+	end
+
+	def tracker
+		@user = current_user
+		@agency = @user.agency
+		@companies = @agency.companies
+		@filterrific = Filterrific.new(Agency, params[:filterrific] || session[:filterrific_agencies])
+		@filterrific.select_options = { with_category_id: @categories.to_a.map { |c| [c.id, c.reason] }, with_companies: @companies.to_a.map { |e| [e.company_name, e.id] }  }
+		@agency_opportunities = @agency.opportunities.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
+		session[:filterrific_agencies] = @filterrific.to_hash
+		@actual_leads = @agency.opportunities.actual_leads
 	end
 
 	def users

@@ -3581,3 +3581,7 @@
    .lead-categories li {
    	display: inline-block;
    }
+
+   .tracker-labels li {
+   	display: inline-block;
+   }

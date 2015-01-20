@@ -31,5 +31,6 @@ Leadtracker::Application.routes.draw do
    get '/sign-out',             to: "sessions#destroy"
    get '/ctm',                  to: "opportunities#create"
    get '/agency/:id/companies', to: "agencies#index", as: 'agency_companies'
+   get '/agency/:id/tracker',   to: "agencies#tracker", as: 'agency_tracker'
 
   end
