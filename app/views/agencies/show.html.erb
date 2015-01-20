@@ -41,6 +41,7 @@
 									<div class="widget-shadow"></div>
 									<div class="widget-shadow-fix"></div>
 								</div>
+								<%= @agency.opportunities.actual_leads.group('date(opportunities.created_at)').count(:id).keys %>
 							</div>
 							<div class="col-sm-12 col-lg-6">
 								<div class="widget">

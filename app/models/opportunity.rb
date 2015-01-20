@@ -50,20 +50,4 @@ class Opportunity < ActiveRecord::Base
 		includes(:category).where( categories: { lead: true })
 	end
 
-
-	def pie_actions(array)
-      # slice array to get index 0 of each sub array
-      sliceArray = array[0..2].map { |row| row[0] }
-      # create a hash with appropriate values
-      strHash = { 1 => "google", 2 => "facebook", 3 => "reddit" }; 
-      # map the values to your sliced array
-      webMap = sliceArray.map { |e| strHash[e] }
-      # slice array again for index 1 of each sub array
-      sliceIndexOne = array[0..2].map { |row| row[1] }
-      #merge two new arrays
-      mergedArray = webMap.zip(sliceIndexOne)
-      # return array  
-      return mergedArray
-	end
-
 end

@@ -29,7 +29,7 @@ class CompaniesController < ApplicationController
     @company = Company.find(params[:id])
     if @company.update_attributes(company_params)
       flash[:success] = "You have successfully edited Your Account"
-      redirect_to edit_user_path
+      redirect_to edit_company_path
     else
       flash[:danger] = "Something Went Wrong! Your account wasn't edited properly"
       render :edit
@@ -40,8 +40,6 @@ class CompaniesController < ApplicationController
       @user = current_user
       @company = @user.company
       @opportunities_all_time = @company.opportunities.where(reviewed: true)
-      #@leads_breakdown = @company.opportunities.group(:leadaction_id).distinct.count.to_a.drop(1)
-      #@opportunities_breakdown = @company.opportunities.group(:nonleadaction_id).distinct.count.to_a.drop(1)
       @bymonthopportunitiescount = @company.opportunities.where(reviewed: true).group('date(opportunities.created_at)').count(:id).values
       @bymonthleadscount = @company.opportunities.actual_leads.group('date(opportunities.created_at)').count(:id).values
       @leadsmonths = @company.opportunities.where(reviewed: true).actual_leads.group('date(opportunities.created_at)').count(:id).map {|k, v| k.to_date.strftime("%B %Y")}
@@ -86,19 +84,35 @@ class CompaniesController < ApplicationController
         f.chart({:defaultSeriesType => "column"})
       end
 
+      @source_chart = LazyHighCharts::HighChart.new('graph') do |f|
+        f.title({ :text => "LEADS BY SOURCE" })
+        f.xAxis(:categories => @leadsmonths)
+        f.plot_options(:pointStart => 6.months.ago)
+        @company.source_breakdown.each do |k, v|
+          f.series(:name => k, :yAxis => 0, :data => v)
+        end
+        f.dimensions = '600x190'
+        f.yAxis [
+          {:title => {:text => "Number of Calls By Source"} },
+        ]
+
+        f.legend(:enabled => false)
+        f.chart({:defaultSeriesType => "line"})
+      end
+
       @leads_breakdown_pie = LazyHighCharts::HighChart.new('pie') do |f|
             f.chart({:defaultSeriesType=>"pie"})
             series = {
                      :type=> 'pie',
                      :name=> 'Opportunity',
                      :innerSize=> '70%',
-                     :data=> [['New System Quote',    8.41],['Non HVAC Service',    0],['Service', 33.62], ['Scheduling Question', 4.64], ['Other', 53.04]]
+                     :data=> @company.leads_breakdown
             }
             f.series(series)
-            f.options[:title][:text] = "Opportunities<br/>Breakdown"
+            f.options[:title][:text] = "Opportunities Breakdown"
             f.options[:title][:align] = "center"
-            f.options[:title][:verticalAlign] = "middle"
-            f.options[:tooltip][:pointFormat] = "<b>{point.percentage:.1f}%</b>"
+            f.options[:title][:verticalAlign] = "top"
+            f.options[:tooltip][:pointFormat] = "<b>{point.percentage:.1f}%</b>  |  <b>{point.y}</b>"
             f.legend(:layout=> 'horizontal', :position=> 'bottom') 
             f.plot_options(:pie=>{
               :allowPointSelect=>true,
@@ -118,19 +132,13 @@ class CompaniesController < ApplicationController
                      :type=> 'pie',
                      :name=> 'Source',
                      :innerSize=> '70%',
-                     :data=> [
-                        ['Google Organic',    53.04],
-                        ['Facebook',    0],
-                        ['Radio',             33.62],
-                        ['Pens', 4.64],
-                        ['Other',               8.41]
-                     ]
+                     :data=> @company.source_breakdown
             }
             f.series(series)
-            f.options[:title][:text] = "Source<br/>Breakdown"
+            f.options[:title][:text] = "Source Breakdown"
             f.options[:title][:align] = "center"
-            f.options[:title][:verticalAlign] = "middle"
-            f.options[:tooltip][:pointFormat] = "<b>{point.percentage:.1f}%</b>"
+            f.options[:title][:verticalAlign] = "top"
+            f.options[:tooltip][:pointFormat] = "<b>{point.percentage:.1f}%</b>  |  <b>{point.y}</b>"
             f.legend(:layout=> 'vertical') 
             f.plot_options(:pie=>{
               :allowPointSelect=>true, 
@@ -164,6 +172,6 @@ class CompaniesController < ApplicationController
   private
 
   def company_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :full_name, :admin, :main_contact_first_name, :main_contact_last_name, :company_name, :phonenumber, :password, :address_one, :address_two, :city, :state, :postcode)
+    params.require(:company).permit(:company_name, :phonenumber, :address_one, :address_two, :city, :state, :postcode)
   end
 end
