@@ -20,7 +20,7 @@ class OpportunitiesController < ApplicationController
 	    if @opportunity.update(opportunity_params)
 	      flash[:success] = "Loop closed!"
 	      if params[:controller] == 'opportunities'
-	      		redirect_to opportunities_path
+	      		redirect_to "/opportunities/reset_filterrific"
 	  	  else
 	      		redirect_to closingloop_opportunities_path
 	      end

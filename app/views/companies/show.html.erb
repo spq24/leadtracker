@@ -15,9 +15,6 @@
             <p class="counter counter-days" id="counter_real_leads_time">30</p>
         </div>
 </div>
-
-<%= @company.source_breakdown %>
-
 <div class="row">
     <div class="span10">
         <div class="widget widget-shadow carousel slide contentSlider" id="carousel-example-generic" data-interval="false" data-ride="carousel">            
@@ -62,4 +59,5 @@
 </div><!--/row-->
 <hr />
 <div class="row">
+<div id="sourcechart" class="item active"><%= high_chart("sourcechart", @source_chart) %></div>
 </div>

@@ -84,6 +84,22 @@ class CompaniesController < ApplicationController
         f.chart({:defaultSeriesType => "column"})
       end
 
+      @source_chart = LazyHighCharts::HighChart.new('graph') do |f|
+        f.title({ :text => "LEADS BY SOURCE" })
+        f.xAxis(:categories => @leadsmonths)
+        f.plot_options(:pointStart => 6.months.ago)
+        @company.source_breakdown.each do |k, v|
+          f.series(:name => k, :yAxis => 0, :data => v)
+        end
+        f.dimensions = '600x190'
+        f.yAxis [
+          {:title => {:text => "Number of Calls By Source"} },
+        ]
+
+        f.legend(:enabled => false)
+        f.chart({:defaultSeriesType => "line"})
+      end
+
       @leads_breakdown_pie = LazyHighCharts::HighChart.new('pie') do |f|
             f.chart({:defaultSeriesType=>"pie"})
             series = {
