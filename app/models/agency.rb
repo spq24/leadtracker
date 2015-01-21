@@ -5,7 +5,8 @@ class Agency < ActiveRecord::Base
 		  :with_companies,
 		  :with_created_at_gte,
 		  :with_created_at_lt,
-		  :with_category_id
+		  :with_category_id,
+		  :where_lead
 		]
 	)
 

@@ -85,6 +85,7 @@ class AgenciesController < ApplicationController
 		@agency_opportunities = @agency.opportunities.where(reviewed: true).filterrific_find(@filterrific).page(params[:page])
 		session[:filterrific_agencies] = @filterrific.to_hash
 		@actual_leads = @agency.opportunities.actual_leads
+		@skip_footer = true
 	end
 
 	def users
