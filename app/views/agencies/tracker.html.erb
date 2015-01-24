@@ -32,29 +32,18 @@
                 <% end %>
             </div>
             <h3 class="page-header"><%= @agency.company_name %> Customers</h3>
-<<<<<<< HEAD
-            <h4>
-                <ul class="tracker-labels">
-                    <li class="col-md-4">Company Name</li>
-                    <li class="col-md-2">Leads Since Start</li>
-                    <li class="col-md-3">Months With Your Company</li>
-                    <li>Status</li>
-                </ul>
-            </h4>
-=======
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
               <div class="panel panel-success">
                 <h4>
                     <ul class="tracker-labels">
                         <li class="col-md-4">Company Name</li>
-                        <li class="col-md-2">Leads Since Start</li>
-                        <li class="col-md-3">Months With Your Company</li>
+                        <li class="col-md-2">Total Leads</li>
+                        <li class="col-md-3">Months On</li>
                         <li>Status</li>
                     </ul>
                 </h4>
               </div>
             </div>
->>>>>>> 32bebe925912bec3b0bf11ff8727dc135caa044f
             <% @agency.companies.each do |c| %>
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                   <div class="panel panel-default">
@@ -67,11 +56,6 @@
                       </h4>
                     </div>
                     <div id="collapse<%= c.id %>" class="panel-collapse collapse out" role="tabpanel" aria-labelledby="heading<%= c.id %>">
-<<<<<<< HEAD
-                      <div class="panel-body widget widget-content widget-white">
-                          <div class="col-md-3">
-                              <%= link_to "Google Listing", c.google_maps_url, target:"_blank" %>
-=======
                       
                       <div class="panel-body widget widget-content widget-white">
                           
@@ -84,7 +68,6 @@
                                 <% end %>
                             
 
->>>>>>> 32bebe925912bec3b0bf11ff8727dc135caa044f
                               <% if c.google_maps_status == 'verified' %>
                                 <span class="label label-success">Verified</span>
                               <% else %>
@@ -98,31 +81,15 @@
                               <b>Google Verified Date:</b><br />
                               <%= c.google_verified_date %><br />
                               <b>Login Info</b><br />
-<<<<<<< HEAD
-                              <p>Username:<p> <%= c.google_account %><br />
-                              <p>Password:<p> <%= c.google_password %><br /><br />
-=======
                               <p>Username: <%= c.google_account %>
                                  Password: <%= c.google_password %>
                               </p>
 
                               <br />
->>>>>>> 32bebe925912bec3b0bf11ff8727dc135caa044f
 
                               <b>Main Contact:</b><br />
                               <p>First Name:<%= c.users.first.first_name %></p>
                               <p>Last Name:<%= c.users.first.last_name %></p>
-<<<<<<< HEAD
-                              <p>Email:<%= c.users.first.email %></p>
-                          </div>
-                          <div class="col-md-3">
-                              <%= link_to "Bing Listing", c.bing_places_url, target:"_blank" %>
-                              <% if c.bing_places_status == 'verified' %>
-                              <span class="label label-success">Verified</span>
-                              <% else %>
-                              <span class="label label-danger">Not Verified</span>
-                              <% end %><br />
-=======
                               <p>Email: <%= mail_to c.users.first.email %></p>
                           </div>
                           
@@ -143,24 +110,11 @@
                               
                               <br />
 
->>>>>>> 32bebe925912bec3b0bf11ff8727dc135caa044f
                               <b>Bing Notes:</b><br />
                               <%= c.bing_places_notes %><br /><br />
                               <b>Bing Verified Date:</b><br />
                               <%= c.bing_verified_date %><br />
                               <b>Login Info</b><br />
-<<<<<<< HEAD
-                              <p>Username:<p><%= c.bing_account %><br />
-                              <p>Password:<p><%= c.bing_password %>
-                          </div>
-                          <div class="col-md-3">
-                              <%= link_to "Yelp Listing", c.yelp_url, target:"_blank" %>
-                              <% if c.yelp_status == 'verified' %>
-                              <span class="label label-success">Verified</span>
-                              <% else %>
-                              <span class="label label-danger">Not Verified</span>
-                              <% end %><br />
-=======
                               <p>Username: <%= c.bing_account %>
                                  Password: <%= c.bing_password %>
                               </p>
@@ -193,25 +147,11 @@
 
                               <br />
                               
->>>>>>> 32bebe925912bec3b0bf11ff8727dc135caa044f
                               <b>Yelp Notes:</b><br />
                               <%= c.yelp_notes %><br /><br />
                               <b>Yelp Verified Date:</b><br />
                               <%= c.yelp_verified_date %><br />
                               <b>Login Info</b><br />
-<<<<<<< HEAD
-                              <p>Username:<p><%= c.yelp_account %><br />
-                              <p>Password:<p><%= c.yelp_password %>
-                          </div>
-                          <div class="col-md-3">
-                              <%= link_to "Yahoo Listing", c.yahoo_local_url, target:"_blank" %>
-                              <% if c.yahoo_local_status == 'verified' %>
-                              <span class="label label-success">Verified</span>
-                              <% else %>
-                              <span class="label label-danger">Not Verified</span>
-                              <% end %><br />
-                              <b>Yahoo Local Notes:</b><br />
-=======
                               <p>Username: <%= c.yelp_account %>
                                  Password: <%= c.yelp_password %>
                               </p>
@@ -243,16 +183,10 @@
                               <br />
                               
                               <b>Yahoo Local Notes:</b><br /><br />
->>>>>>> 32bebe925912bec3b0bf11ff8727dc135caa044f
                               <%= c.yahoo_local_notes %><br />
                               <b>Yahoo Verified Date:</b><br />
                               <%= c.yahoo_verified_date %><br />
                               <b>Login Info</b><br />
-<<<<<<< HEAD
-                              <p>Username:<p><%= c.yahoo_account %><br />
-                              <p>Password:<p><%= c.yahoo_password %>
-                          </div><br />
-=======
                               <p>Username: <%= c.yahoo_account %>
                                  Password: <%= c.yahoo_password %>
                               </p>
@@ -260,7 +194,6 @@
 
                           <br />
 
->>>>>>> 32bebe925912bec3b0bf11ff8727dc135caa044f
                           <div class="col-md-12">
                             <b>Notes:</b>
                             <p><%= c.admin_notes %></p>
