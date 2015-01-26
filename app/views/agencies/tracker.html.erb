@@ -62,27 +62,32 @@
                           <div class="col-md-3">
                             <h4>
                               <% if c.google_maps_url.present? %>
-                                  <%= link_to "Google Listing", "http://"+c.google_maps_url, target:"_blank" %>:
+                                  <%= link_to "Google Listing", "https://"+c.google_maps_url, target:"_blank" %>:
                                 <% else %>
                                   Google Listing:
                                 <% end %>
                             
 
-                              <% if c.google_maps_status == 'verified' %>
-                                <span class="label label-success">Verified</span>
+                              <% if c.google_maps_status == "1" %>
+                                <span class="label label-success">
+                                  <%= best_in_place c, :google_maps_status, as: :select, collection: %w(Verified Not-Verified), value: c.google_maps_status %>
+                                </span>
                               <% else %>
-                                <span class="label label-danger">Not Verified</span>
+                                <span class="label label-danger">
+                                  <%= best_in_place c, :google_maps_status, as: :select, collection: %w(Verified Not-Verified), place_holder: "Not Verified" %>
+                                </span>
                               <% end %>
+                              <%= best_in_place c, :google_maps_url, place_holder: "Edit Link" %>
                             </h4>
                               <br />
                               
                               <b>Google Notes:</b><br />
-                              <%= c.google_maps_notes %><br /><br />
+                              <%= best_in_place c, :google_maps_notes, as: :textarea, value: c.google_maps_notes, place_holder: "empty" %><br /><br />
                               <b>Google Verified Date:</b><br />
-                              <%= c.google_verified_date %><br />
+                              <%= best_in_place c, :google_verified_date, as: :date, value: c.google_verified_date, place_holder: "empty" %><br />
                               <b>Login Info</b><br />
-                              <p>Username: <%= c.google_account %>
-                                 Password: <%= c.google_password %>
+                              <p>Username: <%= best_in_place c, :google_account, value: c.google_account, place_holder: "empty" %><br />
+                                 Password: <%= best_in_place c, :google_password, value: c.google_password, place_holder: "empty" %>
                               </p>
 
                               <br />
@@ -101,33 +106,38 @@
                                     Bing Listing:
                                 <% end %>
                               
-                                <% if c.bing_places_status == 'verified' %>
-                                  <span class="label label-success">Verified</span>
+                                <% if c.bing_places_status == "1" %>
+                                <span class="label label-success">
+                                  <%= best_in_place c, :bing_places_status, as: :select, collection: %w(Verified Not-Verified), value: c.bing_places_status %>
+                                </span>
                                 <% else %>
-                                  <span class="label label-danger">Not Verified</span>
+                                  <span class="label label-danger">
+                                    <%= best_in_place c, :bing_places_status, as: :select, collection: %w(Verified Not-Verified), place_holder: "Not Verified" %>
+                                  </span>
                                 <% end %>
+                                <small><%= best_in_place c, :bing_places_url, as: :input, place_holder: "Edit Link" %></small> 
                               </h4>
                               
                               <br />
 
                               <b>Bing Notes:</b><br />
-                              <%= c.bing_places_notes %><br /><br />
+                              <%= best_in_place c, :bing_places_notes, as: :textarea, value: c.bing_places_notes, place_holder: "empty" %><br /><br />
                               <b>Bing Verified Date:</b><br />
-                              <%= c.bing_verified_date %><br />
+                              <%= best_in_place c, :bing_verified_date, as: :date, value: c.bing_verified_date, place_holder: "empty" %><br />
                               <b>Login Info</b><br />
-                              <p>Username: <%= c.bing_account %>
-                                 Password: <%= c.bing_password %>
+                              <p>Username: <%= best_in_place c, :bing_account, value: c.bing_account, place_holder: "empty" %><br />
+                                 Password: <%= best_in_place c, :bing_password, value: c.bing_password, place_holder: "empty" %>
                               </p>
 
                               <br />
 
                               <b>Address Information:</b><br />
-                              <p>Address (Line 1): <%= c.address_one %></p>
-                              <p>Address (Line 2): <%= c.address_two %></p>
-                              <p>City: <%= c.city %></p>
-                              <p>State: <%= c.state %></p>
-                              <p>Zip Code: <%= c.zip %></p>
-                              <p>Country: <%= c.country %></p>
+                              <p>Address (Line 1): <%= best_in_place c, :address_one, value: c.address_one, place_holder: "empty" %></p>
+                              <p>Address (Line 2): <%= best_in_place c, :address_two, value: c.address_two, place_holder: "empty" %></p></p>
+                              <p>City: <%= best_in_place c, :city, value: c.city, place_holder: "empty" %></p></p>
+                              <p>State: <%= best_in_place c, :state, value: c.state, place_holder: "empty" %></p></p>
+                              <p>Zip Code: <%= best_in_place c, :zip, value: c.zip, place_holder: "empty" %></p></p>
+                              <p>Country: <%= best_in_place c, :country, value: c.country, place_holder: "empty" %></p></p>
                           </div>
                           
                           <div class="col-md-3">
@@ -138,22 +148,27 @@
                                     Yelp:
                                 <% end %>
                               
-                                <% if c.yelp_status == 'verified' %>
-                                  <span class="label label-success">Verified</span>
+                                <% if c.yelp_status == "1" %>
+                                <span class="label label-success">
+                                  <%= best_in_place c, :yelp_status, as: :select, collection: %w(Verified Not-Verified), value: c.yelp_status %>
+                                </span>
                                 <% else %>
-                                  <span class="label label-danger">Not Verified</span>
-                                <% end %>
+                                <span class="label label-danger">
+                                  <%= best_in_place c, :yelp_status, as: :select, collection: %w(Verified Not-Verified), place_holder: "Not Verified" %>
+                                </span>
+                                <% end %><br />
+                                <small><%= best_in_place c, :yelp_url, as: :input, place_holder: "Edit Link" %></small>
                               </h4>
 
                               <br />
                               
                               <b>Yelp Notes:</b><br />
-                              <%= c.yelp_notes %><br /><br />
+                              <%= best_in_place c, :yelp_notes, as: :textarea, value: c.yelp_notes, place_holder: "empty" %><br /><br />
                               <b>Yelp Verified Date:</b><br />
-                              <%= c.yelp_verified_date %><br />
+                              <%= best_in_place c, :yelp_verified_date, as: :date, value: c.yelp_verified_date, place_holder: "empty" %><br />
                               <b>Login Info</b><br />
-                              <p>Username: <%= c.yelp_account %>
-                                 Password: <%= c.yelp_password %>
+                              <p>Username: <%= best_in_place c, :yelp_account, value: c.yelp_account, place_holder: "empty" %><br />
+                                 Password: <%= best_in_place c, :yelp_password, value: c.yelp_password, place_holder: "empty" %>
                               </p>
 
                               <br />
@@ -173,22 +188,27 @@
                                     Yahoo Local:
                                 <% end %>
                               
-                                <% if c.yahoo_local_status == 'verified' %>
-                                  <span class="label label-success">Verified</span>
+                                <% if c.yahoo_local_status == 1 %>
+                                  <span class="label label-success">
+                                    <%= best_in_place c, :yahoo_local_status, as: :select, collection: %w(Verified Not-Verified), value: c.yahoo_local_status %>
+                                  </span>
                                 <% else %>
-                                  <span class="label label-danger">Not Verified</span>
-                                <% end %>
+                                <span class="label label-danger">
+                                  <%= best_in_place c, :yahoo_local_status, as: :select, collection: %w(Verified Not-Verified), place_holder: "Not Verified" %>
+                                </span>
+                                <% end %><br />
+                                <small><%= best_in_place c, :yahoo_local_url, as: :input, place_holder: "Edit Link" %></small>
                               </h4>
 
                               <br />
                               
-                              <b>Yahoo Local Notes:</b><br /><br />
-                              <%= c.yahoo_local_notes %><br />
+                              <b>Yahoo Local Notes:</b><br />
+                              <%= best_in_place c, :yahoo_local_notes, as: :textarea, value: c.yahoo_local_notes, place_holder: "empty" %><br /><br /><br />
                               <b>Yahoo Verified Date:</b><br />
-                              <%= c.yahoo_verified_date %><br />
+                              <%= best_in_place c, :yahoo_verified_date, as: :date, value: c.yahoo_verified_date, place_holder: "empty" %><br />
                               <b>Login Info</b><br />
-                              <p>Username: <%= c.yahoo_account %>
-                                 Password: <%= c.yahoo_password %>
+                              <p>Username: <%= best_in_place c, :yahoo_account, value: c.yahoo_account, place_holder: "empty" %><br />
+                                 Password: <%= best_in_place c, :yahoo_password, value: c.yahoo_password, place_holder: "empty" %>
                               </p>
                           </div>
 
@@ -196,7 +216,7 @@
 
                           <div class="col-md-12">
                             <b>Notes:</b>
-                            <p><%= c.admin_notes %></p>
+                            <%= best_in_place c, :admin_notes, :cancel_button => "x", :cancel_button_class => "bip-cancel btn-danger", :as => :textarea, :nil => "Add/Edit Notes", value: c.admin_notes, place_holder: "Add/Edit Notes" %>
                           </div>
                       </div>
                     </div>

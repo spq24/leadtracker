@@ -21,6 +21,7 @@ gem 'font-awesome-rails'
 gem 'prawn'
 gem 'httparty'
 gem 'gmaps4rails'
+gem 'best_in_place'
 
 group :development do
 	gem 'pry'

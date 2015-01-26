@@ -11,8 +11,10 @@
 // about supported directives.
 //
 //= require jquery
+//= require best_in_place
 //= require jquery_ujs
 //= require jquery-ui
+//= require best_in_place.jquery-ui
 //= require turbolinks
 //= require toggle
 //= require bootstrap-sprockets

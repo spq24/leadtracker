@@ -34,6 +34,17 @@ class CompaniesController < ApplicationController
       flash[:danger] = "Something Went Wrong! Your account wasn't edited properly"
       render :edit
     end 
+
+    respond_to do |format|
+      if @company.update_attributes(company_params)
+        format.html { redirect_to(@company, :notice => 'Company was successfully updated.') }
+        format.json { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.json { respond_with_bip(@company) }
+      end
+    end
+
   end
 
   def show
@@ -172,6 +183,6 @@ class CompaniesController < ApplicationController
   private
 
   def company_params
-    params.require(:company).permit(:company_name, :phonenumber, :address_one, :address_two, :city, :state, :postcode)
+    params.require(:company).permit(:company_name, :phonenumber, :address_one, :address_two, :city, :state, :postcode, :country, :admin_notes, :google_account, :google_password, :google_maps_url, :google_maps_status, :google_maps_notes, :google_verified_date, :bing_places_url, :bing_account, :bing_password, :bing_places_status, :bing_places_notes, :bing_verified_date, :yelp_url, :yelp_status, :yelp_notes, :yelp_verified_date, :yelp_account, :yelp_password, :yahoo_local_url, :yahoo_local_status, :yahoo_local_notes, :yahoo_verified_date, :yahoo_account, :yahoo_password)
   end
 end
