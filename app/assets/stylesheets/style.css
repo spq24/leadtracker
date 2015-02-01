@@ -3632,3 +3632,8 @@
 		margin-bottom: -300px;
 		border-radius: 5px;
 	}
+
+	.edit-link {
+		color:#000;
+		font-size: 9px;
+	}
