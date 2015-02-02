@@ -16,7 +16,7 @@
         </div>
 </div>
 <div class="row">
-    <div class="span10">
+    <div class="col-md-10">
         <div class="widget widget-shadow carousel slide contentSlider" id="carousel-example-generic" data-interval="false" data-ride="carousel">            
             <div class="carousel-inner">
               <div id="leadsopportunitychart" class="item active"><%= high_chart("leadsopportunitychart", @opportunity_leads_chart) %></div>
@@ -35,7 +35,7 @@
         </div>
     </div><!--/span10-->
     
-    <div class="span4">        
+    <div class="col-md-2">        
         <div class="widget-piechart">
             <div id="leadsbreakdownpiechart" id="piechart" style="height: 185px; margin-left: 0;">
                 <%= high_chart("leadsbreakdownpiechart", @leads_breakdown_pie) %>

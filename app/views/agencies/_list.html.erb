@@ -117,8 +117,8 @@
                   </div>
                   <div class="control-group col-md-4">
                     <% if opportunity.category.lead? %>
-                    <h5>Customer Type</h5>
-                    <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', opportunity.actiontype_id), { include_blank: true }, class: "btn" %>
+                      <h5>Customer Type</h5>
+                      <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', opportunity.actiontype_id), { include_blank: true }, class: "btn" %>
                     <% end %>
                   </div>
                   <div class="control-group col-md-4">
@@ -150,7 +150,7 @@
           </div>
         </div>
       </div>
-  <% end %>
+    <% end %>
 </div>
 <div id="paginator">
     <%= paginate @agency_opportunities, :remote => true %>

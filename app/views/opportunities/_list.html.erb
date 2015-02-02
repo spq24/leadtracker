@@ -12,14 +12,14 @@
 </table>
 <%= render_filterrific_spinner %>
 <div class="panel-group" id="accordion">
-  <% @company_opportunities.each do |opportunity| %>
+    <% @company_opportunities.each do |opportunity| %>
       <div class="panel panel-default" id="panel<%= opportunity.id %>">
         <div class="panel-heading">
           <h4 class="panel-title">
             <ul>
-              <li><span class="accordion-toggle" data-toggle="collapse" data-target="#collapse<%= opportunity.id %>" href="#collapse<%= opportunity.id %>"><%= opportunity.created_at.to_date.to_s(:long) %></span></li>
-              <li><%= opportunity.opportunity_name, class: "accordion-toggle" %></li>
-              <li style="margin-left: 2rem;"><%= opportunity.message_type.upcase, class: "accordion-toggle" %></li>
+              <li><span data-toggle="collapse" data-target="#collapse<%= opportunity.id %>" href="#collapse<%= opportunity.id %>"><%= opportunity.created_at.to_date.to_s(:long) %></span></li>
+              <li><%= opportunity.opportunity_name %></li>
+              <li style="margin-left: 2rem;"><%= opportunity.message_type.upcase %></li>
               <li>
                   <% if opportunity.category.lead? %>
                       <span class="request request-quality">Lead</span>
@@ -117,8 +117,8 @@
                   </div>
                   <div class="control-group col-md-4">
                     <% if opportunity.category.lead? %>
-                    <h5>Customer Type</h5>
-                    <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', opportunity.actiontype_id), { include_blank: true }, class: "btn" %>
+                      <h5>Customer Type</h5>
+                      <%= f.select :actiontype_id, options_from_collection_for_select(@actiontypes, 'id', 'action_type', opportunity.actiontype_id), { include_blank: true }, class: "btn" %>
                     <% end %>
                   </div>
                   <div class="control-group col-md-4">
@@ -150,7 +150,7 @@
           </div>
         </div>
       </div>
-  <% end %>
+    <% end %>
 </div>
 <div id="paginator">
     <%= paginate @company_opportunities, :remote => true %>

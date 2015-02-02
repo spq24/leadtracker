@@ -6,10 +6,11 @@
         <%= render 'shared/counts' %>
     </div>    
         <div class="row">
-        	<div class="col-md-8">
+            <div class="col-md-8">
                 <div class="widget widget-shadow">
                     <div class="widget-content">                   
-                          <div class="row-fluid">
+                         <%= form_for @filterrific do |f| %>
+                            <div class="row-fluid">
                                 <ul class="date-fields">
                                     <li>
                                         <label>Start Date:</label><br />
@@ -18,10 +19,6 @@
                                     <li>
                                         <label>End Date:</label><br />
                                         <%= f.date_field(:with_created_at_lt) %>
-                                    </li>
-                                    <li>
-                                        <label>Companies:</label><br />
-                                        <%= f.select(:with_companies, @filterrific.select_options[:with_companies], { include_blank: ' - All Customers -'}, class: "btn btn-default dropdown-toggle") %>
                                     </li>
                                 </ul>
                             </div>
@@ -32,8 +29,8 @@
                         <% end %>                      
                     </div>
                     <div class="widget-bottom row-fluid row-inline">
-                    	<div class="widget-left-shadow"></div>
-                    	<div class="widget-right-shadow"></div>
+                        <div class="widget-left-shadow"></div>
+                        <div class="widget-right-shadow"></div>
                     </div>
                 </div>
             </div><!--/widget-->
@@ -50,8 +47,8 @@
             </div>
         </div>
         <div class="row filter">
-        	<div class="col-md-2 filter-col">
-            	<div class="widget">
+            <div class="col-md-2 filter-col">
+                <div class="widget">
                     <h5 class="underline">Categories<span class="question"  title="Reason for the phone call or form contact from website."></a></span></h5>
                     <ul class="widget-half"  id="leads" >
                         <%= form_for @filterrific do |f| %>
