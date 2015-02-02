@@ -3637,3 +3637,20 @@
 		color:#000;
 		font-size: 9px;
 	}
+
+	.date-fields li {
+		display: inline-block;
+		margin-left: 10%;
+	}
+
+	.date-fields input {
+		border-radius: 5px;
+	}
+
+	#leads_table {
+		width: 80%;
+	}
+
+    .panel-group {
+		margin-left: 17%;
+	}

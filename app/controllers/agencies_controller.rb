@@ -76,6 +76,11 @@ class AgenciesController < ApplicationController
 	    @actual_leads_thirty = @actual_leads.where(created_at: 30.days.ago..Time.now.beginning_of_day)
 	end
 
+	def reset_filterrific
+	    session[:filterrific_opportunities] = nil
+	    redirect_to  opportunities_path
+  	end
+
 	def tracker
 		@user = current_user
 		@agency = @user.agency
